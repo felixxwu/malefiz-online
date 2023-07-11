@@ -1,4 +1,4 @@
-import { translateGroup, zoomGroup } from './getSVG'
+import { svg, translateGroup, zoomGroup } from './getSVG'
 
 const init = {
   mouseDownData: <
@@ -9,6 +9,13 @@ const init = {
 }
 
 const onChange: Type<keyof typeof init> = {
+  mouseDownData(value) {
+    if (value) {
+      svg!.style.cursor = 'grab'
+    } else {
+      svg!.style.cursor = 'default'
+    }
+  },
   svgTranslation(value) {
     translateGroup!.style.transform = `translate(${value.x}px, ${value.y}px)`
   },

@@ -1,3 +1,5 @@
+import { CONSTS } from './consts'
+import { translateGroup } from './getSVG'
 import { resize } from './resize'
 import { store } from './store'
 
@@ -12,6 +14,7 @@ export function addEventListeners() {
   })
   window.addEventListener('pointermove', event => {
     if (!store.mouseDownData) return
+    translateGroup!.style.pointerEvents = 'none'
     const xDiff = event.clientX - store.mouseDownData.coords.x
     const yDiff = event.clientY - store.mouseDownData.coords.y
     store.svgTranslation = {
@@ -19,12 +22,26 @@ export function addEventListeners() {
       y: store.mouseDownData.svgTranslation.y + yDiff / store.svgZoom,
     }
   })
-  window.addEventListener('pointerup', () => (store.mouseDownData = null))
-  window.addEventListener('pointerleave', () => (store.mouseDownData = null))
-  window.addEventListener('pointercancel', () => (store.mouseDownData = null))
+  window.addEventListener('pointerup', onPointerUp)
+  window.addEventListener('pointerleave', onPointerUp)
+  window.addEventListener('pointercancel', onPointerUp)
+  function onPointerUp() {
+    store.mouseDownData = null
+    translateGroup!.style.pointerEvents = 'all'
+  }
 
   window.addEventListener('wheel', event => {
-    store.svgZoom = Math.max(0.1, store.svgZoom * (1 + event.deltaY / 2000))
+    if (event.ctrlKey) {
+      store.svgZoom = Math.min(
+        Math.max(CONSTS.MIN_ZOOM, store.svgZoom * (1 + event.deltaY / CONSTS.ZOOM_SLOWDOWN)),
+        CONSTS.MAX_ZOOM
+      )
+    } else {
+      store.svgTranslation = {
+        x: store.svgTranslation.x - event.deltaX / store.svgZoom / CONSTS.PAN_SLOWDOWN,
+        y: store.svgTranslation.y - event.deltaY / store.svgZoom / CONSTS.PAN_SLOWDOWN,
+      }
+    }
   })
 
   window.addEventListener('contextmenu', event => event.preventDefault())
