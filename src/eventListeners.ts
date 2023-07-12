@@ -17,6 +17,7 @@ export function addEventListeners() {
     translateGroup!.style.pointerEvents = 'none'
     const xDiff = event.clientX - store.mouseDownData.coords.x
     const yDiff = event.clientY - store.mouseDownData.coords.y
+    store.svgTransition = 0
     store.svgTranslation = {
       x: store.mouseDownData.svgTranslation.x + xDiff / store.svgZoom,
       y: store.mouseDownData.svgTranslation.y + yDiff / store.svgZoom,

@@ -6,7 +6,7 @@ import { db } from './firebase'
 import { store } from './store'
 import { el, elNS } from './el'
 
-type Circle = {
+export type Circle = {
   id: string
   position: {
     x: number

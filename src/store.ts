@@ -1,5 +1,7 @@
+import { Map, drawMap } from './createMap'
 import { GameState } from './game'
 import { svg, translateGroup, zoomGroup } from './getSVG'
+import { menuMap } from './menu'
 import { updatePlayers } from './players'
 
 const init = {
@@ -8,9 +10,11 @@ const init = {
   >null,
   svgTranslation: { x: 0, y: 0 },
   svgZoom: 1,
+  svgTransition: 0,
   gameState: <GameState | null>null,
   oldGameState: <GameState | null>null,
   gameId: <string | null>null,
+  currentMap: menuMap,
 }
 
 const onChange: Type<keyof typeof init> = {
@@ -28,9 +32,16 @@ const onChange: Type<keyof typeof init> = {
     zoomGroup!.style.transform = `scale(${value})`
     zoomGroup!.style.transformOrigin = `50% 50%`
   },
+  svgTransition(value) {
+    translateGroup!.style.transition = `all ${value}ms`
+    zoomGroup!.style.transition = `all ${value}ms`
+  },
   gameState(value) {
     if (!value) return
     updatePlayers(value)
+  },
+  currentMap(value) {
+    value && drawMap(value)
   },
 }
 
