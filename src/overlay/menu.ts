@@ -1,3 +1,4 @@
+import qrcode from 'qrcode-generator'
 import { menuOpacity, menuPointerEvents } from '../cssVars'
 import { el } from '../el'
 import { crossIcon } from '../icons'
@@ -16,6 +17,10 @@ const menuButtonStyles: Partial<CSSStyleDeclaration> = {
 }
 
 export function createMenu() {
+  const qr = qrcode(0, 'L')
+  qr.addData(window.location.href)
+  qr.make()
+
   return el('div')({
     attributes: {
       style: {
@@ -30,7 +35,7 @@ export function createMenu() {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: '20px',
+        gap: '30px',
         opacity: menuOpacity.value,
         pointerEvents: menuPointerEvents.value,
         transition: '500ms',
@@ -39,7 +44,46 @@ export function createMenu() {
     children: [
       el('div')({
         attributes: {
-          style: menuButtonStyles,
+          style: {
+            borderRadius: '5px',
+            backgroundColor: 'var(--colour1)',
+            padding: '20px',
+            maxWidth: '280px',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px',
+          },
+        },
+        children: [
+          el('div')({ attributes: { innerHTML: 'Invite Players:', style: { color: 'black' } } }),
+          el('div')({
+            attributes: {
+              id: 'qrcode',
+              innerHTML: qr.createSvgTag({ cellSize: 2, margin: 0, scalable: true }),
+            },
+          }),
+          el('a')({
+            attributes: {
+              href: window.location.href,
+              innerHTML: window.location.href,
+              style: { color: 'black', wordBreak: 'break-all' },
+            },
+          }),
+        ],
+      }),
+      el('div')({
+        attributes: {
+          style: {
+            width: '200px',
+            height: '40px',
+            borderRadius: '5px',
+            backgroundColor: 'var(--colour1)',
+            cursor: 'pointer',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
           onclick: () => {
             store.menuOpen = false
             zoomIntoCircle(store.currentMap[0], { transition: 1000 })
@@ -55,15 +99,16 @@ export function createMenu() {
       }),
       el('div')({
         attributes: {
-          style: menuButtonStyles,
-        },
-        children: [
-          el('div')({ attributes: { innerHTML: 'Invite Players', style: { color: 'black' } } }),
-        ],
-      }),
-      el('div')({
-        attributes: {
-          style: menuButtonStyles,
+          style: {
+            width: '40px',
+            height: '40px',
+            borderRadius: '50%',
+            backgroundColor: 'var(--colour1)',
+            cursor: 'pointer',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
           onclick: () => {
             store.menuOpen = false
           },

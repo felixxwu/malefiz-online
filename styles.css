@@ -15,3 +15,7 @@ body {
     user-select: none;
     touch-action: none;
 }
+
+#qrcode rect {
+    fill: var(--colour1);
+}
