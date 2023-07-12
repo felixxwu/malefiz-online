@@ -4,6 +4,7 @@ import { GameState } from './game'
 import { mapGroup } from './getSVG'
 import { db } from './firebase'
 import { store } from './store'
+import { el, elNS } from './el'
 
 type Circle = {
   id: string
@@ -66,48 +67,63 @@ export function drawMap(map: Map) {
 
 function drawCircles(map: Map) {
   for (const circle of map) {
-    const circleElement = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
-    circleElement.setAttribute('id', circle.id)
-    circleElement.setAttribute('cx', (circle.position.x * 100).toString())
-    circleElement.setAttribute('cy', (circle.position.y * 100).toString())
-    circleElement.setAttribute('r', `${CONSTS.CIRCLE_RADIUS}`)
-    circleElement.style.cursor = 'pointer'
-    if (circle.onClick) {
-      circleElement.onclick = circle.onClick
-    } else if (store.gameId) {
-      circleElement.onclick = () => handleOnClick(circle.id)
-    }
-    mapGroup!.appendChild(circleElement)
+    mapGroup!.appendChild(
+      elNS('circle')({
+        attributes: {
+          id: circle.id,
+          style: { cursor: 'pointer' },
+          onclick: circle.onClick ?? (() => handleOnClick(circle.id)),
+        },
+        readonlyAttributes: {
+          cx: `${circle.position.x * 100}`,
+          cy: `${circle.position.y * 100}`,
+          r: `${CONSTS.CIRCLE_RADIUS}`,
+        },
+      })
+    )
   }
 }
 
 function drawText(map: Map) {
   for (const circle of map) {
     if (circle.text) {
-      const foreignObject = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject')
-      foreignObject.setAttribute('x', (circle.position.x * 100 - CONSTS.CIRCLE_RADIUS).toString())
-      foreignObject.setAttribute('y', (circle.position.y * 100 - CONSTS.CIRCLE_RADIUS).toString())
-      foreignObject.setAttribute('width', `${CONSTS.CIRCLE_RADIUS * 2}px`)
-      foreignObject.setAttribute('height', `${CONSTS.CIRCLE_RADIUS * 2}px`)
-      foreignObject.style.pointerEvents = 'none'
-
-      const textElement = document.createElementNS('http://www.w3.org/1999/xhtml', 'div')
-      textElement.style.width = `${CONSTS.CIRCLE_RADIUS * 2}px`
-      textElement.style.height = `${CONSTS.CIRCLE_RADIUS * 2}px`
-      textElement.style.fontSize = `${circle.fontSize}px`
-      textElement.style.color = 'white'
-      textElement.style.display = 'flex'
-      textElement.style.alignItems = 'center'
-      textElement.style.justifyContent = 'center'
-
-      const text = document.createElement('div')
-      text.style.width = 'min-content'
-      text.style.textAlign = 'center'
-      text.innerHTML = circle.text
-
-      textElement.appendChild(text)
-      foreignObject.appendChild(textElement)
-      mapGroup!.appendChild(foreignObject)
+      mapGroup!.appendChild(
+        elNS('foreignObject')({
+          attributes: { style: { pointerEvents: 'none' } },
+          readonlyAttributes: {
+            x: `${circle.position.x * 100 - CONSTS.CIRCLE_RADIUS}px`,
+            y: `${circle.position.y * 100 - CONSTS.CIRCLE_RADIUS}px`,
+            width: `${CONSTS.CIRCLE_RADIUS * 2}px`,
+            height: `${CONSTS.CIRCLE_RADIUS * 2}px`,
+          },
+          children: [
+            el('div')({
+              attributes: {
+                style: {
+                  width: `${CONSTS.CIRCLE_RADIUS * 2}px`,
+                  height: `${CONSTS.CIRCLE_RADIUS * 2}px`,
+                  fontSize: `${circle.fontSize}px`,
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                },
+              },
+              children: [
+                el('div')({
+                  attributes: {
+                    style: {
+                      width: 'min-content',
+                      textAlign: 'center',
+                    },
+                    innerHTML: circle.text,
+                  },
+                }),
+              ],
+            }),
+          ],
+        })
+      )
     }
   }
 }
@@ -119,14 +135,18 @@ function drawLinesBetweenCircles(map: Map) {
       if (!neighbour) {
         continue
       }
-      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line')
-      line.setAttribute('x1', (circle.position.x * 100).toString())
-      line.setAttribute('y1', (circle.position.y * 100).toString())
-      line.setAttribute('x2', (neighbour.position.x * 100).toString())
-      line.setAttribute('y2', (neighbour.position.y * 100).toString())
-      line.setAttribute('stroke', 'grey')
-      line.setAttribute('stroke-width', `${CONSTS.PATH_STROKE_WIDTH}`)
-      mapGroup!.appendChild(line)
+      mapGroup!.appendChild(
+        elNS('line')({
+          readonlyAttributes: {
+            x1: `${circle.position.x * 100}`,
+            y1: `${circle.position.y * 100}`,
+            x2: `${neighbour.position.x * 100}`,
+            y2: `${neighbour.position.y * 100}`,
+            stroke: 'grey',
+            'stroke-width': `${CONSTS.PATH_STROKE_WIDTH + 2}`,
+          },
+        })
+      )
     }
   }
 }

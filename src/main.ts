@@ -8,9 +8,11 @@ import { db } from './firebase'
 import { GameState } from './game'
 import { store } from './store'
 import { drawMenu } from './menu'
+import { renderOverlay } from './overlay'
 
 resize()
 addEventListeners()
+renderOverlay()
 
 const urlParams = new URLSearchParams(window.location.search)
 const gameId = urlParams.get('game')
