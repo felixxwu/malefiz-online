@@ -1,7 +1,7 @@
-import { Map } from './createMap'
-import { createGame } from './game'
-import { store } from './store'
-import { zoomIntoCircle } from './zoom'
+import { Map } from '../types/mapTypes'
+import { createGame } from '../game'
+import { store } from '../data/store'
+import { zoomIntoCircle } from '../utils/zoom'
 
 export const menuMap: Map = [
   {

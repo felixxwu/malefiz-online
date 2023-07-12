@@ -1,8 +1,8 @@
-import { menuButtonEnabled } from '../cssVars'
-import { el } from '../el'
+import { menuButtonEnabled } from '../data/cssVars'
+import { el } from '../utils/el'
 import { fullScreenIcon, menuIcon, minusIcon, plusIcon } from '../icons'
-import { store } from '../store'
-import { fitToScreen } from '../zoom'
+import { store } from '../data/store'
+import { fitToScreen } from '../utils/zoom'
 
 const overlayButtonStyles: Partial<CSSStyleDeclaration> = {
   width: '40px',

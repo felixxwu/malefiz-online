@@ -1,14 +1,14 @@
-import { drawMap } from './createMap'
-import { addEventListeners } from './eventListeners'
-import { resize } from './resize'
+import { drawMap } from './renderers/drawMap'
+import { addEventListeners } from './listeners'
+import { resize } from './utils/resize'
 import './firebase'
 
 import { doc, onSnapshot } from 'firebase/firestore'
 import { db } from './firebase'
 import { GameState } from './game'
-import { store } from './store'
+import { store } from './data/store'
 import { renderOverlay } from './overlay'
-import { fitToScreen, zoomIntoCircle } from './zoom'
+import { fitToScreen, zoomIntoCircle } from './utils/zoom'
 
 let firstDataLoad = true
 

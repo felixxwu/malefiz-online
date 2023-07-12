@@ -1,25 +1,12 @@
 import { doc, updateDoc } from 'firebase/firestore'
-import { CONSTS } from './consts'
-import { GameState } from './game'
-import { mapGroup } from './getSVG'
-import { db } from './firebase'
-import { store } from './store'
-import { el, elNS } from './el'
-import { textOpacity } from './cssVars'
-
-export type Circle = {
-  id: string
-  position: {
-    x: number
-    y: number
-  }
-  neighbours: string[]
-  text?: string
-  fontSize?: number
-  onClick?: () => void
-}
-
-export type Map = Circle[]
+import { CONSTS } from '../data/consts'
+import { GameState } from '../game'
+import { mapGroup } from '../utils/getSvgGroup'
+import { db } from '../firebase'
+import { store } from '../data/store'
+import { el, elNS } from '../utils/el'
+import { textOpacity } from '../data/cssVars'
+import { Map } from '../types/mapTypes'
 
 async function handleOnClick(id: string) {
   if (store.gameId === null) return
@@ -35,29 +22,6 @@ async function handleOnClick(id: string) {
   }
   await updateDoc(doc(db, 'games', store.gameId), newGame)
 }
-
-export const map1: Map = [
-  {
-    id: '1',
-    position: { x: 1, y: 1 },
-    neighbours: ['2', '3'],
-  },
-  {
-    id: '2',
-    position: { x: 2, y: 1 },
-    neighbours: ['1', '3'],
-  },
-  {
-    id: '3',
-    position: { x: 1, y: 3 },
-    neighbours: ['1', '2'],
-  },
-  {
-    id: '4',
-    position: { x: 4, y: 3 },
-    neighbours: ['3', '2'],
-  },
-]
 
 export function drawMap(map: Map) {
   mapGroup!.innerHTML = ''

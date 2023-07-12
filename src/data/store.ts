@@ -1,9 +1,9 @@
-import { drawMap } from './createMap'
+import { drawMap } from '../renderers/drawMap'
 import { menuButtonEnabled, menuOpacity, menuPointerEvents, textOpacity } from './cssVars'
-import { GameState } from './game'
-import { svg, translateGroup, zoomGroup } from './getSVG'
-import { menuMap } from './menu'
-import { updatePlayers } from './players'
+import { GameState } from '../game'
+import { svg, translateGroup, zoomGroup } from '../utils/getSvgGroup'
+import { menuMap } from '../maps/menu'
+import { updatePlayers } from '../renderers/drawPlayers'
 
 const init = {
   mouseDownData: <

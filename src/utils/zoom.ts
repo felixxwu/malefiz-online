@@ -1,6 +1,6 @@
-import { CONSTS } from './consts'
-import { Circle, Map } from './createMap'
-import { store } from './store'
+import { CONSTS } from '../data/consts'
+import { Circle, Map } from '../types/mapTypes'
+import { store } from '../data/store'
 
 export function fitToScreen(
   map: Map,

@@ -1,4 +1,4 @@
-import { elNS } from './el'
+import { elNS } from './utils/el'
 
 function createIcon(path: string) {
   return (size: number = 24, colour: string = 'var(--colour1)') =>

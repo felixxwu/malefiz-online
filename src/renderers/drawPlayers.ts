@@ -1,5 +1,5 @@
-import { GameState } from './game'
-import { playersGroup } from './getSVG'
+import { GameState } from '../game'
+import { playersGroup } from '../utils/getSvgGroup'
 
 export function updatePlayers(gameState: GameState) {
   for (const player of gameState.players) {

@@ -1,4 +1,4 @@
-import { svg } from './getSVG'
+import { svg } from './getSvgGroup'
 
 export function resize() {
   svg!.style.width = window.innerWidth + 'px'

@@ -1,5 +1,6 @@
 import { addDoc, collection } from 'firebase/firestore'
-import { Map, map1 } from './createMap'
+import { Map } from './types/mapTypes'
+import { map1 } from './maps/map1'
 import { db } from './firebase'
 
 type Player = {

@@ -1,23 +1,8 @@
-import { CONSTS } from './consts'
-import { svg, translateGroup } from './getSVG'
-import { resize } from './resize'
-import { store } from './store'
+import { svg, translateGroup } from '../utils/getSvgGroup'
+import { store } from '../data/store'
+import { evCache, getDistance, removeEvent } from '.'
 
-function removeEvent(event: PointerEvent) {
-  // Remove this event from the target's cache
-  const index = evCache.findIndex(cachedEv => cachedEv.pointerId === event.pointerId)
-  evCache.splice(index, 1)
-}
-
-function getDistance(ev1: PointerEvent, ev2: PointerEvent) {
-  return Math.sqrt(Math.pow(ev1.clientX - ev2.clientX, 2) + Math.pow(ev1.clientY - ev2.clientY, 2))
-}
-
-const evCache: PointerEvent[] = []
-
-export function addEventListeners() {
-  svg!.addEventListener('resize', resize)
-
+export function addPointerEventListeners() {
   svg!.addEventListener('pointerdown', event => {
     evCache.push(event)
     if (evCache.length === 1) {
@@ -65,21 +50,4 @@ export function addEventListeners() {
     translateGroup!.style.pointerEvents = 'all'
     removeEvent(event)
   }
-
-  svg!.addEventListener('wheel', event => {
-    store.svgTransition = 0
-    if (event.ctrlKey) {
-      store.svgZoom = Math.min(
-        Math.max(CONSTS.MIN_ZOOM, store.svgZoom * (1 + event.deltaY / CONSTS.ZOOM_SLOWDOWN)),
-        CONSTS.MAX_ZOOM
-      )
-    } else {
-      store.svgTranslation = {
-        x: store.svgTranslation.x - event.deltaX / store.svgZoom / CONSTS.PAN_SLOWDOWN,
-        y: store.svgTranslation.y - event.deltaY / store.svgZoom / CONSTS.PAN_SLOWDOWN,
-      }
-    }
-  })
-
-  svg!.addEventListener('contextmenu', event => event.preventDefault())
 }

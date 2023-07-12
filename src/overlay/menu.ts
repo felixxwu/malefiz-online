@@ -1,9 +1,9 @@
 import qrcode from 'qrcode-generator'
-import { menuOpacity, menuPointerEvents } from '../cssVars'
-import { el } from '../el'
+import { menuOpacity, menuPointerEvents } from '../data/cssVars'
+import { el } from '../utils/el'
 import { crossIcon } from '../icons'
-import { store } from '../store'
-import { zoomIntoCircle } from '../zoom'
+import { store } from '../data/store'
+import { zoomIntoCircle } from '../utils/zoom'
 
 export function createMenu() {
   const qr = qrcode(0, 'L')
