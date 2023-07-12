@@ -1,4 +1,6 @@
+import { GameState } from './game'
 import { svg, translateGroup, zoomGroup } from './getSVG'
+import { updatePlayers } from './players'
 
 const init = {
   mouseDownData: <
@@ -6,6 +8,8 @@ const init = {
   >null,
   svgTranslation: { x: 0, y: 0 },
   svgZoom: 1,
+  gameState: <GameState | null>null,
+  oldGameState: <GameState | null>null,
 }
 
 const onChange: Type<keyof typeof init> = {
@@ -22,6 +26,10 @@ const onChange: Type<keyof typeof init> = {
   svgZoom(value) {
     zoomGroup!.style.transform = `scale(${value})`
     zoomGroup!.style.transformOrigin = `50% 50%`
+  },
+  gameState(value) {
+    if (!value) return
+    updatePlayers(value)
   },
 }
 
