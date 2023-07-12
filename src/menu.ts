@@ -1,5 +1,7 @@
-import { Map, drawMap } from './createMap'
+import { Map } from './createMap'
 import { createGame } from './game'
+import { store } from './store'
+import { zoomIntoCircle } from './zoom'
 
 export const menuMap: Map = [
   {
@@ -9,7 +11,11 @@ export const menuMap: Map = [
     text: `Create Game`,
     fontSize: 13,
     onClick: () => {
-      createGame()
+      zoomIntoCircle(store.currentMap[0], { transition: 1000 })
+      store.textOpacity = 0
+      setTimeout(() => {
+        createGame()
+      }, 800)
     },
   },
   // {

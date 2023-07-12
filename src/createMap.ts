@@ -115,6 +115,8 @@ function drawText(map: Map) {
                     style: {
                       width: 'min-content',
                       textAlign: 'center',
+                      opacity: 'var(--textOpacity)',
+                      transition: '1000ms',
                     },
                     innerHTML: circle.text,
                   },

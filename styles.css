@@ -1,11 +1,17 @@
+html {
+    --textOpacity: 0
+}
+
 body {
     margin: 0;
     height: 100vh;
     overflow: hidden;
-    background-color: hsl(75deg 30% 85%);
 }
 
 * {
+    --colour1: hsl(75deg 30% 85%);
     font-family: 'Lexend Deca', sans-serif;
-    color: hsl(75deg 30% 85%);
+    color: var(--colour1);
+    user-select: none;
+    touch-action: none;
 }

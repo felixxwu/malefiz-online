@@ -1,4 +1,4 @@
-import { Map, drawMap } from './createMap'
+import { drawMap } from './createMap'
 import { GameState } from './game'
 import { svg, translateGroup, zoomGroup } from './getSVG'
 import { menuMap } from './menu'
@@ -6,7 +6,12 @@ import { updatePlayers } from './players'
 
 const init = {
   mouseDownData: <
-    { coords: { x: number; y: number }; svgTranslation: { x: number; y: number } } | null
+    {
+      coords: { x: number; y: number }
+      svgTranslation: { x: number; y: number }
+      svgZoom: number
+      pinchDistance: number
+    } | null
   >null,
   svgTranslation: { x: 0, y: 0 },
   svgZoom: 1,
@@ -15,6 +20,7 @@ const init = {
   oldGameState: <GameState | null>null,
   gameId: <string | null>null,
   currentMap: menuMap,
+  textOpacity: 0,
 }
 
 const onChange: Type<keyof typeof init> = {
@@ -42,6 +48,9 @@ const onChange: Type<keyof typeof init> = {
   },
   currentMap(value) {
     value && drawMap(value)
+  },
+  textOpacity(value) {
+    document.documentElement.style.setProperty('--textOpacity', `${value}`)
   },
 }
 

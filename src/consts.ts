@@ -4,5 +4,5 @@ export const CONSTS = {
   MIN_ZOOM: 0.1,
   MAX_ZOOM: 20,
   ZOOM_SLOWDOWN: 1000,
-  PAN_SLOWDOWN: 3,
+  PAN_SLOWDOWN: 2,
 }

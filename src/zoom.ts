@@ -27,8 +27,6 @@ export function fitToScreen(
   const smallestZoom = Math.min(widthZoom, heightZoom)
   const smallestScreenLength = Math.min(window.innerWidth, window.innerHeight)
 
-  console.log(`smallestZoom`, smallestZoom)
-
   setTimeout(() => {
     store.svgTransition = transition ?? 500
     store.svgTranslation = {
@@ -56,7 +54,7 @@ export async function zoomIntoCircle(
 ) {
   const screenCenterX = window.innerWidth / 2
   const screenCenterY = window.innerHeight / 2
-  const smallestScreenLength = Math.min(window.innerWidth, window.innerHeight)
+  const longestScreenLength = Math.max(window.innerWidth, window.innerHeight)
 
   setTimeout(() => {
     store.svgTransition = transition ?? 500
@@ -68,6 +66,6 @@ export async function zoomIntoCircle(
 
   setTimeout(() => {
     store.svgTransition = transition ?? 500
-    store.svgZoom = smallestScreenLength / CONSTS.CIRCLE_RADIUS
+    store.svgZoom = longestScreenLength / CONSTS.CIRCLE_RADIUS
   }, zoomDelay)
 }

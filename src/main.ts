@@ -10,11 +10,16 @@ import { store } from './store'
 import { renderOverlay } from './overlay'
 import { fitToScreen, zoomIntoCircle } from './zoom'
 
+let firstDataLoad = true
+
 resize()
 addEventListeners()
 renderOverlay()
 drawMap(store.currentMap)
 zoomIntoCircle(store.currentMap[0], { transition: 0 })
+
+document.documentElement.style.setProperty('--textOpacity', `0`)
+document.body.style.backgroundColor = 'var(--colour1)'
 
 const urlParams = new URLSearchParams(window.location.search)
 const gameId = urlParams.get('game')
@@ -23,12 +28,16 @@ if (gameId) {
   onSnapshot(doc(db, 'games', gameId), doc => {
     store.gameState = doc.data() as GameState
     store.currentMap = store.gameState.map
-    setTimeout(() => {
-      fitToScreen(store.currentMap, { transition: 1000, translateDelay: 800 })
-    }, 200)
+    if (firstDataLoad) {
+      firstDataLoad = false
+      setTimeout(() => {
+        fitToScreen(store.currentMap, { transition: 1000, translateDelay: 800 })
+      })
+    }
   })
 } else {
   setTimeout(() => {
     fitToScreen(store.currentMap, { transition: 1000, translateDelay: 800 })
-  }, 200)
+    store.textOpacity = 1
+  })
 }

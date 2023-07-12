@@ -23,7 +23,7 @@ export async function createGame() {
         positions: [
           {
             pieceId: '1',
-            circleId: '1',
+            circleId: '2',
           },
         ],
       },

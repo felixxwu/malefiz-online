@@ -1,9 +1,19 @@
 import { el } from './el'
-import { menuMap } from './menu'
+import { fullScreenIcon, minusIcon, plusIcon } from './icons'
 import { store } from './store'
-import { fitToScreen, zoomIntoCircle } from './zoom'
+import { fitToScreen } from './zoom'
 
-//style="width: 50px; height: 50px; pointer-events: all;"
+const zoomButtonAttributes: Partial<CSSStyleDeclaration> = {
+  width: '40px',
+  height: '40px',
+  borderRadius: '50%',
+  backgroundColor: 'black',
+  color: 'white',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  cursor: 'pointer',
+}
 
 export function renderOverlay() {
   document.body.appendChild(
@@ -35,43 +45,32 @@ export function renderOverlay() {
           children: [
             el('div')({
               attributes: {
-                id: 'zoomIn',
-                style: {
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
-                  backgroundColor: 'black',
-                  color: 'white',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  cursor: 'pointer',
-                },
+                style: zoomButtonAttributes,
                 onclick: () => {
-                  store.currentMap && zoomIntoCircle(store.currentMap[0], {})
+                  store.svgTransition = 200
+                  store.svgZoom *= 1.2
                 },
               },
-              children: [el('div')({ attributes: { innerHTML: 'x' } })],
+              children: [plusIcon(15)],
             }),
             el('div')({
               attributes: {
-                id: 'zoomIn',
-                style: {
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
-                  backgroundColor: 'black',
-                  color: 'white',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  cursor: 'pointer',
-                },
+                style: zoomButtonAttributes,
                 onclick: () => {
-                  store.currentMap && fitToScreen(store.currentMap, { translateDelay: 500 })
+                  store.currentMap && fitToScreen(store.currentMap, {})
                 },
               },
-              children: [el('div')({ attributes: { innerHTML: '+' } })],
+              children: [fullScreenIcon(15)],
+            }),
+            el('div')({
+              attributes: {
+                style: zoomButtonAttributes,
+                onclick: () => {
+                  store.svgTransition = 200
+                  store.svgZoom *= 0.8
+                },
+              },
+              children: [minusIcon(15)],
             }),
           ],
         }),
