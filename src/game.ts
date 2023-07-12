@@ -31,6 +31,7 @@ export async function createGame() {
     ],
     created: Date.now(),
   }
+  document.body.style.backgroundColor = 'black'
   const gameId = await addDoc(collection(db, 'games'), newGame)
   window.location.search = `?game=${gameId.id}`
 }
