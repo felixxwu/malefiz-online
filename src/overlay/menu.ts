@@ -5,17 +5,6 @@ import { crossIcon } from '../icons'
 import { store } from '../store'
 import { zoomIntoCircle } from '../zoom'
 
-const menuButtonStyles: Partial<CSSStyleDeclaration> = {
-  width: '200px',
-  height: '40px',
-  borderRadius: '5px',
-  backgroundColor: 'var(--colour1)',
-  cursor: 'pointer',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-}
-
 export function createMenu() {
   const qr = qrcode(0, 'L')
   qr.addData(window.location.href)

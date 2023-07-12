@@ -40,7 +40,7 @@ export function fitToScreen(
     store.svgZoom =
       smallestZoom === Infinity
         ? smallestScreenLength / CONSTS.CIRCLE_RADIUS / 5
-        : smallestZoom * 0.7
+        : smallestZoom * 0.6
   }, zoomDelay)
 }
 

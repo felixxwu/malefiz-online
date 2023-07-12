@@ -9,7 +9,6 @@ import { GameState } from './game'
 import { store } from './store'
 import { renderOverlay } from './overlay'
 import { fitToScreen, zoomIntoCircle } from './zoom'
-import { textOpacity } from './cssVars'
 
 let firstDataLoad = true
 
