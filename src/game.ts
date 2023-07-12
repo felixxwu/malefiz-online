@@ -11,6 +11,7 @@ type Player = {
 export type GameState = {
   map: Map
   players: Player[]
+  created: number
 }
 
 export async function createGame() {
@@ -28,6 +29,7 @@ export async function createGame() {
         ],
       },
     ],
+    created: Date.now(),
   }
   const gameId = await addDoc(collection(db, 'games'), newGame)
   window.location.search = `?game=${gameId.id}`

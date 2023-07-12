@@ -1,5 +1,5 @@
 import { CONSTS } from './consts'
-import { translateGroup } from './getSVG'
+import { svg, translateGroup } from './getSVG'
 import { resize } from './resize'
 import { store } from './store'
 
@@ -16,9 +16,9 @@ function getDistance(ev1: PointerEvent, ev2: PointerEvent) {
 const evCache: PointerEvent[] = []
 
 export function addEventListeners() {
-  window.addEventListener('resize', resize)
+  svg!.addEventListener('resize', resize)
 
-  window.addEventListener('pointerdown', event => {
+  svg!.addEventListener('pointerdown', event => {
     evCache.push(event)
     if (evCache.length === 1) {
       store.mouseDownData = {
@@ -36,7 +36,7 @@ export function addEventListeners() {
       }
     }
   })
-  window.addEventListener('pointermove', event => {
+  svg!.addEventListener('pointermove', event => {
     if (!store.mouseDownData) return
 
     const index = evCache.findIndex(cachedEv => cachedEv.pointerId === event.pointerId)
@@ -57,16 +57,16 @@ export function addEventListeners() {
       }
     }
   })
-  window.addEventListener('pointerup', onPointerUp)
-  window.addEventListener('pointerleave', onPointerUp)
-  window.addEventListener('pointercancel', onPointerUp)
+  svg!.addEventListener('pointerup', onPointerUp)
+  svg!.addEventListener('pointerleave', onPointerUp)
+  svg!.addEventListener('pointercancel', onPointerUp)
   function onPointerUp(event: PointerEvent) {
     store.mouseDownData = null
     translateGroup!.style.pointerEvents = 'all'
     removeEvent(event)
   }
 
-  window.addEventListener('wheel', event => {
+  svg!.addEventListener('wheel', event => {
     store.svgTransition = 0
     if (event.ctrlKey) {
       store.svgZoom = Math.min(
@@ -81,5 +81,5 @@ export function addEventListeners() {
     }
   })
 
-  window.addEventListener('contextmenu', event => event.preventDefault())
+  svg!.addEventListener('contextmenu', event => event.preventDefault())
 }

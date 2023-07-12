@@ -9,6 +9,7 @@ import { GameState } from './game'
 import { store } from './store'
 import { renderOverlay } from './overlay'
 import { fitToScreen, zoomIntoCircle } from './zoom'
+import { textOpacity } from './cssVars'
 
 let firstDataLoad = true
 
@@ -18,7 +19,6 @@ renderOverlay()
 drawMap(store.currentMap)
 zoomIntoCircle(store.currentMap[0], { transition: 0 })
 
-document.documentElement.style.setProperty('--textOpacity', `0`)
 document.body.style.backgroundColor = 'var(--colour1)'
 
 const urlParams = new URLSearchParams(window.location.search)
@@ -32,12 +32,12 @@ if (gameId) {
       firstDataLoad = false
       setTimeout(() => {
         fitToScreen(store.currentMap, { transition: 1000, translateDelay: 800 })
-      })
+      }, 100)
     }
   })
 } else {
   setTimeout(() => {
     fitToScreen(store.currentMap, { transition: 1000, translateDelay: 800 })
     store.textOpacity = 1
-  })
+  }, 100)
 }

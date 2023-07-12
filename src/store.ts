@@ -1,4 +1,5 @@
 import { drawMap } from './createMap'
+import { menuButtonEnabled, menuOpacity, menuPointerEvents, textOpacity } from './cssVars'
 import { GameState } from './game'
 import { svg, translateGroup, zoomGroup } from './getSVG'
 import { menuMap } from './menu'
@@ -21,6 +22,7 @@ const init = {
   gameId: <string | null>null,
   currentMap: menuMap,
   textOpacity: 0,
+  menuOpen: false,
 }
 
 const onChange: Type<keyof typeof init> = {
@@ -46,11 +48,18 @@ const onChange: Type<keyof typeof init> = {
     if (!value) return
     updatePlayers(value)
   },
+  gameId(value) {
+    menuButtonEnabled.set(value ? 'flex' : 'none')
+  },
   currentMap(value) {
     value && drawMap(value)
   },
   textOpacity(value) {
-    document.documentElement.style.setProperty('--textOpacity', `${value}`)
+    textOpacity.set(`${value}`)
+  },
+  menuOpen(value) {
+    menuOpacity.set(value ? '1' : '0')
+    menuPointerEvents.set(value ? 'all' : 'none')
   },
 }
 

@@ -5,6 +5,7 @@ import { mapGroup } from './getSVG'
 import { db } from './firebase'
 import { store } from './store'
 import { el, elNS } from './el'
+import { textOpacity } from './cssVars'
 
 export type Circle = {
   id: string
@@ -115,7 +116,7 @@ function drawText(map: Map) {
                     style: {
                       width: 'min-content',
                       textAlign: 'center',
-                      opacity: 'var(--textOpacity)',
+                      opacity: textOpacity.value,
                       transition: '1000ms',
                     },
                     innerHTML: circle.text,
@@ -144,7 +145,7 @@ function drawLinesBetweenCircles(map: Map) {
             y1: `${circle.position.y * 100}`,
             x2: `${neighbour.position.x * 100}`,
             y2: `${neighbour.position.y * 100}`,
-            stroke: 'grey',
+            stroke: 'black',
             'stroke-width': `${CONSTS.PATH_STROKE_WIDTH + 2}`,
           },
         })
