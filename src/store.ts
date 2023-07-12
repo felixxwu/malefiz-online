@@ -10,6 +10,7 @@ const init = {
   svgZoom: 1,
   gameState: <GameState | null>null,
   oldGameState: <GameState | null>null,
+  gameId: <string | null>null,
 }
 
 const onChange: Type<keyof typeof init> = {

@@ -1,18 +1,25 @@
-import { drawMap, map1 } from './createMap'
+import { drawMap } from './createMap'
 import { addEventListeners } from './eventListeners'
 import { resize } from './resize'
 import './firebase'
 
 import { doc, onSnapshot } from 'firebase/firestore'
 import { db } from './firebase'
-import { GameState, createGame } from './game'
+import { GameState } from './game'
 import { store } from './store'
-
-onSnapshot(doc(db, 'games', '1'), doc => {
-  store.gameState = doc.data() as GameState
-})
+import { drawMenu } from './menu'
 
 resize()
 addEventListeners()
-drawMap(map1)
-// createGame()
+
+const urlParams = new URLSearchParams(window.location.search)
+const gameId = urlParams.get('game')
+store.gameId = gameId
+if (gameId) {
+  onSnapshot(doc(db, 'games', gameId), doc => {
+    store.gameState = doc.data() as GameState
+    drawMap(store.gameState.map)
+  })
+} else {
+  drawMenu()
+}

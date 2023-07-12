@@ -1,4 +1,4 @@
-import { doc, setDoc } from 'firebase/firestore'
+import { addDoc, collection } from 'firebase/firestore'
 import { Map, map1 } from './createMap'
 import { db } from './firebase'
 
@@ -29,5 +29,6 @@ export async function createGame() {
       },
     ],
   }
-  await setDoc(doc(db, 'games', '1'), newGame)
+  const gameId = await addDoc(collection(db, 'games'), newGame)
+  window.location.search = `?game=${gameId.id}`
 }
