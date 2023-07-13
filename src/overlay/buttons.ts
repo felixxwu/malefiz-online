@@ -1,4 +1,4 @@
-import { menuButtonEnabled } from '../data/cssVars'
+import { menuButtonEnabled, textOpacity } from '../data/cssVars'
 import { el } from '../utils/el'
 import { fullScreenIcon, menuIcon, minusIcon, plusIcon } from '../icons'
 import { store } from '../data/store'
@@ -29,6 +29,8 @@ export function OverlayButtons() {
         width: '100%',
         height: '100%',
         pointerEvents: 'none',
+        transition: '1000ms',
+        opacity: textOpacity.value,
       },
     },
     children: [MenuButton(), ViewControls([ZoomIn(), FitScreen(), ZoomOut()])],
