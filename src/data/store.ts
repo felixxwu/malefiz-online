@@ -65,9 +65,11 @@ const onChange: Type<keyof typeof init> = {
   },
   onlinePlayers(value) {
     for (const player of store.gameState!.players) {
-      document.getElementById('p' + player.id)!.style.opacity = value.includes(player.id)
-        ? '1'
-        : '0.3'
+      for (const position of player.positions) {
+        document.getElementById('p' + position.pieceId)!.style.opacity = value.includes(player.id)
+          ? '1'
+          : '0.3'
+      }
     }
   },
 }

@@ -18,10 +18,13 @@ async function handleOnClick(id: string) {
     if (!data) return
     const newGameStatePlayers: Partial<GameState> = {
       players: data.players.map(player => {
+        const pieceIdToMove = player.positions[0].pieceId
         if (getUserData().playerToControl === player.id) {
           return {
             ...player,
-            positions: [{ pieceId: player.positions[0].pieceId, circleId: id }],
+            positions: player.positions
+              .filter(p => p.pieceId !== pieceIdToMove)
+              .concat({ pieceId: pieceIdToMove, circleId: id }),
           }
         } else {
           return player

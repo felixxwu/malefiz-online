@@ -20,7 +20,7 @@ export const homePageMap: Map = [
   },
   {
     id: '2',
-    position: { x: 1, y: 2 },
+    position: { x: 2, y: 1 },
     neighbours: ['1'],
     text: `Play AI`,
     fontSize: 13,

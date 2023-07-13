@@ -17,7 +17,7 @@ export function getDistance(ev1: PointerEvent, ev2: PointerEvent) {
 export const evCache: PointerEvent[] = []
 
 export function addEventListeners() {
-  svg!.addEventListener('resize', resize)
+  window!.addEventListener('resize', resize)
 
   addPointerEventListeners()
   addWheelEventListeners()

@@ -13,9 +13,9 @@ if (gameId) {
   let firstDataLoad = true
   onSnapshot(doc(db, 'games', gameId), doc => {
     store.gameState = doc.data() as GameState
-    store.currentMap = store.gameState.map
     if (firstDataLoad) {
       firstDataLoad = false
+      store.currentMap = store.gameState.map
       introSequence()
       joinGame(gameId!)
     }
