@@ -8,6 +8,7 @@ import { el, elNS } from '../utils/el'
 import { textOpacity } from '../data/cssVars'
 import { Map } from '../types/mapTypes'
 import { getUserData } from '../data/userId'
+import { getNextPlayer } from '../game'
 
 async function handleOnClick(id: string) {
   if (store.gameId === null) return
@@ -16,6 +17,7 @@ async function handleOnClick(id: string) {
     const document = await transaction.get(doc(db, 'games', store.gameId!))
     const data = document.data() as GameState
     if (!data) return
+    if (data.playerTurn !== getUserData().playerToControl) return
     const newGameStatePlayers: Partial<GameState> = {
       players: data.players.map(player => {
         const pieceIdToMove = player.positions[0].pieceId
@@ -30,6 +32,7 @@ async function handleOnClick(id: string) {
           return player
         }
       }),
+      playerTurn: getNextPlayer(),
     }
     transaction.update(doc(db, 'games', store.gameId!), newGameStatePlayers)
   })

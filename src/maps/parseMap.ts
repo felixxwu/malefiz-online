@@ -45,6 +45,7 @@ export function parseMap(template: string): GameState {
       .filter(p => p.positions.length > 0),
     created: Date.now(),
     users: [],
+    playerTurn: '1',
   }
   return gameState
 }

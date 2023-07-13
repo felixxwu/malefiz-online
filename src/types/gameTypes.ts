@@ -17,4 +17,5 @@ export type GameState = {
   players: Player[]
   created: number
   users: User[]
+  playerTurn: string
 }
