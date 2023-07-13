@@ -1,7 +1,8 @@
+import { colour1 } from './data/cssVars'
 import { elNS } from './utils/el'
 
 function createIcon(path: string) {
-  return (size: number = 24, colour: string = 'var(--colour1)') =>
+  return (size: number = 24, colour: string = colour1.value) =>
     elNS('svg')({
       readonlyAttributes: { viewBox: `0 0 24 24`, width: `${size}`, height: `${size}` },
       children: [

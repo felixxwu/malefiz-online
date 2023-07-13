@@ -1,14 +1,15 @@
 import { drawMap } from './renderers/drawMap'
 import { addEventListeners } from './listeners'
 import { resize } from './utils/resize'
-import './firebase'
+import './config/firebase'
 
 import { doc, onSnapshot } from 'firebase/firestore'
-import { db } from './firebase'
+import { db } from './config/firebase'
 import { GameState } from './game'
 import { store } from './data/store'
 import { renderOverlay } from './overlay'
 import { fitToScreen, zoomIntoCircle } from './utils/zoom'
+import { colour1 } from './data/cssVars'
 
 let firstDataLoad = true
 
@@ -18,7 +19,9 @@ renderOverlay()
 drawMap(store.currentMap)
 zoomIntoCircle(store.currentMap[0], { transition: 0 })
 
-document.body.style.backgroundColor = 'var(--colour1)'
+setTimeout(() => {
+  document.body.style.backgroundColor = colour1.value
+}, 1)
 
 const urlParams = new URLSearchParams(window.location.search)
 const gameId = urlParams.get('game')

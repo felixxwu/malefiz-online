@@ -68,6 +68,7 @@ export const store: typeof init = new Proxy(init, {
     return target[key]
   },
   set<T extends typeof store>(target: T, key: keyof T, value: T[keyof T]) {
+    // console.log('store', key, '=', value)
     target[key] = value
     onChange[key]?.(value)
     return true

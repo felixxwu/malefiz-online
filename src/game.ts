@@ -1,7 +1,7 @@
 import { addDoc, collection } from 'firebase/firestore'
 import { Map } from './types/mapTypes'
 import { map1 } from './maps/map1'
-import { db } from './firebase'
+import { db } from './config/firebase'
 
 type Player = {
   id: string

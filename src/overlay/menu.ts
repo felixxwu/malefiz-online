@@ -1,14 +1,18 @@
 import qrcode from 'qrcode-generator'
-import { menuOpacity, menuPointerEvents } from '../data/cssVars'
+import { colour1, menuOpacity, menuPointerEvents } from '../data/cssVars'
 import { el } from '../utils/el'
 import { crossIcon } from '../icons'
 import { store } from '../data/store'
 import { zoomIntoCircle } from '../utils/zoom'
 
-export function createMenu() {
+const menuTransition = 300
+
+export function Menu() {
   const qr = qrcode(0, 'L')
   qr.addData(window.location.href)
   qr.make()
+
+  const closeMenu = () => (store.menuOpen = false)
 
   return el('div')({
     attributes: {
@@ -20,31 +24,18 @@ export function createMenu() {
         height: '100%',
         backgroundColor: 'rgba(0,0,0,0.5)',
         backdropFilter: `blur(20px)`,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: '30px',
         opacity: menuOpacity.value,
         pointerEvents: menuPointerEvents.value,
-        transition: '500ms',
+        transition: `${menuTransition}ms`,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
       },
+      onclick: closeMenu,
     },
     children: [
-      el('div')({
-        attributes: {
-          style: {
-            borderRadius: '5px',
-            backgroundColor: 'var(--colour1)',
-            padding: '20px',
-            maxWidth: '280px',
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '10px',
-          },
-        },
-        children: [
+      StopPropagationWrapper([
+        InvitePlayers([
           el('div')({ attributes: { innerHTML: 'Invite Players:', style: { color: 'black' } } }),
           el('div')({
             attributes: {
@@ -59,51 +50,95 @@ export function createMenu() {
               style: { color: 'black', wordBreak: 'break-all' },
             },
           }),
-        ],
-      }),
-      el('div')({
-        attributes: {
-          style: {
-            width: '200px',
-            height: '40px',
-            borderRadius: '5px',
-            backgroundColor: 'var(--colour1)',
-            cursor: 'pointer',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          },
-          onclick: () => {
-            store.menuOpen = false
-            zoomIntoCircle(store.currentMap[0], { transition: 1000 })
-            setTimeout(() => {
-              document.body.style.backgroundColor = 'black'
-              window.location.href = '/'
-            }, 1000)
-          },
-        },
-        children: [
+        ]),
+        LeaveGame([
           el('div')({ attributes: { innerHTML: 'Leave Game', style: { color: 'black' } } }),
-        ],
-      }),
-      el('div')({
-        attributes: {
-          style: {
-            width: '40px',
-            height: '40px',
-            borderRadius: '50%',
-            backgroundColor: 'var(--colour1)',
-            cursor: 'pointer',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          },
-          onclick: () => {
-            store.menuOpen = false
-          },
-        },
-        children: [crossIcon(15, 'black')],
-      }),
+        ]),
+        CloseMenu([crossIcon(15, 'black')]),
+      ]),
     ],
+  })
+}
+
+function StopPropagationWrapper(children: Node[]) {
+  return el('div')({
+    attributes: {
+      onclick: (e: Event) => e.stopPropagation(),
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '30px',
+      },
+    },
+    children,
+  })
+}
+
+function InvitePlayers(children: Node[]) {
+  return el('div')({
+    attributes: {
+      style: {
+        borderRadius: '5px',
+        backgroundColor: colour1.value,
+        padding: '20px',
+        maxWidth: '280px',
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
+      },
+    },
+    children,
+  })
+}
+
+function LeaveGame(children: Node[]) {
+  const leaveGame = () => {
+    store.menuOpen = false
+    zoomIntoCircle(store.currentMap[0], { transition: 1000 })
+    setTimeout(() => {
+      document.body.style.backgroundColor = 'black'
+      window.location.href = '/'
+    }, 1000)
+  }
+
+  return el('div')({
+    attributes: {
+      style: {
+        width: '200px',
+        height: '40px',
+        borderRadius: '5px',
+        backgroundColor: colour1.value,
+        cursor: 'pointer',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      onclick: leaveGame,
+    },
+    children,
+  })
+}
+
+function CloseMenu(children: Node[]) {
+  const closeMenu = () => (store.menuOpen = false)
+
+  return el('div')({
+    attributes: {
+      style: {
+        width: '40px',
+        height: '40px',
+        borderRadius: '50%',
+        backgroundColor: colour1.value,
+        cursor: 'pointer',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      onclick: closeMenu,
+    },
+    children,
   })
 }

@@ -18,7 +18,7 @@ const overlayButtonStyles: Partial<CSSStyleDeclaration> = {
 
 const edgeMargin = 20
 
-export function createButtons() {
+export function OverlayButtons() {
   return el('div')({
     attributes: {
       id: 'overlay',
@@ -31,67 +31,80 @@ export function createButtons() {
         pointerEvents: 'none',
       },
     },
-    children: [
-      el('div')({
-        attributes: {
-          style: {
-            ...overlayButtonStyles,
-            position: 'absolute',
-            top: `${edgeMargin}px`,
-            left: `${edgeMargin}px`,
-            pointerEvents: 'all',
-            display: menuButtonEnabled.value,
-          },
-          onclick: () => {
-            store.menuOpen = true
-          },
-        },
-        children: [menuIcon(15)],
-      }),
-      el('div')({
-        attributes: {
-          style: {
-            position: 'absolute',
-            bottom: `${edgeMargin}px`,
-            right: `${edgeMargin}px`,
-            pointerEvents: 'all',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '10px',
-          },
-        },
-        children: [
-          el('div')({
-            attributes: {
-              style: overlayButtonStyles,
-              onclick: () => {
-                store.svgTransition = 200
-                store.svgZoom *= 1.2
-              },
-            },
-            children: [plusIcon(15)],
-          }),
-          el('div')({
-            attributes: {
-              style: overlayButtonStyles,
-              onclick: () => {
-                store.currentMap && fitToScreen(store.currentMap, {})
-              },
-            },
-            children: [fullScreenIcon(15)],
-          }),
-          el('div')({
-            attributes: {
-              style: overlayButtonStyles,
-              onclick: () => {
-                store.svgTransition = 200
-                store.svgZoom *= 0.8
-              },
-            },
-            children: [minusIcon(15)],
-          }),
-        ],
-      }),
-    ],
+    children: [MenuButton(), ViewControls([ZoomIn(), FitScreen(), ZoomOut()])],
+  })
+}
+
+function MenuButton() {
+  return el('div')({
+    attributes: {
+      style: {
+        ...overlayButtonStyles,
+        position: 'absolute',
+        top: `${edgeMargin}px`,
+        left: `${edgeMargin}px`,
+        pointerEvents: 'all',
+        display: menuButtonEnabled.value,
+      },
+      onclick: () => {
+        store.menuOpen = true
+      },
+    },
+    children: [menuIcon(15)],
+  })
+}
+
+function ViewControls(children: Node[]) {
+  return el('div')({
+    attributes: {
+      style: {
+        position: 'absolute',
+        bottom: `${edgeMargin}px`,
+        right: `${edgeMargin}px`,
+        pointerEvents: 'all',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
+      },
+    },
+    children,
+  })
+}
+
+function ZoomIn() {
+  return el('div')({
+    attributes: {
+      style: overlayButtonStyles,
+      onclick: () => {
+        store.svgTransition = 200
+        store.svgZoom *= 1.2
+      },
+    },
+    children: [plusIcon(15)],
+  })
+}
+
+function FitScreen() {
+  return el('div')({
+    attributes: {
+      style: overlayButtonStyles,
+      onclick: () => {
+        store.currentMap && fitToScreen(store.currentMap, {})
+      },
+    },
+    children: [fullScreenIcon(15)],
+  })
+}
+
+function ZoomOut() {
+  return el('div')({
+    attributes: {
+      style: overlayButtonStyles,
+      onclick: () => {
+        store.svgTransition = 200
+        store.svgZoom *= 0.8
+      },
+    },
+    children: [minusIcon(15)],
   })
 }
