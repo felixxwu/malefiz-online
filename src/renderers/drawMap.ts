@@ -1,25 +1,30 @@
 import { doc, updateDoc } from 'firebase/firestore'
 import { CONSTS } from '../data/consts'
-import { GameState } from '../game'
+import { GameState } from '../types/gameTypes'
 import { mapGroup } from '../utils/getSvgGroup'
 import { db } from '../config/firebase'
 import { store } from '../data/store'
 import { el, elNS } from '../utils/el'
 import { textOpacity } from '../data/cssVars'
 import { Map } from '../types/mapTypes'
+import { getUserData } from '../data/userId'
 
 async function handleOnClick(id: string) {
   if (store.gameId === null) return
 
   const newGame: Partial<GameState> = {
-    players: [
-      {
-        id: '1',
-        colour: 'red',
-        positions: [{ pieceId: '1', circleId: id }],
-      },
-    ],
+    players: store.gameState!.players.map(player => {
+      if (getUserData().playerToControl === player.id) {
+        return {
+          ...player,
+          positions: [{ pieceId: player.positions[0].pieceId, circleId: id }],
+        }
+      } else {
+        return player
+      }
+    }),
   }
+
   await updateDoc(doc(db, 'games', store.gameId), newGame)
 }
 
@@ -110,7 +115,7 @@ function drawLinesBetweenCircles(map: Map) {
             x2: `${neighbour.position.x * 100}`,
             y2: `${neighbour.position.y * 100}`,
             stroke: 'black',
-            'stroke-width': `${CONSTS.PATH_STROKE_WIDTH + 2}`,
+            'stroke-width': `${CONSTS.PATH_STROKE_WIDTH}`,
           },
         })
       )

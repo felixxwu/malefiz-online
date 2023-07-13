@@ -1,4 +1,4 @@
-import { GameState } from '../game'
+import { GameState } from '../types/gameTypes'
 import { playersGroup } from '../utils/getSvgGroup'
 
 export function updatePlayers(gameState: GameState) {
@@ -14,7 +14,7 @@ export function updatePlayers(gameState: GameState) {
         positionCircle.setAttribute('id', 'p' + position.pieceId)
         positionCircle.setAttribute('cx', (pos!.x * 100).toString())
         positionCircle.setAttribute('cy', (pos!.y * 100).toString())
-        positionCircle.setAttribute('r', '32')
+        positionCircle.setAttribute('r', '20')
         positionCircle.setAttribute('fill', player.colour)
         positionCircle.style.transition = 'all 0.5s'
         positionCircle.style.filter = 'drop-shadow(0 0 3px rgba(0,0,0,0.3))'

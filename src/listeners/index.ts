@@ -2,6 +2,7 @@ import { svg } from '../utils/getSvgGroup'
 import { resize } from '../utils/resize'
 import { addPointerEventListeners } from './addPointerEventListeners'
 import { addWheelEventListeners } from './addWheelEventListeners'
+import { beforeunload } from './beforeunload'
 
 export function removeEvent(event: PointerEvent) {
   // Remove this event from the target's cache
@@ -20,6 +21,7 @@ export function addEventListeners() {
 
   addPointerEventListeners()
   addWheelEventListeners()
+  beforeunload()
 
   svg!.addEventListener('contextmenu', event => event.preventDefault())
 }

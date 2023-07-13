@@ -1,8 +1,8 @@
 import { drawMap } from '../renderers/drawMap'
 import { menuButtonEnabled, menuOpacity, menuPointerEvents, textOpacity } from './cssVars'
-import { GameState } from '../game'
+import { GameState } from '../types/gameTypes'
 import { svg, translateGroup, zoomGroup } from '../utils/getSvgGroup'
-import { menuMap } from '../maps/menu'
+import { homePageMap } from '../maps/home'
 import { updatePlayers } from '../renderers/drawPlayers'
 
 const init = {
@@ -20,9 +20,11 @@ const init = {
   gameState: <GameState | null>null,
   oldGameState: <GameState | null>null,
   gameId: <string | null>null,
-  currentMap: menuMap,
+  currentMap: homePageMap,
   textOpacity: 0,
   menuOpen: false,
+  userId: <string | null>null,
+  onlinePlayers: <string[]>[],
 }
 
 const onChange: Type<keyof typeof init> = {
@@ -60,6 +62,13 @@ const onChange: Type<keyof typeof init> = {
   menuOpen(value) {
     menuOpacity.set(value ? '1' : '0')
     menuPointerEvents.set(value ? 'all' : 'none')
+  },
+  onlinePlayers(value) {
+    for (const player of store.gameState!.players) {
+      document.getElementById('p' + player.id)!.style.opacity = value.includes(player.id)
+        ? '1'
+        : '0.3'
+    }
   },
 }
 

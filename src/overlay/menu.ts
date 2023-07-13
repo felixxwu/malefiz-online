@@ -3,7 +3,7 @@ import { colour1, menuOpacity, menuPointerEvents } from '../data/cssVars'
 import { el } from '../utils/el'
 import { crossIcon } from '../icons'
 import { store } from '../data/store'
-import { zoomIntoCircle } from '../utils/zoom'
+import { leaveGame } from '../game'
 
 const menuTransition = 300
 
@@ -95,15 +95,6 @@ function InvitePlayers(children: Node[]) {
 }
 
 function LeaveGame(children: Node[]) {
-  const leaveGame = () => {
-    store.menuOpen = false
-    zoomIntoCircle(store.currentMap[0], { transition: 1000 })
-    setTimeout(() => {
-      document.body.style.backgroundColor = 'black'
-      window.location.href = '/'
-    }, 1000)
-  }
-
   return el('div')({
     attributes: {
       style: {
