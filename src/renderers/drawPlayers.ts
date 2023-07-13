@@ -1,7 +1,8 @@
 import { GameState } from '../types/gameTypes'
+import { elNS } from '../utils/el'
 import { playersGroup } from '../utils/getSvgGroup'
 
-export function updatePlayers(gameState: GameState) {
+export function drawPlayers(gameState: GameState) {
   for (const player of gameState.players) {
     for (const position of player.positions) {
       const pos = gameState.map.find(circle => circle.id === position.circleId)!.position
@@ -10,14 +11,21 @@ export function updatePlayers(gameState: GameState) {
         existingPiece.setAttribute('cx', (pos!.x * 100).toString())
         existingPiece.setAttribute('cy', (pos!.y * 100).toString())
       } else {
-        const positionCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
-        positionCircle.setAttribute('id', 'p' + position.pieceId)
-        positionCircle.setAttribute('cx', (pos!.x * 100).toString())
-        positionCircle.setAttribute('cy', (pos!.y * 100).toString())
-        positionCircle.setAttribute('r', '20')
-        positionCircle.setAttribute('fill', player.colour)
-        positionCircle.style.transition = 'all 0.5s'
-        positionCircle.style.filter = 'drop-shadow(0 0 3px rgba(0,0,0,0.3))'
+        const positionCircle = elNS('circle')({
+          attributes: {
+            id: 'p' + position.pieceId,
+            style: {
+              transition: 'all 0.5s',
+              filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.3))',
+            },
+          },
+          readonlyAttributes: {
+            cx: (pos!.x * 100).toString(),
+            cy: (pos!.y * 100).toString(),
+            r: '20',
+            fill: player.colour,
+          },
+        })
         playersGroup!.appendChild(positionCircle)
       }
     }

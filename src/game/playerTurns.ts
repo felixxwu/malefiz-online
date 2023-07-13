@@ -1,4 +1,5 @@
 import { store } from '../data/store'
+import { getUserData } from '../data/userId'
 
 export function getNextPlayer(): string {
   if (!store.gameState) return '1'
@@ -8,4 +9,9 @@ export function getNextPlayer(): string {
   )
   const nextPlayerIndex = (currentPlayerIndex + 1) % store.gameState.players.length
   return store.gameState.players[nextPlayerIndex].id!
+}
+
+export function isMyTurn(): boolean {
+  if (!store.gameState) return false
+  return store.gameState.playerTurn === getUserData().playerToControl
 }

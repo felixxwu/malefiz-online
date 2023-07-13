@@ -22,7 +22,7 @@ export function setup() {
 
 export function introSequence() {
   setTimeout(() => {
-    fitToScreen(store.currentMap, { transition: 1000, translateDelay: 800 })
+    fitToScreen(store.currentMap, { transition: 1300, translateDelay: 1200 })
     store.textOpacity = 1
   }, 100)
 }

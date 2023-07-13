@@ -3,7 +3,8 @@ import { menuButtonEnabled, menuOpacity, menuPointerEvents, textOpacity } from '
 import { GameState } from '../types/gameTypes'
 import { svg, translateGroup, zoomGroup } from '../utils/getSvgGroup'
 import { homePageMap } from '../maps/home'
-import { updatePlayers } from '../renderers/drawPlayers'
+import { drawPlayers } from '../renderers/drawPlayers'
+import { drawHud } from '../renderers/drawHud'
 
 const init = {
   mouseDownData: <
@@ -44,12 +45,13 @@ const onChange: Type<keyof typeof init> = {
     zoomGroup!.style.transformOrigin = `50% 50%`
   },
   svgTransition(value) {
-    translateGroup!.style.transition = `all ${value}ms`
-    zoomGroup!.style.transition = `all ${value}ms`
+    translateGroup!.style.transition = `all ${value}ms cubic-bezier(0.65, 0, 0.35, 1) `
+    zoomGroup!.style.transition = `all ${value}ms cubic-bezier(0.65, 0, 0.35, 1) `
   },
   gameState(value) {
     if (!value) return
-    updatePlayers(value)
+    drawPlayers(value)
+    drawHud()
   },
   gameId(value) {
     menuButtonEnabled.set(value ? 'flex' : 'none')
@@ -72,6 +74,9 @@ const onChange: Type<keyof typeof init> = {
           : '0.3'
       }
     }
+  },
+  pieceSelected() {
+    drawHud()
   },
 }
 

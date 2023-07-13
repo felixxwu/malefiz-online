@@ -2,7 +2,7 @@ import { menuButtonEnabled, textOpacity } from '../data/cssVars'
 import { el } from '../utils/el'
 import { fullScreenIcon, menuIcon, minusIcon, plusIcon } from '../icons'
 import { store } from '../data/store'
-import { fitToScreen } from '../utils/zoom'
+import { fitToScreen, zoomIn, zoomOut } from '../utils/zoom'
 
 const overlayButtonStyles: Partial<CSSStyleDeclaration> = {
   width: '40px',
@@ -77,10 +77,7 @@ function ZoomIn() {
   return el('div')({
     attributes: {
       style: overlayButtonStyles,
-      onclick: () => {
-        store.svgTransition = 200
-        store.svgZoom *= 1.2
-      },
+      onclick: zoomIn,
     },
     children: [plusIcon(15)],
   })
@@ -102,10 +99,7 @@ function ZoomOut() {
   return el('div')({
     attributes: {
       style: overlayButtonStyles,
-      onclick: () => {
-        store.svgTransition = 200
-        store.svgZoom *= 0.8
-      },
+      onclick: zoomOut,
     },
     children: [minusIcon(15)],
   })

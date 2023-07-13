@@ -69,3 +69,13 @@ export async function zoomIntoCircle(
     store.svgZoom = longestScreenLength / CONSTS.CIRCLE_RADIUS
   }, zoomDelay)
 }
+
+export function zoomIn() {
+  store.svgTransition = 300
+  store.svgZoom *= 1.2
+}
+
+export function zoomOut() {
+  store.svgTransition = 300
+  store.svgZoom *= 0.8
+}

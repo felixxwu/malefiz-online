@@ -36,7 +36,7 @@ export async function joinGame(gameId: string) {
   // keep user online
   setInterval(async () => {
     updateLastOnline(Date.now())
-  }, 5000 + Math.random() * 1000)
+  }, 5000)
 
   // check for offline players
   setInterval(() => {

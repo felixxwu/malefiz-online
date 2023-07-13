@@ -1,42 +1,9 @@
-import { doc, runTransaction } from 'firebase/firestore'
 import { CONSTS } from '../data/consts'
-import { GameState } from '../types/gameTypes'
 import { mapGroup } from '../utils/getSvgGroup'
-import { db } from '../config/firebase'
-import { store } from '../data/store'
 import { el, elNS } from '../utils/el'
 import { textOpacity } from '../data/cssVars'
 import { Map } from '../types/mapTypes'
-import { getUserData } from '../data/userId'
-import { getNextPlayer } from '../game/getNextPlayer'
-
-async function handleOnClick(id: string) {
-  if (store.gameId === null) return
-
-  runTransaction(db, async transaction => {
-    const document = await transaction.get(doc(db, 'games', store.gameId!))
-    const data = document.data() as GameState
-    if (!data) return
-    if (data.playerTurn !== getUserData().playerToControl) return
-    const newGameStatePlayers: Partial<GameState> = {
-      players: data.players.map(player => {
-        const pieceIdToMove = player.positions[0].pieceId
-        if (getUserData().playerToControl === player.id) {
-          return {
-            ...player,
-            positions: player.positions
-              .filter(p => p.pieceId !== pieceIdToMove)
-              .concat({ pieceId: pieceIdToMove, circleId: id }),
-          }
-        } else {
-          return player
-        }
-      }),
-      playerTurn: getNextPlayer(),
-    }
-    transaction.update(doc(db, 'games', store.gameId!), newGameStatePlayers)
-  })
-}
+import { handleCircleClick } from '../game/handleCircleClick'
 
 export function drawMap(map: Map) {
   mapGroup!.innerHTML = ''
@@ -52,7 +19,7 @@ function drawCircles(map: Map) {
         attributes: {
           id: circle.id,
           style: { cursor: 'pointer' },
-          onclick: circle.onClick ?? (() => handleOnClick(circle.id)),
+          onclick: circle.onClick ?? (() => handleCircleClick(circle.id)),
         },
         readonlyAttributes: {
           cx: `${circle.position.x * 100}`,
