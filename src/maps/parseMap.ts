@@ -34,10 +34,10 @@ export function parseMap(template: string): GameState {
   const gameState: GameState = {
     map: createdMap,
     players: playerCoordinates
-      .map(p => ({
-        id: p.id,
-        colour: p.colour,
-        positions: p.coords.map(c => ({
+      .map(player => ({
+        id: player.id,
+        colour: player.colour,
+        positions: player.coords.map(c => ({
           pieceId: `${pieceId++}`,
           circleId: findCircle(c.x, c.y, circleCoordinates)!.id,
         })),
@@ -46,6 +46,7 @@ export function parseMap(template: string): GameState {
     created: Date.now(),
     users: [],
     playerTurn: '1',
+    dieRoll: 1,
   }
   return gameState
 }

@@ -18,4 +18,5 @@ export type GameState = {
   created: number
   users: User[]
   playerTurn: string
+  dieRoll: number | null
 }

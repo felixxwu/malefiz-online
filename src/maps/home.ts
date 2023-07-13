@@ -1,5 +1,5 @@
 import { Map } from '../types/mapTypes'
-import { createGame } from '../game'
+import { createGame } from '../game/createGame'
 import { store } from '../data/store'
 import { zoomIntoCircle } from '../utils/zoom'
 

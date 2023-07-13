@@ -1,10 +1,4 @@
-type RecursivePartial<T> = {
-  [P in keyof T]?: T[P] extends (infer U)[]
-    ? RecursivePartial<U>[]
-    : T[P] extends object | undefined
-    ? RecursivePartial<T[P]>
-    : T[P]
-}
+import { RecursivePartial } from '../types/recursivePartial'
 
 export function el<T extends keyof HTMLElementTagNameMap>(tag: T) {
   return ({

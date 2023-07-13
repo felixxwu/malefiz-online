@@ -1,6 +1,5 @@
 import { svg, translateGroup } from '../utils/getSvgGroup'
 import { store } from '../data/store'
-import { evCache, getDistance, removeEvent } from '.'
 
 export function addPointerEventListeners() {
   svg!.addEventListener('pointerdown', event => {
@@ -50,4 +49,16 @@ export function addPointerEventListeners() {
     translateGroup!.style.pointerEvents = 'all'
     removeEvent(event)
   }
+}
+
+function getDistance(ev1: PointerEvent, ev2: PointerEvent) {
+  return Math.sqrt(Math.pow(ev1.clientX - ev2.clientX, 2) + Math.pow(ev1.clientY - ev2.clientY, 2))
+}
+
+const evCache: PointerEvent[] = []
+
+function removeEvent(event: PointerEvent) {
+  // Remove this event from the target's cache
+  const index = evCache.findIndex(cachedEv => cachedEv.pointerId === event.pointerId)
+  evCache.splice(index, 1)
 }

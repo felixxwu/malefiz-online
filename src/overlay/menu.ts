@@ -3,7 +3,7 @@ import { colour1, menuOpacity, menuPointerEvents } from '../data/cssVars'
 import { el } from '../utils/el'
 import { crossIcon } from '../icons'
 import { store } from '../data/store'
-import { leaveGame } from '../game'
+import { leaveGame } from '../game/leaveGame'
 
 const menuTransition = 300
 

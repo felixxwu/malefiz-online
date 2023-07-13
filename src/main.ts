@@ -1,7 +1,7 @@
 import './config/firebase'
 import { doc, onSnapshot } from 'firebase/firestore'
 import { db } from './config/firebase'
-import { joinGame } from './game'
+import { joinGame } from './game/joinGame'
 import { GameState } from './types/gameTypes'
 import { store } from './data/store'
 import { gameId } from './data/gameId'

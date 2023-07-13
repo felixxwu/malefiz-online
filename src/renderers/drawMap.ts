@@ -8,7 +8,7 @@ import { el, elNS } from '../utils/el'
 import { textOpacity } from '../data/cssVars'
 import { Map } from '../types/mapTypes'
 import { getUserData } from '../data/userId'
-import { getNextPlayer } from '../game'
+import { getNextPlayer } from '../game/getNextPlayer'
 
 async function handleOnClick(id: string) {
   if (store.gameId === null) return

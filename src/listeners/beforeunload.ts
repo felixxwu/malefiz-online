@@ -1,4 +1,4 @@
-import { leaveGame } from '../game'
+import { leaveGame } from '../game/leaveGame'
 
 export function beforeunload() {
   window.addEventListener('beforeunload', () => {

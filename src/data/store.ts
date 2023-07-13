@@ -25,6 +25,7 @@ const init = {
   menuOpen: false,
   userId: <string | null>null,
   onlinePlayers: <string[]>[],
+  pieceSelected: <string | null>null,
 }
 
 const onChange: Type<keyof typeof init> = {
