@@ -5,6 +5,8 @@ import { store } from '../data/store'
 import { getUserData } from '../data/userId'
 import { getNextPlayer } from './playerTurns'
 import { getPieceFromCircle } from '../utils/getPieceFromCircle'
+import { getLegalMoves } from './legalMoves'
+import { getCircleFromPiece } from '../utils/getCircleFromPiece'
 
 export async function handleCircleClick(circleId: string) {
   if (store.gameId === null) return
@@ -13,7 +15,11 @@ export async function handleCircleClick(circleId: string) {
   if (pieceId === null) {
     // make move
     if (pieceBelongsToMe(store.pieceSelected)) {
-      await movePiece(store.pieceSelected!, circleId)
+      const circle = getCircleFromPiece(store.pieceSelected!)
+      const legalMoves = getLegalMoves(circle!.id)
+      if (legalMoves.map(circle => circle.id).includes(circleId)) {
+        await movePiece(store.pieceSelected!, circleId)
+      }
     }
     store.pieceSelected = null
   } else {

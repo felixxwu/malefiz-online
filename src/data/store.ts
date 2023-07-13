@@ -5,6 +5,8 @@ import { svg, translateGroup, zoomGroup } from '../utils/getSvgGroup'
 import { homePageMap } from '../maps/home'
 import { drawPlayers } from '../renderers/drawPlayers'
 import { drawHud } from '../renderers/drawHud'
+import { Circle } from '../types/mapTypes'
+import { mapToHashTable } from '../maps/mapToHashTable'
 
 const init = {
   mouseDownData: <
@@ -20,6 +22,7 @@ const init = {
   svgTransition: 0,
   gameState: <GameState | null>null,
   oldGameState: <GameState | null>null,
+  gameStateMapHashed: <{ [key: string]: Circle }>{},
   gameId: <string | null>null,
   currentMap: homePageMap,
   textOpacity: 0,
@@ -52,6 +55,7 @@ const onChange: Type<keyof typeof init> = {
     if (!value) return
     drawPlayers(value)
     drawHud()
+    store.gameStateMapHashed = mapToHashTable(value.map)
   },
   gameId(value) {
     menuButtonEnabled.set(value ? 'flex' : 'none')

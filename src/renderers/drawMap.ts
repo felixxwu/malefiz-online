@@ -33,6 +33,7 @@ function drawCircles(map: Map) {
 
 function drawText(map: Map) {
   for (const circle of map) {
+    // circle.text = circle.id
     if (circle.text) {
       mapGroup!.appendChild(
         elNS('foreignObject')({

@@ -46,7 +46,7 @@ export function parseMap(template: string): GameState {
     created: Date.now(),
     users: [],
     playerTurn: '1',
-    dieRoll: 1,
+    dieRoll: 2,
   }
   return gameState
 }

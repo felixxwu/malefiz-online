@@ -1,5 +1,6 @@
 import { colour1 } from '../data/cssVars'
 import { store } from '../data/store'
+import { getLegalMoves } from '../game/legalMoves'
 import { isMyTurn } from '../game/playerTurns'
 import { elNS } from '../utils/el'
 import { getCircleFromPiece } from '../utils/getCircleFromPiece'
@@ -7,11 +8,40 @@ import { hudGroup } from '../utils/getSvgGroup'
 
 export function drawHud() {
   hudGroup!.innerHTML = ''
-  if (store.pieceSelected !== null && isMyTurn()) {
-    drawIndicatorOverSelectedPiece()
+  if (isMyTurn()) {
+    if (store.pieceSelected === null) {
+      drawIndicatorOverMyPieces()
+    } else {
+      drawIndicatorOverSelectedPiece()
+      drawLegalMoves()
+    }
   }
-  if (store.pieceSelected === null && isMyTurn()) {
-    drawIndicatorOverMyPieces()
+}
+
+function drawLegalMoves() {
+  const circle = getCircleFromPiece(store.pieceSelected!)
+  const legalMoves = getLegalMoves(circle!.id)
+  const myColour = store.gameState!.players.find(
+    player => player.id === store.gameState!.playerTurn
+  )!.colour
+  for (const legalMove of legalMoves) {
+    const x = legalMove.position.x * 100
+    const y = legalMove.position.y * 100
+    hudGroup!.appendChild(
+      elNS('circle')({
+        attributes: {
+          style: {
+            fill: myColour,
+          },
+        },
+        readonlyAttributes: {
+          cx: x.toString(),
+          cy: y.toString(),
+          r: '10',
+          class: 'fadeInAndOut',
+        },
+      })
+    )
   }
 }
 

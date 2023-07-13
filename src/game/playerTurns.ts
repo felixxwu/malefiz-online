@@ -13,5 +13,7 @@ export function getNextPlayer(): string {
 
 export function isMyTurn(): boolean {
   if (!store.gameState) return false
-  return store.gameState.playerTurn === getUserData().playerToControl
+  const userData = getUserData()
+  if (!userData) return false
+  return store.gameState.playerTurn === userData.playerToControl
 }
