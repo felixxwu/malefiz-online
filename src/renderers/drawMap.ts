@@ -1,4 +1,4 @@
-import { doc, updateDoc } from 'firebase/firestore'
+import { doc, runTransaction } from 'firebase/firestore'
 import { CONSTS } from '../data/consts'
 import { GameState } from '../types/gameTypes'
 import { mapGroup } from '../utils/getSvgGroup'
@@ -12,20 +12,24 @@ import { getUserData } from '../data/userId'
 async function handleOnClick(id: string) {
   if (store.gameId === null) return
 
-  const newGame: Partial<GameState> = {
-    players: store.gameState!.players.map(player => {
-      if (getUserData().playerToControl === player.id) {
-        return {
-          ...player,
-          positions: [{ pieceId: player.positions[0].pieceId, circleId: id }],
+  runTransaction(db, async transaction => {
+    const document = await transaction.get(doc(db, 'games', store.gameId!))
+    const data = document.data() as GameState
+    if (!data) return
+    const newGameStatePlayers: Partial<GameState> = {
+      players: data.players.map(player => {
+        if (getUserData().playerToControl === player.id) {
+          return {
+            ...player,
+            positions: [{ pieceId: player.positions[0].pieceId, circleId: id }],
+          }
+        } else {
+          return player
         }
-      } else {
-        return player
-      }
-    }),
-  }
-
-  await updateDoc(doc(db, 'games', store.gameId), newGame)
+      }),
+    }
+    transaction.update(doc(db, 'games', store.gameId!), newGameStatePlayers)
+  })
 }
 
 export function drawMap(map: Map) {

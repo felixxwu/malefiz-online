@@ -1,8 +1,9 @@
-import { addDoc, collection, doc, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, doc, runTransaction } from 'firebase/firestore'
 import { map1 } from './maps/map1'
 import { db } from './config/firebase'
 import { store } from './data/store'
 import { zoomIntoCircle } from './utils/zoom'
+import { GameState } from './types/gameTypes'
 
 export async function createGame() {
   const gameId = await addDoc(collection(db, 'games'), map1)
@@ -22,14 +23,20 @@ export async function joinGame(gameId: string) {
 
   if (freePlayers.length === 0) return
 
-  await updateDoc(doc(db, 'games', gameId), {
-    users: gameUsers
-      .filter(u => u.id !== store.userId)
-      .concat({
-        id: store.userId!,
-        playerToControl: freePlayers[0].id,
-        lastOnline: Date.now(),
-      }),
+  await runTransaction(db, async transaction => {
+    const document = await transaction.get(doc(db, 'games', gameId))
+    const data = document.data() as GameState
+    if (!data) return
+    const newGameStateUsers: Partial<GameState> = {
+      users: data.users
+        .filter((user: any) => user.id !== store.userId)
+        .concat({
+          id: store.userId!,
+          playerToControl: freePlayers[0].id,
+          lastOnline: Date.now(),
+        }),
+    }
+    transaction.update(doc(db, 'games', gameId), newGameStateUsers)
   })
 
   // keep user online
@@ -56,13 +63,18 @@ export function leaveGame() {
 
 export function updateLastOnline(time: number) {
   if (!store.gameState || !store.gameId) return
-  updateDoc(doc(db, 'games', store.gameId), {
-    users: store.gameState.users.map(user => {
-      if (user.id === store.userId) {
-        if (user.lastOnline === 0) return user
-        return { ...user, lastOnline: time }
-      }
-      return user
-    }),
+  runTransaction(db, async transaction => {
+    const document = await transaction.get(doc(db, 'games', store.gameId!))
+    const data = document.data() as GameState
+    if (!data) return
+    const newGameStateUsers: Partial<GameState> = {
+      users: data.users.map(user => {
+        if (user.id === store.userId) {
+          return { ...user, lastOnline: time }
+        }
+        return user
+      }),
+    }
+    transaction.update(doc(db, 'games', store.gameId!), newGameStateUsers)
   })
 }
