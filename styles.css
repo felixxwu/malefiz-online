@@ -14,6 +14,8 @@ body {
     color: var(--colour1);
     user-select: none;
     touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
 }
 
 #qrcode rect {
