@@ -11,7 +11,9 @@ export function drawHud() {
   hudGroup!.innerHTML = ''
   if (isMyTurn()) {
     if (store.pieceSelected === null) {
-      drawIndicatorOverMyPieces()
+      if (store.gameState!.dieRoll !== null) {
+        drawIndicatorOverMyPieces()
+      }
     } else {
       const circle = getCircleFromPiece(store.pieceSelected!)!
       const legalMoves = getLegalMoves(circle.id)

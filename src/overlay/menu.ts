@@ -77,6 +77,8 @@ function StopPropagationWrapper(children: Node[]) {
 }
 
 function InvitePlayers(children: Node[]) {
+  if (store.localGame) return el('div')({})
+
   return el('div')({
     attributes: {
       style: {

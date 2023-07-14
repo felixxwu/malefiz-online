@@ -1,18 +1,23 @@
-import { doc, runTransaction } from 'firebase/firestore'
-import { db } from '../config/firebase'
 import { store } from '../data/store'
 import { GameState } from '../types/gameTypes'
 import { updateLastOnline } from './updateLastOnline'
+import { updateGameState } from '../utils/updateGameState'
 
 // assumes we have game in store
 export async function joinGame(gameId?: string) {
   if (!store.gameState) return
 
+  if (gameId) {
+    store.gameId = gameId
+  }
+
   const gameUsers = store.gameState.users
   const gamePlayers = store.gameState.players
   const freePlayers = gamePlayers.filter(
     player =>
-      !gameUsers.filter(u => u.id !== store.userId).find(user => user.playerToControl === player.id)
+      !gameUsers
+        .filter(u => u.id !== store.userId && u.lastOnline > Date.now() - 10000)
+        .find(user => user.playerToControl === player.id)
   )
 
   if (freePlayers.length === 0) return
@@ -27,19 +32,9 @@ export async function joinGame(gameId?: string) {
       }),
   })
 
-  if (store.localGame || gameId === undefined) {
-    store.gameState = {
-      ...store.gameState,
-      ...newGameState(store.gameState),
-    }
-  } else {
-    await runTransaction(db, async transaction => {
-      const document = await transaction.get(doc(db, 'games', gameId))
-      const data = document.data() as GameState
-      if (!data) return
-      transaction.update(doc(db, 'games', gameId), newGameState(data))
-    })
+  updateGameState(newGameState)
 
+  if (!store.localGame) {
     // keep user online
     setInterval(async () => {
       updateLastOnline(Date.now())

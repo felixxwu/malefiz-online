@@ -8,10 +8,10 @@ type Coordinate = {
 }
 
 const players = [
-  { id: '1', colour: 'red' },
-  { id: '2', colour: 'blue' },
-  { id: '3', colour: 'green' },
-  { id: '4', colour: 'yellow' },
+  { id: '1', colour: 'hsl(0 70% 60% / 1)' },
+  { id: '2', colour: 'hsl(240 70% 60% / 1)' },
+  { id: '3', colour: 'hsl(140 70% 60% / 1)' },
+  { id: '4', colour: 'hsl(69 70% 60% / 1)' },
 ]
 
 export function parseMap(template: string): GameState {
@@ -46,7 +46,8 @@ export function parseMap(template: string): GameState {
     created: Date.now(),
     users: [],
     playerTurn: '1',
-    dieRoll: 2,
+    dieRoll: null,
+    gameStateHash: '',
   }
   return gameState
 }

@@ -1,15 +1,19 @@
-import { menuButtonEnabled, textOpacity } from '../data/cssVars'
+import { colour1, textOpacity } from '../data/cssVars'
 import { el } from '../utils/el'
 import { fullScreenIcon, menuIcon, minusIcon, plusIcon } from '../icons'
 import { store } from '../data/store'
 import { fitToScreen, zoomIn, zoomOut } from '../utils/zoom'
+import { rollDie } from '../game/rollDie'
+import { isMyTurn } from '../game/playerTurns'
+
+const buttonSize = 40
 
 const overlayButtonStyles: Partial<CSSStyleDeclaration> = {
-  width: '40px',
-  height: '40px',
-  borderRadius: '50%',
+  width: `${buttonSize}px`,
+  height: `${buttonSize}px`,
+  borderRadius: `${buttonSize / 2}px`,
   backgroundColor: 'black',
-  color: 'white',
+  color: colour1.value,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -33,11 +37,12 @@ export function OverlayButtons() {
         opacity: textOpacity.value,
       },
     },
-    children: [MenuButton(), ViewControls([ZoomIn(), FitScreen(), ZoomOut()])],
+    children: [MenuButton(), ViewControls([ZoomIn(), FitScreen(), ZoomOut()]), RollButton()],
   })
 }
 
 function MenuButton() {
+  if (!store.gameState) return el('div')({})
   return el('div')({
     attributes: {
       style: {
@@ -46,13 +51,50 @@ function MenuButton() {
         top: `${edgeMargin}px`,
         left: `${edgeMargin}px`,
         pointerEvents: 'all',
-        display: menuButtonEnabled.value,
+        display: 'flex',
       },
       onclick: () => {
         store.menuOpen = true
       },
     },
     children: [menuIcon(15)],
+  })
+}
+
+function RollButton() {
+  if (!store.gameState || store.gameState!.dieRoll !== null || !isMyTurn()) return el('div')({})
+  return el('div')({
+    attributes: {
+      style: {
+        position: 'absolute',
+        bottom: `${edgeMargin}px`,
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+      },
+    },
+    children: [
+      el('div')({
+        attributes: {
+          style: {
+            ...overlayButtonStyles,
+            width: '100px',
+            pointerEvents: 'all',
+          },
+          onclick: () => {
+            rollDie()
+          },
+        },
+        children: [
+          el('div')({
+            attributes: {
+              innerHTML: 'Roll',
+              className: 'fadeInAndOut',
+            },
+          }),
+        ],
+      }),
+    ],
   })
 }
 

@@ -1,16 +1,14 @@
 import { drawMap } from '../renderers/drawMap'
-import { menuButtonEnabled, menuOpacity, menuPointerEvents, textOpacity } from './cssVars'
+import { menuOpacity, menuPointerEvents, textOpacity } from './cssVars'
 import { GameState } from '../types/gameTypes'
 import { svg, translateGroup, zoomGroup } from '../utils/getSvgGroup'
 import { homePageMap } from '../maps/home'
-import { drawPlayers } from '../renderers/drawPlayers'
 import { drawHud } from '../renderers/drawHud'
 import { Circle } from '../types/mapTypes'
-import { mapToHashTable } from '../maps/mapToHashTable'
-import { playAiIfApplicable } from '../localgame/playAiIfApplicable'
 import { getCircleFromPiece } from '../utils/getCircleFromPiece'
 import { getLegalMoves } from '../game/legalMoves'
 import { fitToScreen } from '../utils/zoom'
+import { onGameStateChange } from '../game/onGameStateChange'
 
 const init = {
   mouseDownData: <
@@ -25,7 +23,7 @@ const init = {
   svgZoom: 1,
   svgTransition: 0,
   gameState: <GameState | null>null,
-  oldGameState: <GameState | null>null,
+  oldGameStateHash: <string | null>null,
   gameStateMapHashed: <{ [key: string]: Circle }>{},
   gameId: <string | null>null,
   currentMap: homePageMap,
@@ -57,14 +55,10 @@ const onChange: Type<keyof typeof init> = {
     zoomGroup!.style.transition = `all ${value}ms cubic-bezier(0.65, 0, 0.35, 1) `
   },
   gameState(value) {
-    if (!value) return
-    drawPlayers(value)
-    drawHud()
-    store.gameStateMapHashed = mapToHashTable(value.map)
-    playAiIfApplicable()
-  },
-  gameId(value) {
-    menuButtonEnabled.set(value ? 'flex' : 'none')
+    if (store.gameState!.gameStateHash !== store.oldGameStateHash) {
+      onGameStateChange(value)
+      store.oldGameStateHash = store.gameState!.gameStateHash
+    }
   },
   currentMap(value) {
     value && drawMap(value)

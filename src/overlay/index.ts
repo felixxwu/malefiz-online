@@ -2,6 +2,8 @@ import { OverlayButtons } from './buttons'
 import { Menu } from './menu'
 
 export function renderOverlay() {
-  document.body.appendChild(OverlayButtons())
-  document.body.appendChild(Menu())
+  const overlay = document.getElementById('overlay')!
+  overlay.innerHTML = ''
+  overlay.appendChild(OverlayButtons())
+  overlay.appendChild(Menu())
 }

@@ -41,3 +41,29 @@ body {
 .fadeInAndOut {
     animation: fadeInAndOut 1s infinite;
 }
+
+@keyframes rollDie {
+    0% { 
+        opacity: 0;
+        rotate: 360deg;
+        filter: blur(10px);
+        scale: 5;
+        translate: 500px 500px;
+    }
+    30% {
+        opacity: 1;
+        filter: blur(0px);
+        scale: 1;
+    }
+    100% {
+        opacity: 1;
+        rotate: 0deg;
+        filter: blur(0px);
+        scale: 1;
+        translate: 0 0;
+    }
+}
+
+.dieRoll {
+    animation: rollDie 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+}

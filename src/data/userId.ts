@@ -15,3 +15,7 @@ export function initUserId() {
 export function getUserData(): User {
   return store.gameState!.users.find(user => user.id === store.userId)!
 }
+
+export function currentPlayer() {
+  return store.gameState!.players.find(player => player.id === store.gameState!.playerTurn)!
+}
