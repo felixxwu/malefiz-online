@@ -7,7 +7,15 @@ import { rollDie } from '../game/rollDie'
 
 export async function playAiIfApplicable() {
   if (!canAiPlay()) return
-  await sleep(1300)
+  await sleep(1000)
+  if (!canAiPlay()) return
+
+  if (store.gameState!.dieRoll === null) {
+    await rollDie()
+    return
+  }
+
+  await sleep(1000)
   if (!canAiPlay()) return
 
   const currentPlayer = store.gameState!.playerTurn
@@ -15,7 +23,6 @@ export async function playAiIfApplicable() {
     player => player.id === currentPlayer
   )!.positions
   const randomPiece = playerPieces[Math.floor(Math.random() * playerPieces.length)]
-  await rollDie()
   const legalMoves = getLegalMoves(randomPiece.circleId)
   const randomMove = legalMoves[Math.floor(Math.random() * legalMoves.length)]
   movePiece(randomPiece.pieceId, randomMove.id)
