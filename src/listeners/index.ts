@@ -1,5 +1,6 @@
 import { svg } from '../utils/getSvgGroup'
 import { resize } from '../utils/resize'
+import { addBgClickListener } from './addBgClickListener'
 import { addKeydownListeners } from './addKeydownListeners'
 import { addPointerEventListeners } from './addPointerEventListeners'
 import { addWheelEventListeners } from './addWheelEventListeners'
@@ -10,6 +11,7 @@ export function addEventListeners() {
   addPointerEventListeners()
   addWheelEventListeners()
   addKeydownListeners()
+  addBgClickListener()
   beforeunload()
   svg!.addEventListener('contextmenu', event => event.preventDefault())
 }

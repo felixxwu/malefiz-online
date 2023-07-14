@@ -5,7 +5,7 @@ import { GameState } from '../types/gameTypes'
 import { updateLastOnline } from './updateLastOnline'
 
 // assumes we have game in store
-export async function joinGame(gameId: string) {
+export async function joinGame(gameId?: string) {
   if (!store.gameState) return
 
   const gameUsers = store.gameState.users
@@ -17,31 +17,39 @@ export async function joinGame(gameId: string) {
 
   if (freePlayers.length === 0) return
 
-  await runTransaction(db, async transaction => {
-    const document = await transaction.get(doc(db, 'games', gameId))
-    const data = document.data() as GameState
-    if (!data) return
-    const newGameStateUsers: Partial<GameState> = {
-      users: data.users
-        .filter((user: any) => user.id !== store.userId)
-        .concat({
-          id: store.userId!,
-          playerToControl: freePlayers[0].id,
-          lastOnline: Date.now(),
-        }),
-    }
-    transaction.update(doc(db, 'games', gameId), newGameStateUsers)
+  const newGameState = (gameState: GameState): Partial<GameState> => ({
+    users: gameState.users
+      .filter((user: any) => user.id !== store.userId)
+      .concat({
+        id: store.userId!,
+        playerToControl: freePlayers[0].id,
+        lastOnline: Date.now(),
+      }),
   })
 
-  // keep user online
-  setInterval(async () => {
-    updateLastOnline(Date.now())
-  }, 5000)
+  if (store.localGame || gameId === undefined) {
+    store.gameState = {
+      ...store.gameState,
+      ...newGameState(store.gameState),
+    }
+  } else {
+    await runTransaction(db, async transaction => {
+      const document = await transaction.get(doc(db, 'games', gameId))
+      const data = document.data() as GameState
+      if (!data) return
+      transaction.update(doc(db, 'games', gameId), newGameState(data))
+    })
 
-  // check for offline players
-  setInterval(() => {
-    if (!store.gameState) return
-    const onlineUsers = store.gameState.users.filter(user => user.lastOnline > Date.now() - 10000)
-    store.onlinePlayers = onlineUsers.map(user => user.playerToControl)
-  }, 2000)
+    // keep user online
+    setInterval(async () => {
+      updateLastOnline(Date.now())
+    }, 5000)
+
+    // check for offline players
+    setInterval(() => {
+      if (!store.gameState) return
+      const onlineUsers = store.gameState.users.filter(user => user.lastOnline > Date.now() - 10000)
+      store.onlinePlayers = onlineUsers.map(user => user.playerToControl)
+    }, 2000)
+  }
 }

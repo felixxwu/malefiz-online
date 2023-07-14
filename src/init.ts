@@ -5,9 +5,10 @@ import { addEventListeners } from './listeners'
 import { renderOverlay } from './overlay'
 import { drawMap } from './renderers/drawMap'
 import { resize } from './utils/resize'
+import { sleep } from './utils/sleep'
 import { fitToScreen, zoomIntoCircle } from './utils/zoom'
 
-export function setup() {
+export async function setup() {
   resize()
   addEventListeners()
   initUserId()
@@ -15,14 +16,14 @@ export function setup() {
   drawMap(store.currentMap)
   zoomIntoCircle(store.currentMap[0], { transition: 0 })
 
-  setTimeout(() => {
-    document.body.style.backgroundColor = colour1.value
-  }, 1)
+  await sleep(1)
+
+  document.body.style.backgroundColor = colour1.value
 }
 
-export function introSequence() {
-  setTimeout(() => {
-    fitToScreen(store.currentMap, { transition: 1300, translateDelay: 1200 })
-    store.textOpacity = 1
-  }, 100)
+export async function introSequence() {
+  await sleep(100)
+  fitToScreen(store.currentMap, { transition: 1300, translateDelay: 1200 })
+  await sleep(1000)
+  store.textOpacity = 1
 }

@@ -2,6 +2,8 @@ import { Map } from '../types/mapTypes'
 import { createGame } from '../game/createGame'
 import { store } from '../data/store'
 import { zoomIntoCircle } from '../utils/zoom'
+import { startLocalGame } from '../localgame/startLocalGame'
+import { sleep } from '../utils/sleep'
 
 export const homePageMap: Map = [
   {
@@ -10,12 +12,11 @@ export const homePageMap: Map = [
     neighbours: ['2'],
     text: `New Game`,
     fontSize: 13,
-    onClick: () => {
+    onClick: async () => {
       zoomIntoCircle(store.currentMap[0], { transition: 1000 })
       store.textOpacity = 0
-      setTimeout(() => {
-        createGame()
-      }, 800)
+      await sleep(800)
+      createGame()
     },
   },
   {
@@ -24,10 +25,11 @@ export const homePageMap: Map = [
     neighbours: ['1'],
     text: `Play AI`,
     fontSize: 13,
+    onClick: async () => {
+      zoomIntoCircle(store.currentMap[1], { transition: 1000 })
+      store.textOpacity = 0
+      await sleep(800)
+      startLocalGame()
+    },
   },
-  // {
-  //   id: '3',
-  //   position: { x: 6, y: 2 },
-  //   neighbours: ['1', '2'],
-  // },
 ]

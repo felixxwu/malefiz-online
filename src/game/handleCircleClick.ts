@@ -7,12 +7,14 @@ import { getNextPlayer } from './playerTurns'
 import { getPieceFromCircle } from '../utils/getPieceFromCircle'
 import { getLegalMoves } from './legalMoves'
 import { getCircleFromPiece } from '../utils/getCircleFromPiece'
+import { pieceBelongsToMe } from '../utils/pieceBelongsToMe'
 
 export async function handleCircleClick(circleId: string) {
-  if (store.gameId === null) return
-
   const pieceId = getPieceFromCircle(circleId)
-  if (pieceId === null) {
+  if (pieceBelongsToMe(pieceId)) {
+    // select piece
+    store.pieceSelected = pieceId
+  } else {
     // make move
     if (pieceBelongsToMe(store.pieceSelected)) {
       const circle = getCircleFromPiece(store.pieceSelected!)
@@ -22,45 +24,38 @@ export async function handleCircleClick(circleId: string) {
       }
     }
     store.pieceSelected = null
-  } else {
-    // select piece
-    store.pieceSelected = pieceId
   }
 }
 
-async function movePiece(pieceId: string, circleId: string) {
-  await runTransaction(db, async transaction => {
-    const document = await transaction.get(doc(db, 'games', store.gameId!))
-    const data = document.data() as GameState
-    if (!data) return
-    if (data.playerTurn !== getUserData().playerToControl) return
-    const newGameStatePlayers: Partial<GameState> = {
-      players: data.players.map(player => {
-        if (getUserData().playerToControl === player.id) {
-          return {
-            ...player,
-            positions: player.positions
-              .filter(p => p.pieceId !== pieceId)
-              .concat({ pieceId, circleId }),
-          }
-        } else {
-          return player
+export async function movePiece(pieceId: string, circleId: string) {
+  const newGameState = (gameState: GameState): Partial<GameState> => ({
+    players: gameState.players.map(player => {
+      if (store.gameState!.playerTurn === player.id) {
+        return {
+          ...player,
+          positions: player.positions
+            .filter(pos => pos.pieceId !== pieceId)
+            .concat({ pieceId, circleId }),
         }
-      }),
-      playerTurn: getNextPlayer(),
-    }
-    transaction.update(doc(db, 'games', store.gameId!), newGameStatePlayers)
-  })
-}
-
-function pieceBelongsToMe(pieceId: string | null) {
-  if (pieceId === null) return false
-  for (const player of store.gameState!.players) {
-    for (const position of player.positions) {
-      if (position.pieceId === pieceId) {
-        return player.id === getUserData().playerToControl
+      } else {
+        return player
       }
+    }),
+    playerTurn: getNextPlayer(),
+  })
+
+  if (store.localGame) {
+    store.gameState = {
+      ...store.gameState!,
+      ...newGameState(store.gameState!),
     }
+  } else {
+    await runTransaction(db, async transaction => {
+      const document = await transaction.get(doc(db, 'games', store.gameId!))
+      const data = document.data() as GameState
+      if (!data) return
+      if (data.playerTurn !== getUserData().playerToControl) return
+      transaction.update(doc(db, 'games', store.gameId!), newGameState(data))
+    })
   }
-  return false
 }

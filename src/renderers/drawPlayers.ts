@@ -1,3 +1,4 @@
+import { textOpacity } from '../data/cssVars'
 import { GameState } from '../types/gameTypes'
 import { elNS } from '../utils/el'
 import { playersGroup } from '../utils/getSvgGroup'
@@ -17,6 +18,7 @@ export function drawPlayers(gameState: GameState) {
             style: {
               transition: 'all 0.5s',
               filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.3))',
+              opacity: textOpacity.value,
             },
           },
           readonlyAttributes: {

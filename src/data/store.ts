@@ -7,6 +7,7 @@ import { drawPlayers } from '../renderers/drawPlayers'
 import { drawHud } from '../renderers/drawHud'
 import { Circle } from '../types/mapTypes'
 import { mapToHashTable } from '../maps/mapToHashTable'
+import { playAiIfApplicable } from '../localgame/playAiIfApplicable'
 
 const init = {
   mouseDownData: <
@@ -30,6 +31,7 @@ const init = {
   userId: <string | null>null,
   onlinePlayers: <string[]>[],
   pieceSelected: <string | null>null,
+  localGame: false,
 }
 
 const onChange: Type<keyof typeof init> = {
@@ -56,6 +58,7 @@ const onChange: Type<keyof typeof init> = {
     drawPlayers(value)
     drawHud()
     store.gameStateMapHashed = mapToHashTable(value.map)
+    playAiIfApplicable()
   },
   gameId(value) {
     menuButtonEnabled.set(value ? 'flex' : 'none')
