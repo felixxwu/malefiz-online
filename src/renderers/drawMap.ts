@@ -1,8 +1,8 @@
 import { CONSTS } from '../data/consts'
 import { mapGroup } from '../utils/getSvgGroup'
 import { el, elNS } from '../utils/el'
-import { textOpacity } from '../data/cssVars'
-import { Map } from '../types/mapTypes'
+import { colour1, textOpacity } from '../data/cssVars'
+import { Circle, Map } from '../types/mapTypes'
 import { handleCircleClick } from '../game/handleCircleClick'
 import { polygonToXY } from '../utils/polygon'
 
@@ -48,10 +48,14 @@ function drawCircles(map: Map) {
           readonlyAttributes: {
             cx: `${circle.position.x * 100}`,
             cy: `${circle.position.y * 100}`,
-            r: `${CONSTS.CIRCLE_RADIUS * (circle.start ? 1.7 : 1)}`,
+            r: `${CONSTS.CIRCLE_RADIUS}`,
           },
         })
       )
+      if (circle.finish) {
+        mapGroup!.appendChild(FinishCircle(circle, CONSTS.CIRCLE_RADIUS - 5))
+        mapGroup!.appendChild(FinishCircle(circle, CONSTS.CIRCLE_RADIUS - 15))
+      }
     }
   }
 }
@@ -59,9 +63,6 @@ function drawCircles(map: Map) {
 function drawText(map: Map) {
   for (const circle of map) {
     // circle.text = circle.id
-    if (circle.finish) {
-      circle.text = 'F'
-    }
     if (circle.text) {
       mapGroup!.appendChild(
         elNS('foreignObject')({
@@ -127,4 +128,22 @@ function drawLinesBetweenCircles(map: Map) {
       )
     }
   }
+}
+
+function FinishCircle(circle: Circle, radius: number) {
+  return elNS('circle')({
+    attributes: {
+      style: {
+        pointerEvents: 'none',
+        stroke: colour1.value,
+        fill: 'black',
+        strokeWidth: '5',
+      },
+    },
+    readonlyAttributes: {
+      cx: `${circle.position.x * 100}`,
+      cy: `${circle.position.y * 100}`,
+      r: `${radius - 2.5}`,
+    },
+  })
 }
