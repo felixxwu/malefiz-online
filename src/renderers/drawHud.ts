@@ -2,6 +2,7 @@ import { colour1 } from '../data/cssVars'
 import { store } from '../data/store'
 import { getLegalMoves } from '../game/legalMoves'
 import { isMyTurn } from '../game/playerTurns'
+import { Circle } from '../types/mapTypes'
 import { elNS } from '../utils/el'
 import { getCircleFromPiece } from '../utils/getCircleFromPiece'
 import { hudGroup } from '../utils/getSvgGroup'
@@ -12,15 +13,15 @@ export function drawHud() {
     if (store.pieceSelected === null) {
       drawIndicatorOverMyPieces()
     } else {
+      const circle = getCircleFromPiece(store.pieceSelected!)!
+      const legalMoves = getLegalMoves(circle.id)
       drawIndicatorOverSelectedPiece()
-      drawLegalMoves()
+      drawLegalMoves(legalMoves)
     }
   }
 }
 
-function drawLegalMoves() {
-  const circle = getCircleFromPiece(store.pieceSelected!)
-  const legalMoves = getLegalMoves(circle!.id)
+function drawLegalMoves(legalMoves: Circle[]) {
   const myColour = store.gameState!.players.find(
     player => player.id === store.gameState!.playerTurn
   )!.colour

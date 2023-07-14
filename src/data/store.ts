@@ -8,6 +8,9 @@ import { drawHud } from '../renderers/drawHud'
 import { Circle } from '../types/mapTypes'
 import { mapToHashTable } from '../maps/mapToHashTable'
 import { playAiIfApplicable } from '../localgame/playAiIfApplicable'
+import { getCircleFromPiece } from '../utils/getCircleFromPiece'
+import { getLegalMoves } from '../game/legalMoves'
+import { fitToScreen } from '../utils/zoom'
 
 const init = {
   mouseDownData: <
@@ -82,8 +85,16 @@ const onChange: Type<keyof typeof init> = {
       }
     }
   },
-  pieceSelected() {
+  pieceSelected(value) {
     drawHud()
+
+    if (value) {
+      const circle = getCircleFromPiece(store.pieceSelected!)!
+      const legalMoves = getLegalMoves(circle.id)
+      fitToScreen(legalMoves.concat(circle), {})
+    } else {
+      fitToScreen(store.currentMap, {})
+    }
   },
 }
 

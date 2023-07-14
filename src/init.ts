@@ -23,7 +23,7 @@ export async function setup() {
 
 export async function introSequence() {
   await sleep(100)
-  fitToScreen(store.currentMap, { transition: 1300, translateDelay: 1200 })
+  fitToScreen(store.currentMap, { transition: 1300, translateDelay: 600 })
   await sleep(1000)
   store.textOpacity = 1
 }

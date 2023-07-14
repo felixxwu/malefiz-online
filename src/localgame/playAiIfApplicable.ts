@@ -5,7 +5,7 @@ import { isMyTurn } from '../game/playerTurns'
 import { sleep } from '../utils/sleep'
 
 export async function playAiIfApplicable() {
-  await sleep(1000)
+  await sleep(1300)
 
   if (!store.localGame) return
   if (isMyTurn()) return

@@ -1,3 +1,4 @@
+import { CONSTS } from '../data/consts'
 import { textOpacity } from '../data/cssVars'
 import { GameState } from '../types/gameTypes'
 import { elNS } from '../utils/el'
@@ -16,7 +17,7 @@ export function drawPlayers(gameState: GameState) {
           attributes: {
             id: 'p' + position.pieceId,
             style: {
-              transition: 'all 0.5s',
+              transition: `${CONSTS.PLAYER_TRANSITION}ms`,
               filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.3))',
               opacity: textOpacity.value,
             },

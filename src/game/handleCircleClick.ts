@@ -8,6 +8,8 @@ import { getPieceFromCircle } from '../utils/getPieceFromCircle'
 import { getLegalMoves } from './legalMoves'
 import { getCircleFromPiece } from '../utils/getCircleFromPiece'
 import { pieceBelongsToMe } from '../utils/pieceBelongsToMe'
+import { sleep } from '../utils/sleep'
+import { CONSTS } from '../data/consts'
 
 export async function handleCircleClick(circleId: string) {
   const pieceId = getPieceFromCircle(circleId)
@@ -58,4 +60,6 @@ export async function movePiece(pieceId: string, circleId: string) {
       transaction.update(doc(db, 'games', store.gameId!), newGameState(data))
     })
   }
+
+  await sleep(CONSTS.PLAYER_TRANSITION)
 }
