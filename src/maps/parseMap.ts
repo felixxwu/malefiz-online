@@ -18,7 +18,7 @@ const players = [
 export function parseMap(template: string): GameState {
   let pieceId = 0
   const mapGrid = mapStringTo2dArray(template)
-  const circleCoordinates = getCoordinates(mapGrid, ['O', 'F'].concat(players.map(p => p.id)))
+  const circleCoordinates = getCoordinates(mapGrid, ['O', 'F', 'Z'].concat(players.map(p => p.id)))
   const playerCoordinates = players.map(({ id, colour }) => ({
     id,
     colour,
@@ -33,6 +33,7 @@ export function parseMap(template: string): GameState {
     neighbours: c.neighbours,
     start: players.some(p => p.id === c.circle.matchedSymbol),
     finish: c.circle.matchedSymbol === 'F',
+    zoomInPoint: c.circle.matchedSymbol === 'Z',
   }))
   const gameState: GameState = {
     map: createdMap,

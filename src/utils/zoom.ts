@@ -38,14 +38,19 @@ export function fitToScreen(
   }, zoomDelay)
 }
 
-export async function zoomIntoCircle(
-  circle: Circle,
-  {
-    transition,
-    zoomDelay,
-    translateDelay,
-  }: { transition?: number; zoomDelay?: number; translateDelay?: number }
-) {
+export async function zoomIntoCircle({
+  circle,
+  transition,
+  zoomDelay,
+  translateDelay,
+}: {
+  circle?: Circle
+  transition?: number
+  zoomDelay?: number
+  translateDelay?: number
+}) {
+  const circleToZoomInOn = circle ?? store.currentMap.find(circle => circle.zoomInPoint)!
+
   const screenCenterX = window.innerWidth / 2
   const screenCenterY = window.innerHeight / 2
   const longestScreenLength = Math.max(window.innerWidth, window.innerHeight)
@@ -53,8 +58,8 @@ export async function zoomIntoCircle(
   setTimeout(() => {
     store.svgTransition = transition ?? 500
     store.svgTranslation = {
-      x: screenCenterX - circle.position.x * 100,
-      y: screenCenterY - circle.position.y * 100,
+      x: screenCenterX - circleToZoomInOn.position.x * 100,
+      y: screenCenterY - circleToZoomInOn.position.y * 100,
     }
   }, translateDelay)
 

@@ -14,14 +14,12 @@ export async function setup() {
   initUserId()
   renderOverlay()
   drawMap(store.currentMap)
-  zoomIntoCircle(store.currentMap[0], { transition: 0 })
-
   await sleep(1)
-
   document.body.style.backgroundColor = colour1.value
 }
 
 export async function introSequence() {
+  zoomIntoCircle({ transition: 0 })
   await sleep(100)
   fitToScreen(store.currentMap, { transition: 1300, translateDelay: 600 })
   await sleep(1000)
