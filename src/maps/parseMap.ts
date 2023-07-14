@@ -5,6 +5,7 @@ type Coordinate = {
   x: number
   y: number
   id: string
+  matchedSymbol: string
 }
 
 const players = [
@@ -17,7 +18,7 @@ const players = [
 export function parseMap(template: string): GameState {
   let pieceId = 0
   const mapGrid = mapStringTo2dArray(template)
-  const circleCoordinates = getCoordinates(mapGrid, ['O'].concat(players.map(p => p.id)))
+  const circleCoordinates = getCoordinates(mapGrid, ['O', 'F'].concat(players.map(p => p.id)))
   const playerCoordinates = players.map(({ id, colour }) => ({
     id,
     colour,
@@ -30,6 +31,8 @@ export function parseMap(template: string): GameState {
     id: c.circle.id,
     position: { x: Math.floor(c.circle.x / 2), y: Math.floor(c.circle.y / 2) },
     neighbours: c.neighbours,
+    start: players.some(p => p.id === c.circle.matchedSymbol),
+    finish: c.circle.matchedSymbol === 'F',
   }))
   const gameState: GameState = {
     map: createdMap,
@@ -37,7 +40,7 @@ export function parseMap(template: string): GameState {
       .map(player => ({
         id: player.id,
         colour: player.colour,
-        positions: player.coords.map(c => ({
+        positions: multiplyPieces(player.coords, 5).map(c => ({
           pieceId: `${pieceId++}`,
           circleId: findCircle(c.x, c.y, circleCoordinates)!.id,
         })),
@@ -50,6 +53,16 @@ export function parseMap(template: string): GameState {
     gameStateHash: '',
   }
   return gameState
+}
+
+function multiplyPieces(coords: Coordinate[], multiplier: number) {
+  const multipliedCoords = []
+  for (const coord of coords) {
+    for (let i = 0; i < multiplier; i++) {
+      multipliedCoords.push(coord)
+    }
+  }
+  return multipliedCoords
 }
 
 function findCircle(x: number, y: number, circleCoordinates: Coordinate[]) {
@@ -120,11 +133,11 @@ function getLongestRow(template: string) {
 }
 
 function getCoordinates(mapGrid: string[][], symbols: string[]): Coordinate[] {
-  const coordinates = []
+  const coordinates: Coordinate[] = []
   for (let y = 0; y < mapGrid.length; y++) {
     for (let x = 0; x < mapGrid[y].length; x++) {
       if (symbols.includes(mapGrid[y][x])) {
-        coordinates.push({ x, y, id: coordinates.length.toString() })
+        coordinates.push({ x, y, id: coordinates.length.toString(), matchedSymbol: mapGrid[y][x] })
       }
     }
   }

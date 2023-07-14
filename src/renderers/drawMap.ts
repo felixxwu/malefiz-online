@@ -4,6 +4,7 @@ import { el, elNS } from '../utils/el'
 import { textOpacity } from '../data/cssVars'
 import { Map } from '../types/mapTypes'
 import { handleCircleClick } from '../game/handleCircleClick'
+import { polygonToXY } from '../utils/polygon'
 
 export function drawMap(map: Map) {
   mapGroup!.innerHTML = ''
@@ -14,26 +15,53 @@ export function drawMap(map: Map) {
 
 function drawCircles(map: Map) {
   for (const circle of map) {
-    mapGroup!.appendChild(
-      elNS('circle')({
-        attributes: {
-          id: circle.id,
-          style: { cursor: 'pointer' },
-          onclick: circle.onClick ?? (() => handleCircleClick(circle.id)),
-        },
-        readonlyAttributes: {
-          cx: `${circle.position.x * 100}`,
-          cy: `${circle.position.y * 100}`,
-          r: `${CONSTS.CIRCLE_RADIUS}`,
-        },
-      })
-    )
+    if (circle.start) {
+      mapGroup!.appendChild(
+        elNS('polygon')({
+          attributes: {
+            id: circle.id,
+            style: {
+              cursor: 'pointer',
+              fill: 'black',
+              strokeLinejoin: 'round',
+              stroke: 'black',
+              strokeWidth: '50',
+            },
+            onclick: circle.onClick ?? (() => handleCircleClick(circle.id)),
+          },
+          readonlyAttributes: {
+            points: [0, 1, 2, 3, 4]
+              .map(i => polygonToXY(i, 5, 30))
+              .map(({ x, y }) => `${circle.position.x * 100 + x},${circle.position.y * 100 + y}`)
+              .join(' '),
+          },
+        })
+      )
+    } else {
+      mapGroup!.appendChild(
+        elNS('circle')({
+          attributes: {
+            id: circle.id,
+            style: { cursor: 'pointer' },
+            onclick: circle.onClick ?? (() => handleCircleClick(circle.id)),
+          },
+          readonlyAttributes: {
+            cx: `${circle.position.x * 100}`,
+            cy: `${circle.position.y * 100}`,
+            r: `${CONSTS.CIRCLE_RADIUS * (circle.start ? 1.7 : 1)}`,
+          },
+        })
+      )
+    }
   }
 }
 
 function drawText(map: Map) {
   for (const circle of map) {
     // circle.text = circle.id
+    if (circle.finish) {
+      circle.text = 'F'
+    }
     if (circle.text) {
       mapGroup!.appendChild(
         elNS('foreignObject')({

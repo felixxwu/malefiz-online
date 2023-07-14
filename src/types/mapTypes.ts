@@ -5,6 +5,8 @@ export type Circle = {
     y: number
   }
   neighbours: string[]
+  start: boolean
+  finish: boolean
   text?: string
   fontSize?: number
   onClick?: () => void

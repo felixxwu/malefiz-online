@@ -4,7 +4,7 @@ import { Circle } from '../types/mapTypes'
 export function getLegalMoves(circleId: string) {
   const circle = store.gameState!.map.find(circle => circle.id === circleId)!
   if (!store.gameState!.dieRoll) return []
-  return findLegalMoves(circle, store.gameState!.dieRoll, [circle])
+  return findLegalMoves(circle, store.gameState!.dieRoll, [circle]).filter(c => !c.start)
 }
 
 function findLegalMoves(circle: Circle, movesLeft: number, visited: Circle[] = []) {
