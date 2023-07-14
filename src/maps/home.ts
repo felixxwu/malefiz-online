@@ -10,6 +10,8 @@ export const homePageMap: Map = [
     id: '1',
     position: { x: 1, y: 1 },
     neighbours: ['2'],
+    start: false,
+    finish: false,
     text: `New Game`,
     fontSize: 13,
     onClick: async () => {
@@ -23,6 +25,8 @@ export const homePageMap: Map = [
     id: '2',
     position: { x: 2, y: 1 },
     neighbours: ['1'],
+    start: false,
+    finish: false,
     text: `Play AI`,
     fontSize: 13,
     onClick: async () => {
