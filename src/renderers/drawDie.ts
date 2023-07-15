@@ -9,24 +9,26 @@ export function drawDie() {
   dieGroup!.innerHTML = ''
   if (store.gameState!.dieRoll) {
     const { x, y, rotation } = randomOffsetAndRotation()
-    dieGroup!.appendChild(
-      elNS('g')({
-        attributes: {
-          style: {
-            transform: `rotate(${rotation}deg) translate(${x}px, ${y}px)`,
-            cursor: 'pointer',
-            transformOrigin: `${x + 50}px ${y + 50}px`,
-          },
-          onclick: () => {
-            dieGroup!.innerHTML = ''
-          },
+    const group = elNS('g')({
+      attributes: {
+        style: {
+          transform: `rotate(${rotation}deg) translate(${x}px, ${y}px)`,
+          cursor: 'pointer',
+          transformOrigin: `${x + 50}px ${y + 50}px`,
+          transition: '500ms',
+          willChange: 'transform',
         },
-        readonlyAttributes: {
-          class: 'dieRoll',
+        onclick: () => {
+          group.style.transform = `rotate(0deg) translate(0px, -50px)`
+          group.style.transformOrigin = `0 0`
         },
-        children: [Square(), ...dotLayouts[store.gameState!.dieRoll].map(Dot)],
-      })
-    )
+      },
+      readonlyAttributes: {
+        class: 'dieRoll',
+      },
+      children: [Square(), ...dotLayouts[store.gameState!.dieRoll].map(Dot)],
+    })
+    dieGroup!.appendChild(group)
   }
 }
 
@@ -35,7 +37,7 @@ function randomOffsetAndRotation() {
   return {
     x: Math.random() * mapWidth * 100,
     y: Math.random() * mapHeight * 100,
-    rotation: Math.random() * 360,
+    rotation: Math.random() * 100 - 50,
   }
 }
 

@@ -70,5 +70,5 @@ body {
 
 .dieRoll {
     animation: rollDie 1s cubic-bezier(0.22, 0.61, 0.36, 1);
-    will-change: 'translate', 'rotate', 'opacity', 'filter', 'scale';
+    will-change: 'translate', 'rotate', 'scale', 'opacity', 'filter', 'transform';
 }
