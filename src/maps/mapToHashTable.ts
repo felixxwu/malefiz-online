@@ -1,3 +1,4 @@
+import { GameState, Stone } from '../types/gameTypes'
 import { Circle, Map } from '../types/mapTypes'
 
 export function mapToHashTable(map: Map) {
@@ -7,6 +8,20 @@ export function mapToHashTable(map: Map) {
       throw new Error(`Duplicate circle id: ${circle.id}`)
     }
     hashTable[circle.id] = circle
+  }
+  return hashTable
+}
+
+export function stoneToHashTable(gameState: GameState) {
+  const hashTable: { [circleId: string]: Stone } = {}
+  for (const circle of gameState.map) {
+    const stone = gameState.stones.find(stone => stone.circleId === circle.id)
+    if (stone) {
+      if (hashTable[circle.id]) {
+        throw new Error(`Duplicate stone id: ${circle.id}`)
+      }
+      hashTable[circle.id] = stone
+    }
   }
   return hashTable
 }

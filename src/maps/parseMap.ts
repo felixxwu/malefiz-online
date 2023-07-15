@@ -18,7 +18,11 @@ const players = [
 export function parseMap(template: string): GameState {
   let pieceId = 0
   const mapGrid = mapStringTo2dArray(template)
-  const circleCoordinates = getCoordinates(mapGrid, ['O', 'F', 'Z'].concat(players.map(p => p.id)))
+  const circleCoordinates = getCoordinates(
+    mapGrid,
+    ['O', 'F', 'Z', 'S'].concat(players.map(p => p.id))
+  )
+  const stoneCoordinates = getCoordinates(mapGrid, ['S'])
   const playerCoordinates = players.map(({ id, colour }) => ({
     id,
     colour,
@@ -47,6 +51,10 @@ export function parseMap(template: string): GameState {
         })),
       }))
       .filter(p => p.positions.length > 0),
+    stones: stoneCoordinates.map(c => ({
+      stoneId: c.id,
+      circleId: findCircle(c.x, c.y, circleCoordinates)!.id,
+    })),
     created: Date.now(),
     users: [],
     playerTurn: '1',

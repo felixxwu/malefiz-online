@@ -6,6 +6,11 @@ export type Player = {
   positions: { pieceId: string; circleId: string }[]
 }
 
+export type Stone = {
+  stoneId: string
+  circleId: string
+}
+
 export type User = {
   id: string
   playerToControl: string
@@ -20,4 +25,5 @@ export type GameState = {
   playerTurn: string
   dieRoll: number | null
   gameStateHash: string
+  stones: Stone[]
 }

@@ -7,19 +7,20 @@ O = circle
 F = finish
 1/2/3/4 = player start points
 Z = zoom in point
+S = stone
 
 */
 
 export const map1 = parseMap(`
       F
       -
-O-O-O-O-O-O-O
+O-O-O-S-O-O-O
 -           -
-O-O-O-O-O-O-O
+O-O-S-S-S-O-O
       -
-    O-Z-O
+    O-S-O
     -   -
-  O-O-O-O-O
+  S-S-Z-S-S
   -       -
 O-O-O-O-O-O-O
 -   -   -   -
