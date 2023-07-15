@@ -18,24 +18,24 @@ export function drawPlayers(gameState: GameState) {
             y: circle.position.y + polygonToXY(i, spokes, spacing).y,
           }
         : circle.position
-      const existingPiece = playersGroup!.querySelector(`#p${position.pieceId}`)
+      const existingPiece = playersGroup!.querySelector<SVGElement>(`#p${position.pieceId}`)
       if (existingPiece) {
-        existingPiece.setAttribute('cx', (pos!.x * 100).toString())
-        existingPiece.setAttribute('cy', (pos!.y * 100).toString())
+        existingPiece.style.transform = `translate(${pos!.x * 100}px, ${pos!.y * 100}px)`
       } else {
         const positionCircle = elNS('circle')({
           attributes: {
             id: 'p' + position.pieceId,
             style: {
               transition: `${CONSTS.PLAYER_TRANSITION}ms`,
+              transform: `translate(${pos!.x * 100}px, ${pos!.y * 100}px)`,
               filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.3))',
               opacity: textOpacity.value,
-              willChange: 'transition',
+              willChange: 'transform',
             },
           },
           readonlyAttributes: {
-            cx: (pos!.x * 100).toString(),
-            cy: (pos!.y * 100).toString(),
+            cx: '0',
+            cy: '0',
             r: '20',
             fill: player.colour,
           },
