@@ -22,6 +22,10 @@ body {
     fill: var(--colour1);
 }
 
+#zoom, #translate {
+    will-change: 'transform';
+}
+
 @keyframes upAndDown {
     0% { transform: translateY(0px) }
     50% { transform: translateY(-10px) }
@@ -66,4 +70,5 @@ body {
 
 .dieRoll {
     animation: rollDie 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: 'translate', 'rotate', 'opacity', 'filter', 'scale';
 }

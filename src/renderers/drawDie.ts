@@ -16,7 +16,6 @@ export function drawDie() {
             transform: `rotate(${rotation}deg) translate(${x}px, ${y}px)`,
             cursor: 'pointer',
             transformOrigin: `${x + 50}px ${y + 50}px`,
-            // transformOrigin: `50% 50%`,
           },
           onclick: () => {
             dieGroup!.innerHTML = ''

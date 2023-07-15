@@ -30,6 +30,7 @@ export function drawPlayers(gameState: GameState) {
               transition: `${CONSTS.PLAYER_TRANSITION}ms`,
               filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.3))',
               opacity: textOpacity.value,
+              willChange: 'transition',
             },
           },
           readonlyAttributes: {
