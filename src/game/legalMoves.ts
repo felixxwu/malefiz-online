@@ -1,10 +1,14 @@
 import { store } from '../data/store'
 import { Circle } from '../types/mapTypes'
 
-export function getLegalMoves(circleId: string) {
-  const circle = store.gameState!.map.find(circle => circle.id === circleId)!
+export function getLegalMoves(targetCircleId: string) {
+  const position = store.gameStateHashTable[targetCircleId]!
   if (!store.gameState!.dieRoll) return []
-  return findLegalMoves(circle, store.gameState!.dieRoll, [circle]).filter(c => !c.start)
+  return findLegalMoves(position.circle!, store.gameState!.dieRoll, [position.circle!]).filter(
+    c =>
+      !c.start &&
+      !store.gameStateHashTable[c.id].pieces?.some(p => p.playerId === store.gameState!.playerTurn)
+  )
 }
 
 export function getLegalStonePlacements() {

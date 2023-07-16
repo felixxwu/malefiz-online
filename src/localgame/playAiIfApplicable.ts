@@ -1,9 +1,11 @@
 import { store } from '../data/store'
-import { movePiece } from '../game/movePiece'
-import { getLegalMoves } from '../game/legalMoves'
+import { getLegalStonePlacements } from '../game/legalMoves'
 import { isMyTurn } from '../game/playerTurns'
 import { sleep } from '../utils/sleep'
 import { rollDie } from '../game/rollDie'
+import { submitMove } from '../game/submitMove'
+import { placeStone } from '../game/placeStone'
+import { playerPiecesWithMoves } from '../game/playerPiecesWithMoves'
 
 export async function playAiIfApplicable() {
   if (!canAiPlay()) return
@@ -19,13 +21,30 @@ export async function playAiIfApplicable() {
   if (!canAiPlay()) return
 
   const currentPlayer = store.gameState!.playerTurn
-  const playerPieces = store.gameState!.players.find(
-    player => player.id === currentPlayer
-  )!.positions
-  const randomPiece = playerPieces[Math.floor(Math.random() * playerPieces.length)]
-  const legalMoves = getLegalMoves(randomPiece.circleId)
+  const player = store.gameState!.players.find(player => player.id === currentPlayer)!
+  const piecesWithLegalMoves = playerPiecesWithMoves(player)
+  console.log(`piecesWithLegalMoves`, piecesWithLegalMoves)
+
+  if (piecesWithLegalMoves.length === 0) {
+    await rollDie()
+    return
+  }
+
+  const randomPiece = piecesWithLegalMoves[Math.floor(Math.random() * piecesWithLegalMoves.length)]
+  const legalMoves = randomPiece.moves
+  console.log(`legalMoves`, legalMoves)
   const randomMove = legalMoves[Math.floor(Math.random() * legalMoves.length)]
-  movePiece(randomPiece.pieceId, randomMove.id)
+  await submitMove(randomPiece.pieceId, randomMove.id)
+
+  // place stone if taken
+  if (store.gameState!.stones.some(stone => stone.circleId === null)) {
+    await sleep(100)
+
+    const legalStonePlacements = getLegalStonePlacements()
+    const randomStonePlacement =
+      legalStonePlacements[Math.floor(Math.random() * legalStonePlacements.length)]
+    placeStone(randomStonePlacement.id)
+  }
 }
 
 function canAiPlay() {

@@ -56,6 +56,7 @@ function drawIndicatorOverMyPieces() {
     if (player.id === store.gameState!.playerTurn) {
       for (const position of player.positions) {
         const circle = getCircleFromPiece(position.pieceId)
+        if (getLegalMoves(circle!.id).length === 0) continue
         const x = circle!.position.x * 100
         const y = circle!.position.y * 100 - 50
         hudGroup!.appendChild(HudElement(x, y))
