@@ -1,6 +1,6 @@
 import { store } from '../data/store'
 import { playAiIfApplicable } from '../localgame/playAiIfApplicable'
-import { mapToHashTable, stoneToHashTable } from '../maps/mapToHashTable'
+import { mapToHashTable } from '../maps/mapToHashTable'
 import { drawOverlay } from '../overlay'
 import { drawDie } from '../renderers/drawDie'
 import { drawHud } from '../renderers/drawHud'
@@ -18,7 +18,7 @@ export function onGameStateChange(gameState: GameState | null) {
   } else if (gameState!.dieRoll === null && isMyTurn()) {
     store.actionButton = { text: 'Roll', onClick: () => rollDie(), flashing: true }
   } else {
-    store.actionButton === null
+    store.actionButton = null
   }
 
   drawPlayers(gameState)
@@ -26,7 +26,6 @@ export function onGameStateChange(gameState: GameState | null) {
   drawHud()
   drawDie()
   drawOverlay()
-  store.gameStateMapHashed = mapToHashTable(gameState.map)
-  store.gameStateStoneHashed = stoneToHashTable(gameState)
+  store.gameStateHashTable = mapToHashTable(gameState)
   playAiIfApplicable()
 }

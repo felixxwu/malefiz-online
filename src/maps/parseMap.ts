@@ -20,7 +20,7 @@ export function parseMap(template: string): GameState {
   const mapGrid = mapStringTo2dArray(template)
   const circleCoordinates = getCoordinates(
     mapGrid,
-    ['O', 'F', 'Z', 'S'].concat(players.map(p => p.id))
+    ['O', 'F', 'Z', 'S', 'X'].concat(players.map(p => p.id))
   )
   const stoneCoordinates = getCoordinates(mapGrid, ['S'])
   const playerCoordinates = players.map(({ id, colour }) => ({
@@ -38,6 +38,7 @@ export function parseMap(template: string): GameState {
     start: players.some(p => p.id === c.circle.matchedSymbol),
     finish: c.circle.matchedSymbol === 'F',
     zoomInPoint: c.circle.matchedSymbol === 'Z',
+    safeZone: c.circle.matchedSymbol === 'X',
   }))
   const gameState: GameState = {
     map: createdMap,

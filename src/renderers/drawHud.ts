@@ -1,6 +1,6 @@
 import { colour1 } from '../data/cssVars'
 import { store } from '../data/store'
-import { getLegalMoves } from '../game/legalMoves'
+import { getLegalMoves, getLegalStonePlacements } from '../game/legalMoves'
 import { isMyTurn } from '../game/playerTurns'
 import { Circle } from '../types/mapTypes'
 import { elNS } from '../utils/el'
@@ -19,6 +19,9 @@ export function drawHud() {
       const legalMoves = getLegalMoves(circle.id)
       drawIndicatorOverSelectedPiece()
       drawLegalMoves(legalMoves)
+    }
+    if (store.gameState!.stones.find(stone => stone.circleId === null)) {
+      drawStonePlacementMoves()
     }
   }
 }
@@ -83,4 +86,28 @@ function HudElement(x: number, y: number) {
       class: 'upAndDown',
     },
   })
+}
+
+// draws while circles over all empty circles
+function drawStonePlacementMoves() {
+  const legalStonePlacements = getLegalStonePlacements()
+  for (const circle of legalStonePlacements) {
+    const x = circle!.position.x * 100
+    const y = circle!.position.y * 100
+    hudGroup!.appendChild(
+      elNS('circle')({
+        attributes: {
+          style: {
+            fill: 'white',
+          },
+        },
+        readonlyAttributes: {
+          cx: x.toString(),
+          cy: y.toString(),
+          r: '10',
+          class: 'flashing',
+        },
+      })
+    )
+  }
 }

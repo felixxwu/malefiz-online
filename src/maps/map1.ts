@@ -8,6 +8,7 @@ F = finish
 1/2/3/4 = player start points
 Z = zoom in point
 S = stone
+X = safe zone
 
 */
 
@@ -16,15 +17,17 @@ export const map1 = parseMap(`
       -
 O-O-O-S-O-O-O
 -           -
-O-O-S-S-S-O-O
+O-O-O-S-O-O-O
       -
-    O-S-O
+    S-S-S
     -   -
-  S-S-Z-S-S
+  S-O-Z-O-S
   -       -
-O-O-O-O-O-O-O
+O-S-O-O-O-S-O
 -   -   -   -
-O-O-O   O-O-O
+X   X   X   X
+-   -   -   -
+X-X-X   X-X-X
   -       -
   1       2
 `)

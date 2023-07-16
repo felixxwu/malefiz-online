@@ -1,13 +1,23 @@
 import { store } from '../data/store'
 import { getPieceFromCircle } from '../utils/getPieceFromCircle'
-import { getLegalMoves } from './legalMoves'
+import { getLegalMoves, getLegalStonePlacements } from './legalMoves'
 import { getCircleFromPiece } from '../utils/getCircleFromPiece'
 import { pieceBelongsToMe } from '../utils/pieceBelongsToMe'
 import { movePiece } from './movePiece'
 import { takeStone } from './takeStone'
+import { placeStone } from './placeStone'
 
 export async function handleCircleClick(clickedCircleId: string) {
   if (store.waitingForServer) return
+
+  // place stone
+  if (store.gameState!.stones.find(stone => stone.circleId === null)) {
+    const legalStonePlacements = getLegalStonePlacements()
+    if (legalStonePlacements.map(circle => circle.id).includes(clickedCircleId)) {
+      placeStone(clickedCircleId)
+    }
+  }
+
   if (store.gameState!.dieRoll === null) return
 
   const pieceId = getPieceFromCircle(clickedCircleId)

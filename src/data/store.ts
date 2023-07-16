@@ -1,12 +1,12 @@
 import { drawMap } from '../renderers/drawMap'
 import { menuOpacity, menuPointerEvents, textOpacity } from './cssVars'
-import { GameState, Stone } from '../types/gameTypes'
+import { GameState } from '../types/gameTypes'
 import { svg, translateGroup, zoomGroup } from '../utils/getSvgGroup'
 import { homePageMap } from '../maps/home'
 import { drawHud } from '../renderers/drawHud'
-import { Circle } from '../types/mapTypes'
 import { onGameStateChange } from '../game/onGameStateChange'
 import { drawOverlay } from '../overlay'
+import { HashTable } from '../maps/mapToHashTable'
 
 const init = {
   mouseDownData: <
@@ -22,8 +22,7 @@ const init = {
   svgTransition: 0,
   gameState: <GameState | null>null,
   oldGameStateHash: <string | null>null,
-  gameStateMapHashed: <{ [circleId: string]: Circle }>{},
-  gameStateStoneHashed: <{ [circleId: string]: Stone }>{},
+  gameStateHashTable: <HashTable>{},
   gameId: <string | null>null,
   currentMap: homePageMap,
   textOpacity: 0,

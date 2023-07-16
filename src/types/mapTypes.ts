@@ -7,6 +7,7 @@ export type Circle = {
   neighbours: string[]
   start: boolean
   finish: boolean
+  safeZone: boolean
   zoomInPoint: boolean
   text?: string
   fontSize?: number
