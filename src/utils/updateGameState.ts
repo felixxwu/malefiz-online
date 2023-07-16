@@ -6,7 +6,8 @@ import { currentPlayer } from '../data/userId'
 import hash from 'object-hash'
 
 export async function updateGameState(
-  getNewGameState: (gameState: GameState) => Partial<GameState>
+  getNewGameState: (gameState: GameState) => Partial<GameState>,
+  isUpdateOnlineTimeOnly = false
 ) {
   if (store.localGame) {
     const newGameState = getNewGameState(store.gameState!)
@@ -16,6 +17,11 @@ export async function updateGameState(
       gameStateHash: createGameStateHash({ ...store.gameState!, ...newGameState }),
     }
   } else {
+    if (!isUpdateOnlineTimeOnly) {
+      store.waitingForServer = true
+      store.actionButton = { text: 'Waiting for server...', flashing: false }
+    }
+
     await runTransaction(db, async transaction => {
       const document = await transaction.get(doc(db, 'games', store.gameId!))
       const oldGameState = document.data() as GameState
@@ -27,6 +33,11 @@ export async function updateGameState(
         gameStateHash: createGameStateHash({ ...oldGameState, ...newGameState }),
       })
     })
+
+    if (!isUpdateOnlineTimeOnly) {
+      store.waitingForServer = false
+      store.actionButton = null
+    }
   }
 }
 

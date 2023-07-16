@@ -2,7 +2,7 @@ import { colour1 } from './data/cssVars'
 import { store } from './data/store'
 import { initUserId } from './data/userId'
 import { addEventListeners } from './listeners'
-import { renderOverlay } from './overlay'
+import { drawOverlay } from './overlay'
 import { drawMap } from './renderers/drawMap'
 import { resize } from './utils/resize'
 import { sleep } from './utils/sleep'
@@ -12,7 +12,7 @@ export async function setup() {
   resize()
   addEventListeners()
   initUserId()
-  renderOverlay()
+  drawOverlay()
   drawMap(store.currentMap)
   await sleep(1)
   document.body.style.backgroundColor = colour1.value

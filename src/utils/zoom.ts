@@ -1,7 +1,7 @@
 import { CONSTS } from '../data/consts'
 import { Circle, Map } from '../types/mapTypes'
 import { store } from '../data/store'
-import { mapPosition } from '../maps/mapUtils'
+import { getMapPosition } from '../maps/mapUtils'
 
 export function fitToScreen(
   map: Map,
@@ -11,7 +11,7 @@ export function fitToScreen(
     translateDelay,
   }: { transition?: number; zoomDelay?: number; translateDelay?: number }
 ) {
-  const { mapWidth, mapHeight, mapCenterX, mapCenterY } = mapPosition(map)
+  const { mapWidth, mapHeight, mapCenterX, mapCenterY } = getMapPosition(map)
 
   const screenCenterX = window.innerWidth / 2
   const screenCenterY = window.innerHeight / 2

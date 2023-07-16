@@ -1,7 +1,7 @@
 import { CONSTS } from '../data/consts'
 import { store } from '../data/store'
 import { currentPlayer } from '../data/userId'
-import { mapPosition } from '../maps/mapUtils'
+import { getMapPosition } from '../maps/mapUtils'
 import { elNS } from '../utils/el'
 import { dieGroup } from '../utils/getSvgGroup'
 
@@ -33,7 +33,7 @@ export function drawDie() {
 }
 
 function randomOffsetAndRotation() {
-  const { mapWidth, mapHeight } = mapPosition(store.currentMap)
+  const { mapWidth, mapHeight } = getMapPosition(store.currentMap)
   return {
     x: Math.random() * mapWidth * 100,
     y: Math.random() * mapHeight * 100,

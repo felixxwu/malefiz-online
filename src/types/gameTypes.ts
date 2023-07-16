@@ -8,7 +8,7 @@ export type Player = {
 
 export type Stone = {
   stoneId: string
-  circleId: string
+  circleId: string | null
 }
 
 export type User = {

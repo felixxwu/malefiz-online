@@ -9,7 +9,7 @@ import { hudGroup } from '../utils/getSvgGroup'
 
 export function drawHud() {
   hudGroup!.innerHTML = ''
-  if (isMyTurn()) {
+  if (isMyTurn() && !store.waitingForServer) {
     if (store.pieceSelected === null) {
       if (store.gameState!.dieRoll !== null) {
         drawIndicatorOverMyPieces()
@@ -41,7 +41,7 @@ function drawLegalMoves(legalMoves: Circle[]) {
           cx: x.toString(),
           cy: y.toString(),
           r: '10',
-          class: 'fadeInAndOut',
+          class: 'flashing',
         },
       })
     )

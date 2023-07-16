@@ -1,6 +1,6 @@
 import { Map } from '../types/mapTypes'
 
-export function mapPosition(map: Map) {
+export function getMapPosition(map: Map) {
   const mapTop = map.reduce((acc, node) => Math.min(acc, node.position.y), Infinity)
   const mapLeft = map.reduce((acc, node) => Math.min(acc, node.position.x), Infinity)
   const mapRight = map.reduce((acc, node) => Math.max(acc, node.position.x), 0)

@@ -3,8 +3,6 @@ import { el } from '../utils/el'
 import { fullScreenIcon, menuIcon, minusIcon, plusIcon } from '../icons'
 import { store } from '../data/store'
 import { fitToScreen, zoomIn, zoomOut } from '../utils/zoom'
-import { rollDie } from '../game/rollDie'
-import { isMyTurn } from '../game/playerTurns'
 
 const buttonSize = 40
 
@@ -37,7 +35,7 @@ export function OverlayButtons() {
         opacity: textOpacity.value,
       },
     },
-    children: [MenuButton(), ViewControls([ZoomIn(), FitScreen(), ZoomOut()]), RollButton()],
+    children: [MenuButton(), ViewControls([ZoomIn(), FitScreen(), ZoomOut()]), ActionButton()],
   })
 }
 
@@ -61,8 +59,8 @@ function MenuButton() {
   })
 }
 
-function RollButton() {
-  if (!store.gameState || store.gameState!.dieRoll !== null || !isMyTurn()) return el('div')({})
+function ActionButton() {
+  if (store.actionButton === null) return el('div')({})
   return el('div')({
     attributes: {
       style: {
@@ -78,18 +76,20 @@ function RollButton() {
         attributes: {
           style: {
             ...overlayButtonStyles,
-            width: '100px',
+            backgroundColor: store.actionButton.onClick ? 'black' : 'transparent',
+            width: '150px',
             pointerEvents: 'all',
           },
-          onclick: () => {
-            rollDie()
-          },
+          onclick: store.actionButton.onClick,
         },
         children: [
           el('div')({
             attributes: {
-              innerHTML: 'Roll',
-              className: 'fadeInAndOut',
+              style: {
+                color: store.actionButton.onClick ? colour1.value : 'black',
+              },
+              innerHTML: store.actionButton.text,
+              className: store.actionButton.flashing ? 'flashing' : '',
             },
           }),
         ],

@@ -36,14 +36,14 @@ body {
     animation: upAndDown 1s infinite;
 }
 
-@keyframes fadeInAndOut {
+@keyframes flashing {
     0% { opacity: 0 }
     50% { opacity: 1 }
     100% { opacity: 0 }
 }
 
-.fadeInAndOut {
-    animation: fadeInAndOut 1s infinite;
+.flashing {
+    animation: flashing 1s infinite;
 }
 
 @keyframes rollDie {

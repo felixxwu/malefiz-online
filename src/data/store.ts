@@ -5,10 +5,8 @@ import { svg, translateGroup, zoomGroup } from '../utils/getSvgGroup'
 import { homePageMap } from '../maps/home'
 import { drawHud } from '../renderers/drawHud'
 import { Circle } from '../types/mapTypes'
-import { getCircleFromPiece } from '../utils/getCircleFromPiece'
-import { getLegalMoves } from '../game/legalMoves'
-import { fitToScreen } from '../utils/zoom'
 import { onGameStateChange } from '../game/onGameStateChange'
+import { drawOverlay } from '../overlay'
 
 const init = {
   mouseDownData: <
@@ -34,9 +32,11 @@ const init = {
   onlinePlayers: <string[]>[],
   pieceSelected: <string | null>null,
   localGame: false,
+  actionButton: <{ text: string; flashing: boolean; onClick?: () => void } | null>null,
+  waitingForServer: false,
 }
 
-const onChange: Type<keyof typeof init> = {
+const onChange: OnChange<keyof typeof init> = {
   mouseDownData(value) {
     if (value) {
       svg!.style.cursor = 'grab'
@@ -80,16 +80,23 @@ const onChange: Type<keyof typeof init> = {
       }
     }
   },
-  pieceSelected(value) {
+  pieceSelected() {
     drawHud()
 
-    if (value) {
-      const circle = getCircleFromPiece(store.pieceSelected!)!
-      const legalMoves = getLegalMoves(circle.id)
-      fitToScreen(legalMoves.concat(circle), {})
-    } else {
-      fitToScreen(store.currentMap, {})
-    }
+    // zoom into legal moves
+    // if (value) {
+    //   const circle = getCircleFromPiece(store.pieceSelected!)!
+    //   const legalMoves = getLegalMoves(circle.id)
+    //   fitToScreen(legalMoves.concat(circle), {})
+    // } else {
+    //   fitToScreen(store.currentMap, {})
+    // }
+  },
+  actionButton() {
+    drawOverlay()
+  },
+  waitingForServer() {
+    drawHud()
   },
 }
 
@@ -105,6 +112,6 @@ export const store: typeof init = new Proxy(init, {
   },
 })
 
-type Type<T extends keyof typeof init> = {
+type OnChange<T extends keyof typeof init> = {
   [key in T]?: (value: (typeof init)[key]) => void
 }

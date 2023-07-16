@@ -20,8 +20,10 @@ export function stoneToHashTable(gameState: GameState) {
       if (hashTable[circle.id]) {
         throw new Error(`Duplicate stone id: ${circle.id}`)
       }
-      hashTable[circle.id] = stone
+      hashTable[`${circle.id}`] = stone
     }
   }
+  const takenStone = gameState.stones.find(stone => stone.circleId === null)
+  if (takenStone) hashTable['null'] = takenStone
   return hashTable
 }
