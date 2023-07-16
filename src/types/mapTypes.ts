@@ -5,7 +5,7 @@ export type Circle = {
     y: number
   }
   neighbours: string[]
-  start: boolean
+  start: string | undefined
   finish: boolean
   safeZone: boolean
   zoomInPoint: boolean

@@ -23,7 +23,7 @@ O-O-S-S-S-O-O
     -   -
   S-O-Z-O-S
   -       -
-O-S-O-O-O-S-O
+O-O-O-O-O-O-O
 -   -   -   -
 X   X   X   X
 -   -   -   -

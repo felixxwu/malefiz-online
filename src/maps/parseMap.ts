@@ -10,7 +10,7 @@ type Coordinate = {
 
 const players = [
   { id: '1', colour: 'hsl(0 70% 60% / 1)' },
-  { id: '2', colour: 'hsl(240 70% 60% / 1)' },
+  { id: '2', colour: 'hsl(240 70% 70% / 1)' },
   { id: '3', colour: 'hsl(140 70% 60% / 1)' },
   { id: '4', colour: 'hsl(69 70% 60% / 1)' },
 ]
@@ -35,7 +35,7 @@ export function parseMap(template: string): GameState {
     id: c.circle.id,
     position: { x: Math.floor(c.circle.x / 2), y: Math.floor(c.circle.y / 2) },
     neighbours: c.neighbours,
-    start: players.some(p => p.id === c.circle.matchedSymbol),
+    start: players.find(p => p.id === c.circle.matchedSymbol)?.id,
     finish: c.circle.matchedSymbol === 'F',
     zoomInPoint: c.circle.matchedSymbol === 'Z',
     safeZone: c.circle.matchedSymbol === 'X',
