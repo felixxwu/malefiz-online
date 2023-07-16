@@ -13,6 +13,7 @@ export const homePageMap: Map = [
     start: false,
     finish: false,
     zoomInPoint: true,
+    safeZone: false,
     text: `New Game`,
     fontSize: 13,
     onClick: async () => {
@@ -29,6 +30,7 @@ export const homePageMap: Map = [
     start: false,
     finish: false,
     zoomInPoint: false,
+    safeZone: false,
     text: `Play AI`,
     fontSize: 13,
     onClick: async () => {
