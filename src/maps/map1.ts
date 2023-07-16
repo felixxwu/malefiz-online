@@ -17,9 +17,9 @@ export const map1 = parseMap(`
       -
 O-O-O-S-O-O-O
 -           -
-O-O-O-S-O-O-O
+O-O-S-S-S-O-O
       -
-    S-S-S
+    O-S-O
     -   -
   S-O-Z-O-S
   -       -
