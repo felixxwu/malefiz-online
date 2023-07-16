@@ -77,7 +77,7 @@ function ActionButton() {
           style: {
             ...overlayButtonStyles,
             backgroundColor: store.actionButton.onClick ? 'black' : 'transparent',
-            width: '150px',
+            width: '180px',
             pointerEvents: 'all',
           },
           onclick: store.actionButton.onClick,
