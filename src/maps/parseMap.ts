@@ -1,6 +1,18 @@
 import { GameState } from '../types/gameTypes'
 import { Map } from '../types/mapTypes'
 
+/*
+
+O = circle
+- = connecting line
+F = finish
+1/2/3/4 = player start points
+Z = zoom in point
+S = stone
+X = safe zone
+
+*/
+
 type Coordinate = {
   x: number
   y: number
@@ -9,10 +21,10 @@ type Coordinate = {
 }
 
 const players = [
-  { id: '1', colour: 'hsl(0 70% 60% / 1)', name: 'Red' },
+  { id: '1', colour: 'hsl(0 70% 65% / 1)', name: 'Red' },
   { id: '2', colour: 'hsl(240 70% 70% / 1)', name: 'Blue' },
   { id: '3', colour: 'hsl(140 70% 60% / 1)', name: 'Green' },
-  { id: '4', colour: 'hsl(69 70% 60% / 1)', name: 'Yellow' },
+  { id: '4', colour: 'hsl(60 70% 60% / 1)', name: 'Yellow' },
 ]
 
 export function parseMap(template: string): GameState {

@@ -1,5 +1,5 @@
 export const CONSTS = {
-  CIRCLE_RADIUS: 30,
+  CIRCLE_RADIUS: 35,
   PATH_STROKE_WIDTH: 5,
   MIN_ZOOM: 0.1,
   MAX_ZOOM: 20,

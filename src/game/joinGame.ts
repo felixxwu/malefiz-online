@@ -29,6 +29,8 @@ export async function joinGame(gameId?: string) {
         id: store.userId!,
         playerToControl: freePlayers[0].id,
         lastOnline: Date.now(),
+        isAI: false,
+        isHost: freePlayers.length === gamePlayers.length,
       }),
   })
 

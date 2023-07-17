@@ -33,7 +33,7 @@ export function drawStones(gameState: GameState) {
         },
         readonlyAttributes: {
           points: [0, 1, 2, 3, 4, 5, 6, 7]
-            .map(i => polygonToXY(i, 8, 22.5))
+            .map(i => polygonToXY(i, 8, 25))
             .map(({ x, y }) => `${x},${y}`)
             .join(' '),
           fill: 'white',

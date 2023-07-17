@@ -45,7 +45,11 @@ function drawCircles(map: Map) {
         circle({
           attributes: {
             id: circleData.id,
-            style: { cursor: 'pointer', stroke: 'transparent', strokeWidth: '40' },
+            style: {
+              cursor: 'pointer',
+              stroke: 'transparent',
+              strokeWidth: `${100 - CONSTS.CIRCLE_RADIUS * 2}`,
+            },
             onclick: circleData.onClick ?? (() => handleCircleClick(circleData.id)),
           },
           readonlyAttributes: {

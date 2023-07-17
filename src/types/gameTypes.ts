@@ -16,6 +16,8 @@ export type User = {
   id: string
   playerToControl: string
   lastOnline: number
+  isAI: boolean
+  isHost: boolean
 }
 
 export type GameState = {
