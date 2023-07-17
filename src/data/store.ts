@@ -79,6 +79,7 @@ const onChange: OnChange<keyof typeof init> = {
   },
   onlinePlayers(value) {
     for (const player of store.gameState!.players) {
+      if (player.isAI) continue
       for (const position of player.positions) {
         document.getElementById('p' + position.pieceId)!.style.opacity = value.includes(player.id)
           ? '1'

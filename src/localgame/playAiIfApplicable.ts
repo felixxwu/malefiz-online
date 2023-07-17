@@ -1,6 +1,5 @@
 import { store } from '../data/store'
 import { getLegalStonePlacements } from '../game/legalMoves'
-import { isMyTurn } from '../game/playerTurns'
 import { sleep } from '../utils/sleep'
 import { rollDie } from '../game/rollDie'
 import { submitMove } from '../game/submitMove'
@@ -48,5 +47,9 @@ export async function playAiIfApplicable() {
 }
 
 function canAiPlay() {
-  return store.localGame && !isMyTurn() && getUserData()
+  if (!store.gameState) return false
+  if (!getUserData().isHost) return false
+  const playerTurn = store.gameState.playerTurn
+  const player = store.gameState.players.find(player => player.id === playerTurn)
+  if (player?.isAI) return true
 }
