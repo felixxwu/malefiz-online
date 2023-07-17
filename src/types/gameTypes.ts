@@ -4,6 +4,7 @@ export type Player = {
   id: string
   colour: string
   positions: { pieceId: string; circleId: string }[]
+  name: string
 }
 
 export type Stone = {

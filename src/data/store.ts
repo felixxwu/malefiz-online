@@ -33,6 +33,7 @@ const init = {
   localGame: false,
   actionButton: <{ text: string; flashing: boolean; onClick?: () => void } | null>null,
   waitingForServer: false,
+  gameOver: false,
 }
 
 const onChange: OnChange<keyof typeof init> = {
@@ -55,10 +56,10 @@ const onChange: OnChange<keyof typeof init> = {
     zoomGroup!.style.transition = `all ${value}ms cubic-bezier(0.65, 0, 0.35, 1) `
   },
   gameState(value) {
-    if (store.gameState!.gameStateHash !== store.oldGameStateHash) {
-      onGameStateChange(value)
-      store.oldGameStateHash = store.gameState!.gameStateHash
-    }
+    if (store.gameState!.gameStateHash === store.oldGameStateHash) return
+    if (store.gameOver) return
+    onGameStateChange(value)
+    store.oldGameStateHash = store.gameState!.gameStateHash
   },
   currentMap(value) {
     value && drawMap(value)

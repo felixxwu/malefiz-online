@@ -9,10 +9,10 @@ type Coordinate = {
 }
 
 const players = [
-  { id: '1', colour: 'hsl(0 70% 60% / 1)' },
-  { id: '2', colour: 'hsl(240 70% 70% / 1)' },
-  { id: '3', colour: 'hsl(140 70% 60% / 1)' },
-  { id: '4', colour: 'hsl(69 70% 60% / 1)' },
+  { id: '1', colour: 'hsl(0 70% 60% / 1)', name: 'Red' },
+  { id: '2', colour: 'hsl(240 70% 70% / 1)', name: 'Blue' },
+  { id: '3', colour: 'hsl(140 70% 60% / 1)', name: 'Green' },
+  { id: '4', colour: 'hsl(69 70% 60% / 1)', name: 'Yellow' },
 ]
 
 export function parseMap(template: string): GameState {
@@ -23,10 +23,9 @@ export function parseMap(template: string): GameState {
     ['O', 'F', 'Z', 'S', 'X'].concat(players.map(p => p.id))
   )
   const stoneCoordinates = getCoordinates(mapGrid, ['S'])
-  const playerCoordinates = players.map(({ id, colour }) => ({
-    id,
-    colour,
-    coords: getCoordinates(mapGrid, [id]),
+  const playerCoordinates = players.map(player => ({
+    ...player,
+    coords: getCoordinates(mapGrid, [player.id]),
   }))
   const lineCoordinates = getCoordinates(mapGrid, ['-'])
   const surroundingCircles = getSurroundingCircles(lineCoordinates, circleCoordinates)
@@ -44,8 +43,7 @@ export function parseMap(template: string): GameState {
     map: createdMap,
     players: playerCoordinates
       .map(player => ({
-        id: player.id,
-        colour: player.colour,
+        ...player,
         positions: multiplyPieces(player.coords, 5).map(c => ({
           pieceId: `${pieceId++}`,
           circleId: findCircle(c.x, c.y, circleCoordinates)!.id,

@@ -23,7 +23,6 @@ export async function playAiIfApplicable() {
   const currentPlayer = store.gameState!.playerTurn
   const player = store.gameState!.players.find(player => player.id === currentPlayer)!
   const piecesWithLegalMoves = playerPiecesWithMoves(player)
-  console.log(`piecesWithLegalMoves`, piecesWithLegalMoves)
 
   if (piecesWithLegalMoves.length === 0) {
     await rollDie()
@@ -32,7 +31,6 @@ export async function playAiIfApplicable() {
 
   const randomPiece = piecesWithLegalMoves[Math.floor(Math.random() * piecesWithLegalMoves.length)]
   const legalMoves = randomPiece.moves
-  console.log(`legalMoves`, legalMoves)
   const randomMove = legalMoves[Math.floor(Math.random() * legalMoves.length)]
   await submitMove(randomPiece.pieceId, randomMove.id)
 

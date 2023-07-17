@@ -42,7 +42,7 @@ function drawCircles(map: Map) {
         elNS('circle')({
           attributes: {
             id: circle.id,
-            style: { cursor: 'pointer' },
+            style: { cursor: 'pointer', stroke: 'transparent', strokeWidth: '40' },
             onclick: circle.onClick ?? (() => handleCircleClick(circle.id)),
           },
           readonlyAttributes: {
