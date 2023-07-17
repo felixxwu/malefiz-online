@@ -34,6 +34,7 @@ const init = {
   actionButton: <{ text: string; flashing: boolean; onClick?: () => void } | null>null,
   waitingForServer: false,
   gameOver: false,
+  lastDieRoll: <number | null>null,
 }
 
 const onChange: OnChange<keyof typeof init> = {

@@ -20,7 +20,7 @@ export async function movePiece(pieceId: string, circleId: string) {
           return player
         }
       }),
-      playerTurn: getNextPlayer(),
+      ...(store.lastDieRoll === 6 ? {} : { playerTurn: getNextPlayer() }),
       dieRoll: null,
     })
   )

@@ -27,5 +27,8 @@ export function onGameStateChange(gameState: GameState | null) {
   drawDie()
   drawOverlay()
   store.gameStateHashTable = mapToHashTable(gameState)
+  if (store.gameState!.dieRoll !== null) {
+    store.lastDieRoll = store.gameState!.dieRoll
+  }
   playAiIfApplicable()
 }

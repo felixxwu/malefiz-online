@@ -17,17 +17,18 @@ export async function playAiIfApplicable() {
     return
   }
 
-  await sleep(1000)
-  if (!canAiPlay()) return
-
   const currentPlayer = store.gameState!.playerTurn
   const player = store.gameState!.players.find(player => player.id === currentPlayer)!
   const piecesWithLegalMoves = playerPiecesWithMoves(player)
 
+  // re-roll if no legal moves
   if (piecesWithLegalMoves.length === 0) {
     await rollDie()
     return
   }
+
+  await sleep(1000)
+  if (!canAiPlay()) return
 
   const randomPiece = piecesWithLegalMoves[Math.floor(Math.random() * piecesWithLegalMoves.length)]
   const legalMoves = randomPiece.moves

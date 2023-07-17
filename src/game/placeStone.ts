@@ -1,3 +1,4 @@
+import { store } from '../data/store'
 import { updateGameState } from '../utils/updateGameState'
 import { getNextPlayer } from './playerTurns'
 
@@ -14,6 +15,7 @@ export async function placeStone(clickedCircleId: string) {
       }
     }),
 
-    playerTurn: getNextPlayer(),
+    ...(store.lastDieRoll === 6 ? {} : { playerTurn: getNextPlayer() }),
+    dieRoll: null,
   }))
 }
