@@ -35,7 +35,7 @@ export function parseMap(template: string): GameState {
     id: c.circle.id,
     position: { x: Math.floor(c.circle.x / 2), y: Math.floor(c.circle.y / 2) },
     neighbours: c.neighbours,
-    start: players.find(p => p.id === c.circle.matchedSymbol)?.id,
+    start: players.find(p => p.id === c.circle.matchedSymbol)?.id ?? null,
     finish: c.circle.matchedSymbol === 'F',
     zoomInPoint: c.circle.matchedSymbol === 'Z',
     safeZone: c.circle.matchedSymbol === 'X',
