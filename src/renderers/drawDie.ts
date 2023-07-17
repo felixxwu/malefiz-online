@@ -2,14 +2,14 @@ import { CONSTS } from '../data/consts'
 import { store } from '../data/store'
 import { currentPlayer } from '../data/userId'
 import { getMapPosition } from '../maps/mapUtils'
-import { elNS } from '../utils/el'
+import { circle, g, rect } from '../utils/el'
 import { dieGroup } from '../utils/getSvgGroup'
 
 export function drawDie() {
   dieGroup!.innerHTML = ''
   if (store.gameState!.dieRoll) {
     const { x, y, rotation } = randomOffsetAndRotation()
-    const group = elNS('g')({
+    const group = g({
       attributes: {
         style: {
           transform: `rotate(${rotation}deg) translate(${x}px, ${y}px)`,
@@ -42,7 +42,7 @@ function randomOffsetAndRotation() {
 }
 
 function Square() {
-  return elNS('rect')({
+  return rect({
     attributes: {
       style: {
         fill: currentPlayer().colour,
@@ -86,7 +86,7 @@ const dotLayouts: { [key: number]: (keyof typeof dotPositions)[] } = {
 }
 
 function Dot(position: keyof typeof dotPositions) {
-  return elNS('circle')({
+  return circle({
     readonlyAttributes: {
       cx: dotPositions[position].x.toString(),
       cy: dotPositions[position].y.toString(),

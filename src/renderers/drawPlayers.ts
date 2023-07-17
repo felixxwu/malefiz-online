@@ -1,7 +1,7 @@
 import { CONSTS } from '../data/consts'
 import { textOpacity } from '../data/cssVars'
 import { GameState } from '../types/gameTypes'
-import { elNS } from '../utils/el'
+import { circle } from '../utils/el'
 import { playersGroup } from '../utils/getSvgGroup'
 import { polygonToXY } from '../utils/polygon'
 
@@ -11,18 +11,18 @@ const spokes = 5
 export function drawPlayers(gameState: GameState) {
   for (const player of gameState.players) {
     for (const [i, position] of player.positions.entries()) {
-      const circle = gameState.map.find(circle => circle.id === position.circleId)!
-      const pos = circle.start
+      const circleData = gameState.map.find(circle => circle.id === position.circleId)!
+      const pos = circleData.start
         ? {
-            x: circle.position.x + polygonToXY(i, spokes, spacing).x,
-            y: circle.position.y + polygonToXY(i, spokes, spacing).y,
+            x: circleData.position.x + polygonToXY(i, spokes, spacing).x,
+            y: circleData.position.y + polygonToXY(i, spokes, spacing).y,
           }
-        : circle.position
+        : circleData.position
       const existingPiece = playersGroup!.querySelector<SVGElement>(`#p${position.pieceId}`)
       if (existingPiece) {
         existingPiece.style.transform = `translate(${pos!.x * 100}px, ${pos!.y * 100}px)`
       } else {
-        const positionCircle = elNS('circle')({
+        const positionCircle = circle({
           attributes: {
             id: 'p' + position.pieceId,
             style: {

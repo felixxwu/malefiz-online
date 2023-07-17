@@ -3,7 +3,7 @@ import { store } from '../data/store'
 import { getLegalMoves, getLegalStonePlacements } from '../game/legalMoves'
 import { isMyTurn } from '../game/playerTurns'
 import { Circle } from '../types/mapTypes'
-import { elNS } from '../utils/el'
+import { circle, polygon } from '../utils/el'
 import { getCircleFromPiece } from '../utils/getCircleFromPiece'
 import { hudGroup } from '../utils/getSvgGroup'
 
@@ -34,7 +34,7 @@ function drawLegalMoves(legalMoves: Circle[]) {
     const x = legalMove.position.x * 100
     const y = legalMove.position.y * 100
     hudGroup!.appendChild(
-      elNS('circle')({
+      circle({
         attributes: {
           style: {
             fill: myColour,
@@ -73,7 +73,7 @@ function drawIndicatorOverSelectedPiece() {
 }
 
 function HudElement(x: number, y: number) {
-  return elNS('polygon')({
+  return polygon({
     attributes: {
       style: {
         fill: colour1.value,
@@ -92,11 +92,11 @@ function HudElement(x: number, y: number) {
 // draws while circles over all empty circles
 function drawStonePlacementMoves() {
   const legalStonePlacements = getLegalStonePlacements()
-  for (const circle of legalStonePlacements) {
-    const x = circle!.position.x * 100
-    const y = circle!.position.y * 100
+  for (const circleData of legalStonePlacements) {
+    const x = circleData!.position.x * 100
+    const y = circleData!.position.y * 100
     hudGroup!.appendChild(
-      elNS('circle')({
+      circle({
         attributes: {
           style: {
             fill: 'white',

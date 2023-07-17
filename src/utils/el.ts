@@ -1,6 +1,6 @@
 import { RecursivePartial } from '../types/recursivePartial'
 
-export function el<T extends keyof HTMLElementTagNameMap>(tag: T) {
+function el<T extends keyof HTMLElementTagNameMap>(tag: T) {
   return ({
     attributes,
     children,
@@ -17,7 +17,7 @@ export function el<T extends keyof HTMLElementTagNameMap>(tag: T) {
   }
 }
 
-export function elNS<T extends keyof SVGElementTagNameMap>(tag: T) {
+function elNS<T extends keyof SVGElementTagNameMap>(tag: T) {
   return ({
     attributes,
     children,
@@ -160,3 +160,62 @@ export const u = el('u')
 export const ul = el('ul')
 export const video = el('video')
 export const wbr = el('wbr')
+
+export const animate = elNS('animate')
+export const animateMotion = elNS('animateMotion')
+export const animateTransform = elNS('animateTransform')
+export const circle = elNS('circle')
+export const clipPath = elNS('clipPath')
+export const defs = elNS('defs')
+export const desc = elNS('desc')
+export const ellipse = elNS('ellipse')
+export const feBlend = elNS('feBlend')
+export const feColorMatrix = elNS('feColorMatrix')
+export const feComponentTransfer = elNS('feComponentTransfer')
+export const feComposite = elNS('feComposite')
+export const feConvolveMatrix = elNS('feConvolveMatrix')
+export const feDiffuseLighting = elNS('feDiffuseLighting')
+export const feDisplacementMap = elNS('feDisplacementMap')
+export const feDistantLight = elNS('feDistantLight')
+export const feDropShadow = elNS('feDropShadow')
+export const feFlood = elNS('feFlood')
+export const feFuncA = elNS('feFuncA')
+export const feFuncB = elNS('feFuncB')
+export const feFuncG = elNS('feFuncG')
+export const feFuncR = elNS('feFuncR')
+export const feGaussianBlur = elNS('feGaussianBlur')
+export const feImage = elNS('feImage')
+export const feMerge = elNS('feMerge')
+export const feMergeNode = elNS('feMergeNode')
+export const feMorphology = elNS('feMorphology')
+export const feOffset = elNS('feOffset')
+export const fePointLight = elNS('fePointLight')
+export const feSpecularLighting = elNS('feSpecularLighting')
+export const feSpotLight = elNS('feSpotLight')
+export const feTile = elNS('feTile')
+export const feTurbulence = elNS('feTurbulence')
+export const filter = elNS('filter')
+export const foreignObject = elNS('foreignObject')
+export const g = elNS('g')
+export const image = elNS('image')
+export const line = elNS('line')
+export const linearGradient = elNS('linearGradient')
+export const marker = elNS('marker')
+export const mask = elNS('mask')
+export const metadata = elNS('metadata')
+export const mpath = elNS('mpath')
+export const path = elNS('path')
+export const pattern = elNS('pattern')
+export const polygon = elNS('polygon')
+export const polyline = elNS('polyline')
+export const radialGradient = elNS('radialGradient')
+export const rect = elNS('rect')
+export const set = elNS('set')
+export const stop = elNS('stop')
+export const svg = elNS('svg')
+export const symbol = elNS('symbol')
+export const text = elNS('text')
+export const textPath = elNS('textPath')
+export const tspan = elNS('tspan')
+export const use = elNS('use')
+export const view = elNS('view')

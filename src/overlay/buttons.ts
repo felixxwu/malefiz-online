@@ -1,5 +1,5 @@
 import { colour1, textOpacity } from '../data/cssVars'
-import { el } from '../utils/el'
+import { div } from '../utils/el'
 import { fullScreenIcon, menuIcon, minusIcon, plusIcon } from '../icons'
 import { store } from '../data/store'
 import { fitToScreen, zoomIn, zoomOut } from '../utils/zoom'
@@ -21,7 +21,7 @@ const overlayButtonStyles: Partial<CSSStyleDeclaration> = {
 const edgeMargin = 20
 
 export function OverlayButtons() {
-  return el('div')({
+  return div({
     attributes: {
       id: 'overlay',
       style: {
@@ -40,8 +40,8 @@ export function OverlayButtons() {
 }
 
 function MenuButton() {
-  if (!store.gameState) return el('div')({})
-  return el('div')({
+  if (!store.gameState) return div({})
+  return div({
     attributes: {
       style: {
         ...overlayButtonStyles,
@@ -60,8 +60,8 @@ function MenuButton() {
 }
 
 function ActionButton() {
-  if (store.actionButton === null) return el('div')({})
-  return el('div')({
+  if (store.actionButton === null) return div({})
+  return div({
     attributes: {
       style: {
         position: 'absolute',
@@ -72,7 +72,7 @@ function ActionButton() {
       },
     },
     children: [
-      el('div')({
+      div({
         attributes: {
           style: {
             ...overlayButtonStyles,
@@ -83,7 +83,7 @@ function ActionButton() {
           onclick: store.actionButton.onClick,
         },
         children: [
-          el('div')({
+          div({
             attributes: {
               style: {
                 color: store.actionButton.onClick ? colour1.value : 'black',
@@ -99,7 +99,7 @@ function ActionButton() {
 }
 
 function ViewControls(children: Node[]) {
-  return el('div')({
+  return div({
     attributes: {
       style: {
         position: 'absolute',
@@ -116,7 +116,7 @@ function ViewControls(children: Node[]) {
 }
 
 function ZoomIn() {
-  return el('div')({
+  return div({
     attributes: {
       style: overlayButtonStyles,
       onclick: zoomIn,
@@ -126,7 +126,7 @@ function ZoomIn() {
 }
 
 function FitScreen() {
-  return el('div')({
+  return div({
     attributes: {
       style: overlayButtonStyles,
       onclick: () => {
@@ -138,7 +138,7 @@ function FitScreen() {
 }
 
 function ZoomOut() {
-  return el('div')({
+  return div({
     attributes: {
       style: overlayButtonStyles,
       onclick: zoomOut,

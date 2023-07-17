@@ -2,7 +2,7 @@ import { CONSTS } from '../data/consts'
 import { textOpacity } from '../data/cssVars'
 import { getMapPosition } from '../maps/mapUtils'
 import { GameState } from '../types/gameTypes'
-import { elNS } from '../utils/el'
+import { polygon } from '../utils/el'
 import { playersGroup } from '../utils/getSvgGroup'
 import { polygonToXY } from '../utils/polygon'
 
@@ -17,7 +17,7 @@ export function drawStones(gameState: GameState) {
     if (existingStone) {
       existingStone.style.transform = `translate(${pos!.x * 100}px, ${pos!.y * 100}px)`
     } else {
-      const stonePoly = elNS('polygon')({
+      const stonePoly = polygon({
         attributes: {
           id: 's' + stone.stoneId,
           style: {

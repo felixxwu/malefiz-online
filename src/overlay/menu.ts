@@ -1,6 +1,6 @@
 import qrcode from 'qrcode-generator'
 import { colour1, menuOpacity, menuPointerEvents } from '../data/cssVars'
-import { el } from '../utils/el'
+import { a, div } from '../utils/el'
 import { crossIcon } from '../icons'
 import { store } from '../data/store'
 import { leaveGame } from '../game/leaveGame'
@@ -14,7 +14,7 @@ export function Menu() {
 
   const closeMenu = () => (store.menuOpen = false)
 
-  return el('div')({
+  return div({
     attributes: {
       style: {
         position: 'absolute',
@@ -36,14 +36,14 @@ export function Menu() {
     children: [
       StopPropagationWrapper([
         InvitePlayers([
-          el('div')({ attributes: { innerHTML: 'Invite Players:', style: { color: 'black' } } }),
-          el('div')({
+          div({ attributes: { innerHTML: 'Invite Players:', style: { color: 'black' } } }),
+          div({
             attributes: {
               id: 'qrcode',
               innerHTML: qr.createSvgTag({ cellSize: 2, margin: 0, scalable: true }),
             },
           }),
-          el('a')({
+          a({
             attributes: {
               href: window.location.href,
               innerHTML: window.location.href,
@@ -51,9 +51,7 @@ export function Menu() {
             },
           }),
         ]),
-        LeaveGame([
-          el('div')({ attributes: { innerHTML: 'Leave Game', style: { color: 'black' } } }),
-        ]),
+        LeaveGame([div({ attributes: { innerHTML: 'Leave Game', style: { color: 'black' } } })]),
         CloseMenu([crossIcon(15, 'black')]),
       ]),
     ],
@@ -61,7 +59,7 @@ export function Menu() {
 }
 
 function StopPropagationWrapper(children: Node[]) {
-  return el('div')({
+  return div({
     attributes: {
       onclick: (e: Event) => e.stopPropagation(),
       style: {
@@ -77,9 +75,9 @@ function StopPropagationWrapper(children: Node[]) {
 }
 
 function InvitePlayers(children: Node[]) {
-  if (store.localGame) return el('div')({})
+  if (store.localGame) return div({})
 
-  return el('div')({
+  return div({
     attributes: {
       style: {
         borderRadius: '5px',
@@ -97,7 +95,7 @@ function InvitePlayers(children: Node[]) {
 }
 
 function LeaveGame(children: Node[]) {
-  return el('div')({
+  return div({
     attributes: {
       style: {
         width: '200px',
@@ -118,7 +116,7 @@ function LeaveGame(children: Node[]) {
 function CloseMenu(children: Node[]) {
   const closeMenu = () => (store.menuOpen = false)
 
-  return el('div')({
+  return div({
     attributes: {
       style: {
         width: '40px',

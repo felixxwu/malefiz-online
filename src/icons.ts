@@ -1,13 +1,13 @@
 import { colour1 } from './data/cssVars'
-import { elNS } from './utils/el'
+import { path, svg } from './utils/el'
 
-function createIcon(path: string) {
+function createIcon(pathString: string) {
   return (size: number = 24, colour: string = colour1.value) =>
-    elNS('svg')({
+    svg({
       readonlyAttributes: { viewBox: `0 0 24 24`, width: `${size}`, height: `${size}` },
       children: [
-        elNS('path')({
-          readonlyAttributes: { d: path, fill: colour },
+        path({
+          readonlyAttributes: { d: pathString, fill: colour },
         }),
       ],
     })

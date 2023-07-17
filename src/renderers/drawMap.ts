@@ -1,6 +1,6 @@
 import { CONSTS } from '../data/consts'
 import { mapGroup } from '../utils/getSvgGroup'
-import { el, elNS } from '../utils/el'
+import { circle, div, foreignObject, line, polygon } from '../utils/el'
 import { colour1, textOpacity } from '../data/cssVars'
 import { Circle, Map } from '../types/mapTypes'
 import { handleCircleClick } from '../game/handleCircleClick'
@@ -14,12 +14,12 @@ export function drawMap(map: Map) {
 }
 
 function drawCircles(map: Map) {
-  for (const circle of map) {
-    if (circle.start) {
+  for (const circleData of map) {
+    if (circleData.start) {
       mapGroup!.appendChild(
-        elNS('polygon')({
+        polygon({
           attributes: {
-            id: circle.id,
+            id: circleData.id,
             style: {
               cursor: 'pointer',
               fill: 'black',
@@ -27,34 +27,37 @@ function drawCircles(map: Map) {
               stroke: 'black',
               strokeWidth: '50',
             },
-            onclick: circle.onClick ?? (() => handleCircleClick(circle.id)),
+            onclick: circleData.onClick ?? (() => handleCircleClick(circleData.id)),
           },
           readonlyAttributes: {
             points: [0, 1, 2, 3, 4]
               .map(i => polygonToXY(i, 5, 30))
-              .map(({ x, y }) => `${circle.position.x * 100 + x},${circle.position.y * 100 + y}`)
+              .map(
+                ({ x, y }) =>
+                  `${circleData.position.x * 100 + x},${circleData.position.y * 100 + y}`
+              )
               .join(' '),
           },
         })
       )
     } else {
       mapGroup!.appendChild(
-        elNS('circle')({
+        circle({
           attributes: {
-            id: circle.id,
+            id: circleData.id,
             style: { cursor: 'pointer', stroke: 'transparent', strokeWidth: '40' },
-            onclick: circle.onClick ?? (() => handleCircleClick(circle.id)),
+            onclick: circleData.onClick ?? (() => handleCircleClick(circleData.id)),
           },
           readonlyAttributes: {
-            cx: `${circle.position.x * 100}`,
-            cy: `${circle.position.y * 100}`,
+            cx: `${circleData.position.x * 100}`,
+            cy: `${circleData.position.y * 100}`,
             r: `${CONSTS.CIRCLE_RADIUS}`,
           },
         })
       )
-      if (circle.finish) {
-        mapGroup!.appendChild(FinishCircle(circle, CONSTS.CIRCLE_RADIUS - 5))
-        mapGroup!.appendChild(FinishCircle(circle, CONSTS.CIRCLE_RADIUS - 15))
+      if (circleData.finish) {
+        mapGroup!.appendChild(FinishCircle(circleData, CONSTS.CIRCLE_RADIUS - 5))
+        mapGroup!.appendChild(FinishCircle(circleData, CONSTS.CIRCLE_RADIUS - 15))
       }
     }
   }
@@ -65,7 +68,7 @@ function drawText(map: Map) {
     // circle.text = circle.id
     if (circle.text) {
       mapGroup!.appendChild(
-        elNS('foreignObject')({
+        foreignObject({
           attributes: { style: { pointerEvents: 'none' } },
           readonlyAttributes: {
             x: `${circle.position.x * 100 - CONSTS.CIRCLE_RADIUS}px`,
@@ -74,7 +77,7 @@ function drawText(map: Map) {
             height: `${CONSTS.CIRCLE_RADIUS * 2}px`,
           },
           children: [
-            el('div')({
+            div({
               attributes: {
                 style: {
                   width: `${CONSTS.CIRCLE_RADIUS * 2}px`,
@@ -87,7 +90,7 @@ function drawText(map: Map) {
                 },
               },
               children: [
-                el('div')({
+                div({
                   attributes: {
                     style: {
                       width: 'min-content',
@@ -115,7 +118,7 @@ function drawLinesBetweenCircles(map: Map) {
         continue
       }
       mapGroup!.appendChild(
-        elNS('line')({
+        line({
           readonlyAttributes: {
             x1: `${circle.position.x * 100}`,
             y1: `${circle.position.y * 100}`,
@@ -130,8 +133,8 @@ function drawLinesBetweenCircles(map: Map) {
   }
 }
 
-function FinishCircle(circle: Circle, radius: number) {
-  return elNS('circle')({
+function FinishCircle(circleData: Circle, radius: number) {
+  return circle({
     attributes: {
       style: {
         pointerEvents: 'none',
@@ -141,8 +144,8 @@ function FinishCircle(circle: Circle, radius: number) {
       },
     },
     readonlyAttributes: {
-      cx: `${circle.position.x * 100}`,
-      cy: `${circle.position.y * 100}`,
+      cx: `${circleData.position.x * 100}`,
+      cy: `${circleData.position.y * 100}`,
       r: `${radius - 2.5}`,
     },
   })
