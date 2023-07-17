@@ -48,7 +48,7 @@ export async function playAiIfApplicable() {
 
 function canAiPlay() {
   if (!store.gameState) return false
-  if (!getUserData().isHost) return false
+  if (!getUserData() || !getUserData().isHost) return false
   const playerTurn = store.gameState.playerTurn
   const player = store.gameState.players.find(player => player.id === playerTurn)
   if (player?.isAI) return true

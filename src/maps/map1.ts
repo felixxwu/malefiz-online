@@ -9,7 +9,7 @@ O               O
 -               -
 O-O-O-O-S-O-O-O-O
         -
-        S
+D       S
         -
     S-O-S-Z-S
     -       -
@@ -21,5 +21,5 @@ X               X
 -               -
 X-X-X-X-X-X-X-X-X
     -       -
-    1       2
+    1   P   2
 `)

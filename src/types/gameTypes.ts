@@ -30,4 +30,6 @@ export type GameState = {
   dieRoll: number | null
   gameStateHash: string
   stones: Stone[]
+  stonePit: { x: number; y: number }
+  diePit: { x: number; y: number }
 }

@@ -19,7 +19,8 @@ export function drawDie() {
           willChange: 'transform',
         },
         onclick: () => {
-          group.style.transform = `rotate(0deg) translate(0px, -50px)`
+          const diePit = store.gameState!.diePit
+          group.style.transform = `rotate(0deg) translate(${diePit.x * 100}px, ${diePit.y * 100}px)`
           group.style.transformOrigin = `0 0`
         },
       },

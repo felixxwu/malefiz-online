@@ -10,6 +10,8 @@ F = finish
 Z = zoom in point
 S = stone
 X = safe zone
+P = stone pit
+D = die pit
 
 */
 
@@ -30,6 +32,8 @@ const players = [
 export function parseMap(template: string): GameState {
   let pieceId = 0
   const mapGrid = mapStringTo2dArray(template)
+  const stonePit = getCoordinates(mapGrid, ['P'])[0]
+  const diePit = getCoordinates(mapGrid, ['D'])[0]
   const circleCoordinates = getCoordinates(
     mapGrid,
     ['O', 'F', 'Z', 'S', 'X'].concat(players.map(p => p.id))
@@ -72,6 +76,8 @@ export function parseMap(template: string): GameState {
     playerTurn: '1',
     dieRoll: null,
     gameStateHash: '',
+    stonePit: { x: Math.floor(stonePit.x / 2), y: Math.floor(stonePit.y / 2) },
+    diePit: { x: Math.floor(diePit.x / 2), y: Math.floor(diePit.y / 2) },
   }
   return gameState
 }

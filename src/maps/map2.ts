@@ -9,9 +9,9 @@ O                       O
 -                       -
 O-O-O-O-O-O-S-O-O-O-O-O-O
             -
-            S
+D           S
             -
-        O-O-S-O-O
+        O-O-S-O-O   P
         -       -
         O       O
         -       -

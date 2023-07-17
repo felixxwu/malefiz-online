@@ -1,6 +1,6 @@
 import { CONSTS } from '../data/consts'
 import { textOpacity } from '../data/cssVars'
-import { getMapPosition } from '../maps/mapUtils'
+import { store } from '../data/store'
 import { GameState } from '../types/gameTypes'
 import { polygon } from '../utils/el'
 import { playersGroup } from '../utils/getSvgGroup'
@@ -9,10 +9,7 @@ import { polygonToXY } from '../utils/polygon'
 export function drawStones(gameState: GameState) {
   for (const stone of gameState.stones) {
     const circle = gameState.map.find(circle => circle.id === stone.circleId)
-    const mapPosition = getMapPosition(gameState.map)
-    const pos = circle
-      ? circle.position
-      : { x: mapPosition.mapLeft + mapPosition.mapWidth / 2, y: mapPosition.mapBottom }
+    const pos = circle ? circle.position : store.gameState!.stonePit
     const existingStone = playersGroup!.querySelector<SVGElement>(`#s${stone.stoneId}`)
     if (existingStone) {
       existingStone.style.transform = `translate(${pos!.x * 100}px, ${pos!.y * 100}px)`
