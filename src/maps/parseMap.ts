@@ -54,8 +54,9 @@ export function parseMap(template: string): GameState {
   const gameState: GameState = {
     map: createdMap,
     players: playerCoordinates
-      .map(player => ({
+      .map((player, i) => ({
         ...player,
+        isAI: i !== 0,
         positions: multiplyPieces(player.coords, 5).map(c => ({
           pieceId: `${pieceId++}`,
           circleId: findCircle(c.x, c.y, circleCoordinates)!.id,

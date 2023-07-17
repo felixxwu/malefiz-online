@@ -1,12 +1,11 @@
 import { store } from '../data/store'
 import { joinGame } from '../game/joinGame'
 import { introSequence } from '../init'
-import { map1 } from '../maps/map1'
 
-export function startLocalGame() {
+export async function startLocalGame() {
   store.localGame = true
-  store.gameState = map1
+  store.gameState = store.mapSelectionScreen!
   store.currentMap = store.gameState.map
-  introSequence()
-  joinGame()
+  await introSequence()
+  await joinGame()
 }

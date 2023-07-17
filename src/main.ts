@@ -6,6 +6,7 @@ import { GameState } from './types/gameTypes'
 import { store } from './data/store'
 import { gameId } from './data/gameId'
 import { introSequence, setup } from './init'
+import { zoomIntoCircle } from './utils/zoom'
 
 setup()
 
@@ -16,6 +17,7 @@ if (gameId) {
     if (firstDataLoad) {
       firstDataLoad = false
       store.currentMap = store.gameState.map
+      zoomIntoCircle({ transition: 0 })
       introSequence()
       joinGame(gameId!)
     }

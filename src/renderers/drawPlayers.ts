@@ -45,3 +45,7 @@ export function drawPlayers(gameState: GameState) {
     }
   }
 }
+
+export function clearPlayersAndStones() {
+  playersGroup!.innerHTML = ''
+}

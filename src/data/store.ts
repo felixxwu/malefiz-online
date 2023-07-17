@@ -7,6 +7,9 @@ import { drawHud } from '../renderers/drawHud'
 import { onGameStateChange } from '../game/onGameStateChange'
 import { drawOverlay } from '../overlay'
 import { HashTable } from '../maps/mapToHashTable'
+import { clearPlayersAndStones, drawPlayers } from '../renderers/drawPlayers'
+import { drawStones } from '../renderers/drawStones'
+import { fitToScreen } from '../utils/zoom'
 
 const init = {
   mouseDownData: <
@@ -35,6 +38,8 @@ const init = {
   waitingForServer: false,
   gameOver: false,
   lastDieRoll: <number | null>null,
+  mapSelectionScreen: <GameState | null>null,
+  playerSetupMenu: false,
 }
 
 const onChange: OnChange<keyof typeof init> = {
@@ -98,6 +103,19 @@ const onChange: OnChange<keyof typeof init> = {
   },
   waitingForServer() {
     drawHud()
+  },
+  mapSelectionScreen(value) {
+    drawOverlay()
+    if (value) {
+      store.currentMap = value.map
+      clearPlayersAndStones()
+      drawPlayers(value)
+      drawStones(value)
+      fitToScreen(value.map, {})
+    }
+  },
+  playerSetupMenu() {
+    drawOverlay()
   },
 }
 

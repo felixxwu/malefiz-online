@@ -6,6 +6,7 @@ import { rollDie } from '../game/rollDie'
 import { submitMove } from '../game/submitMove'
 import { placeStone } from '../game/placeStone'
 import { playerPiecesWithMoves } from '../game/playerPiecesWithMoves'
+import { getUserData } from '../data/userId'
 
 export async function playAiIfApplicable() {
   if (!canAiPlay()) return
@@ -47,5 +48,5 @@ export async function playAiIfApplicable() {
 }
 
 function canAiPlay() {
-  return store.localGame && !isMyTurn()
+  return store.localGame && !isMyTurn() && getUserData()
 }

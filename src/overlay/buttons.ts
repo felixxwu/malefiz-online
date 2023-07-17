@@ -6,7 +6,7 @@ import { fitToScreen, zoomIn, zoomOut } from '../utils/zoom'
 
 const buttonSize = 40
 
-const overlayButtonStyles: Partial<CSSStyleDeclaration> = {
+export const overlayButtonStyles: Partial<CSSStyleDeclaration> = {
   width: `${buttonSize}px`,
   height: `${buttonSize}px`,
   borderRadius: `${buttonSize / 2}px`,
@@ -18,7 +18,7 @@ const overlayButtonStyles: Partial<CSSStyleDeclaration> = {
   cursor: 'pointer',
 }
 
-const edgeMargin = 20
+export const edgeMargin = 20
 
 export function OverlayButtons() {
   return div({
@@ -55,7 +55,7 @@ function MenuButton() {
         store.menuOpen = true
       },
     },
-    children: [menuIcon(15)],
+    children: [menuIcon(16)],
   })
 }
 
@@ -121,7 +121,7 @@ function ZoomIn() {
       style: overlayButtonStyles,
       onclick: zoomIn,
     },
-    children: [plusIcon(15)],
+    children: [plusIcon(16)],
   })
 }
 
@@ -133,7 +133,7 @@ function FitScreen() {
         store.currentMap && fitToScreen(store.currentMap, {})
       },
     },
-    children: [fullScreenIcon(15)],
+    children: [fullScreenIcon(16)],
   })
 }
 
@@ -143,6 +143,6 @@ function ZoomOut() {
       style: overlayButtonStyles,
       onclick: zoomOut,
     },
-    children: [minusIcon(15)],
+    children: [minusIcon(16)],
   })
 }

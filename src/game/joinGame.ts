@@ -34,7 +34,7 @@ export async function joinGame(gameId?: string) {
       }),
   })
 
-  updateGameState(newGameState)
+  await updateGameState(newGameState)
 
   if (!store.localGame) {
     // keep user online
