@@ -1,17 +1,37 @@
 import { CONSTS } from '../data/consts'
-import { mapGroup } from '../utils/getSvgGroup'
-import { circle, div, foreignObject, path, polygon } from '../utils/el'
+import { mapGroup, svg } from '../utils/getSvgGroup'
+import { circle, div, foreignObject, path, polygon, rect } from '../utils/el'
 import { colour1, textOpacity } from '../data/cssVars'
 import { Circle, Map } from '../types/mapTypes'
 import { handleCircleClick } from '../game/handleCircleClick'
 import { polygonToXY } from '../utils/polygon'
 import { getMapPosition } from '../maps/mapUtils'
+import { store } from '../data/store'
 
 export function drawMap(map: Map) {
   mapGroup!.innerHTML = ''
   drawLinesBetweenCircles(map)
   drawCircles(map)
   drawText(map)
+
+  const mapPosition = getMapPosition(map)
+  mapGroup!.appendChild(
+    rect({
+      attributes: {
+        id: 'mapPositionRef',
+        style: {
+          opacity: '0',
+          pointerEvents: 'none',
+        },
+      },
+      readonlyAttributes: {
+        x: `${mapPosition.mapLeft * 100}`,
+        y: `${mapPosition.mapTop * 100}`,
+        width: `${mapPosition.mapWidth * 100}`,
+        height: `${mapPosition.mapHeight * 100}`,
+      },
+    })
+  )
 }
 
 function drawCircles(map: Map) {
@@ -51,15 +71,20 @@ function drawCircles(map: Map) {
     }
   }
   mapGroup!.appendChild(path({ readonlyAttributes: { d: pathData } }))
-  mapGroup!.style.cursor = 'pointer'
-  mapGroup!.onclick = (event: MouseEvent) => {
-    const rect = mapGroup!.getBoundingClientRect()
+  mapGroup!.style.pointerEvents = 'none'
+  svg!.onclick = (event: MouseEvent) => {
+    const rect = document.getElementById('mapPositionRef')!.getBoundingClientRect()
     const mapSize = getMapPosition(map)
-    const circleSize = rect.width / (mapSize.mapWidth + 1)
-    const mapCoords = {
-      x: (event.clientX - rect.left) / circleSize - 0.5 + mapSize.mapLeft,
-      y: (event.clientY - rect.top) / circleSize - 0.5 + mapSize.mapTop,
-    }
+    const circleSize = rect.width / mapSize.mapWidth || rect.height / mapSize.mapHeight
+    const mapCoords = circleSize
+      ? {
+          x: (event.clientX - rect.left) / circleSize + mapSize.mapLeft,
+          y: (event.clientY - rect.top) / circleSize + mapSize.mapTop,
+        }
+      : {
+          x: mapSize.mapLeft,
+          y: mapSize.mapTop,
+        }
     for (const circle of map) {
       if (
         Math.abs(circle.position.x - mapCoords.x) < 0.5 &&
@@ -67,12 +92,16 @@ function drawCircles(map: Map) {
       ) {
         if (circle.onClick) {
           circle.onClick()
+          return
         } else {
           handleCircleClick(circle.id)
+          return
         }
       }
     }
+    store.pieceSelected = null
   }
+
   const finish = map.find(circle => circle.finish)
   if (finish) {
     mapGroup!.appendChild(FinishCircle(finish, CONSTS.CIRCLE_RADIUS - 5))
