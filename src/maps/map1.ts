@@ -15,7 +15,7 @@ D       S
     -       -
     O       O
     -       -
-S-O-O-O-O-O-O-O-S
+S-O-O-O-S-O-O-O-S
 -       -       -
 X       X       X
 -       -       -
