@@ -6,6 +6,7 @@ import { submitMove } from '../game/submitMove'
 import { placeStone } from '../game/placeStone'
 import { playerPiecesWithMoves } from '../game/playerPiecesWithMoves'
 import { getUserData } from '../data/userId'
+import { selectedBestPieceToMove } from './ai'
 
 export async function playAiIfApplicable() {
   if (!canAiPlay()) return
@@ -30,10 +31,9 @@ export async function playAiIfApplicable() {
   await sleep(1000)
   if (!canAiPlay()) return
 
-  const randomPiece = piecesWithLegalMoves[Math.floor(Math.random() * piecesWithLegalMoves.length)]
-  const legalMoves = randomPiece.moves
-  const randomMove = legalMoves[Math.floor(Math.random() * legalMoves.length)]
-  await submitMove(randomPiece.pieceId, randomMove.id)
+  const { bestMove, piece } = selectedBestPieceToMove(piecesWithLegalMoves)
+
+  await submitMove(piece.pieceId, bestMove.id)
 
   // place stone if taken
   if (store.gameState!.stones.some(stone => stone.circleId === null)) {

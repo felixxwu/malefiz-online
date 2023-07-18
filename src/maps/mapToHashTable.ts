@@ -1,11 +1,13 @@
 import { GameState, Stone } from '../types/gameTypes'
 import { Circle } from '../types/mapTypes'
+import { addDistancesToFinish } from './distanceToFinish'
 
 export type HashTable = {
   [circleId: string]: {
     circle?: Circle
     stone?: Stone
     pieces?: { playerId: string; pieceId: string }[]
+    distanceToFinish?: number
   }
 }
 
@@ -43,6 +45,8 @@ export function mapToHashTable(gameState: GameState) {
       }
     }
   }
+
+  addDistancesToFinish(hashTable)
 
   return hashTable
 }

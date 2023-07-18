@@ -27,6 +27,8 @@ export function drawPlayers(gameState: GameState) {
           attributes: {
             id: 'p' + position.pieceId,
             style: {
+              stroke: 'black',
+              strokeWidth: '2',
               transition: `${CONSTS.PLAYER_TRANSITION}ms`,
               transform: `translate(${pos!.x * 100}px, ${pos!.y * 100}px)`,
               filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.3))',
