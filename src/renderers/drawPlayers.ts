@@ -7,6 +7,7 @@ import { polygonToXY } from '../utils/polygon'
 
 const spacing = 0.3
 const spokes = 5
+const playerSize = 25
 
 export function drawPlayers(gameState: GameState) {
   for (const player of gameState.players) {
@@ -36,7 +37,7 @@ export function drawPlayers(gameState: GameState) {
           readonlyAttributes: {
             cx: '0',
             cy: '0',
-            r: '20',
+            r: `${playerSize}`,
             fill: player.colour,
           },
         })

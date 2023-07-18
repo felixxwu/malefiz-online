@@ -1,10 +1,11 @@
 import { CONSTS } from '../data/consts'
 import { mapGroup } from '../utils/getSvgGroup'
-import { circle, div, foreignObject, line, polygon } from '../utils/el'
+import { circle, div, foreignObject, path, polygon } from '../utils/el'
 import { colour1, textOpacity } from '../data/cssVars'
 import { Circle, Map } from '../types/mapTypes'
 import { handleCircleClick } from '../game/handleCircleClick'
 import { polygonToXY } from '../utils/polygon'
+import { getMapPosition } from '../maps/mapUtils'
 
 export function drawMap(map: Map) {
   mapGroup!.innerHTML = ''
@@ -14,6 +15,7 @@ export function drawMap(map: Map) {
 }
 
 function drawCircles(map: Map) {
+  let pathData = ''
   for (const circleData of map) {
     if (circleData.start) {
       mapGroup!.appendChild(
@@ -25,7 +27,7 @@ function drawCircles(map: Map) {
               fill: 'black',
               strokeLinejoin: 'round',
               stroke: 'black',
-              strokeWidth: '50',
+              strokeWidth: '60',
             },
             onclick: circleData.onClick ?? (() => handleCircleClick(circleData.id)),
           },
@@ -41,29 +43,40 @@ function drawCircles(map: Map) {
         })
       )
     } else {
-      mapGroup!.appendChild(
-        circle({
-          attributes: {
-            id: circleData.id,
-            style: {
-              cursor: 'pointer',
-              stroke: 'transparent',
-              strokeWidth: `${100 - CONSTS.CIRCLE_RADIUS * 2}`,
-            },
-            onclick: circleData.onClick ?? (() => handleCircleClick(circleData.id)),
-          },
-          readonlyAttributes: {
-            cx: `${circleData.position.x * 100}`,
-            cy: `${circleData.position.y * 100}`,
-            r: `${CONSTS.CIRCLE_RADIUS}`,
-          },
-        })
-      )
-      if (circleData.finish) {
-        mapGroup!.appendChild(FinishCircle(circleData, CONSTS.CIRCLE_RADIUS - 5))
-        mapGroup!.appendChild(FinishCircle(circleData, CONSTS.CIRCLE_RADIUS - 15))
+      pathData += `M ${circleData.position.x * 100}, ${circleData.position.y * 100} m ${
+        CONSTS.CIRCLE_RADIUS
+      }, 0 a ${CONSTS.CIRCLE_RADIUS},${CONSTS.CIRCLE_RADIUS} 0 1,0 ${
+        CONSTS.CIRCLE_RADIUS * -2
+      },0 a ${CONSTS.CIRCLE_RADIUS},${CONSTS.CIRCLE_RADIUS} 0 1,0 ${CONSTS.CIRCLE_RADIUS * 2},0`
+    }
+  }
+  mapGroup!.appendChild(path({ readonlyAttributes: { d: pathData } }))
+  mapGroup!.style.cursor = 'pointer'
+  mapGroup!.onclick = (event: MouseEvent) => {
+    const rect = mapGroup!.getBoundingClientRect()
+    const mapSize = getMapPosition(map)
+    const circleSize = rect.width / (mapSize.mapWidth + 1)
+    const mapCoords = {
+      x: (event.clientX - rect.left) / circleSize - 0.5 + mapSize.mapLeft,
+      y: (event.clientY - rect.top) / circleSize - 0.5 + mapSize.mapTop,
+    }
+    for (const circle of map) {
+      if (
+        Math.abs(circle.position.x - mapCoords.x) < 0.5 &&
+        Math.abs(circle.position.y - mapCoords.y) < 0.5
+      ) {
+        if (circle.onClick) {
+          circle.onClick()
+        } else {
+          handleCircleClick(circle.id)
+        }
       }
     }
+  }
+  const finish = map.find(circle => circle.finish)
+  if (finish) {
+    mapGroup!.appendChild(FinishCircle(finish, CONSTS.CIRCLE_RADIUS - 5))
+    mapGroup!.appendChild(FinishCircle(finish, CONSTS.CIRCLE_RADIUS - 15))
   }
 }
 
@@ -115,26 +128,39 @@ function drawText(map: Map) {
 }
 
 function drawLinesBetweenCircles(map: Map) {
+  const linesHashTable: { [key: string]: Circle[] } = {}
   for (const circle of map) {
     for (const neighbourId of circle.neighbours) {
       const neighbour = map.find(c => c.id === neighbourId)
       if (!neighbour) {
         continue
       }
-      mapGroup!.appendChild(
-        line({
-          readonlyAttributes: {
-            x1: `${circle.position.x * 100}`,
-            y1: `${circle.position.y * 100}`,
-            x2: `${neighbour.position.x * 100}`,
-            y2: `${neighbour.position.y * 100}`,
-            stroke: 'black',
-            'stroke-width': `${CONSTS.PATH_STROKE_WIDTH}`,
-          },
-        })
-      )
+      linesHashTable[[circle.id, neighbour.id].sort().join('-')] = [circle, neighbour]
     }
   }
+  const lines: Circle[][] = []
+  for (const key in linesHashTable) {
+    lines.push(linesHashTable[key])
+  }
+  const svgPath = path({
+    attributes: {
+      style: {
+        stroke: 'black',
+        strokeWidth: `${CONSTS.PATH_STROKE_WIDTH}`,
+      },
+    },
+    readonlyAttributes: {
+      d: lines
+        .map(
+          ([circle1, circle2]) =>
+            `M ${circle1.position.x * 100} ${circle1.position.y * 100} L ${
+              circle2.position.x * 100
+            } ${circle2.position.y * 100}`
+        )
+        .join(' '),
+    },
+  })
+  mapGroup!.appendChild(svgPath)
 }
 
 function FinishCircle(circleData: Circle, radius: number) {
