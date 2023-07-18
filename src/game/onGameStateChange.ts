@@ -20,15 +20,15 @@ export function onGameStateChange(gameState: GameState | null) {
   } else {
     store.actionButton = null
   }
+  store.gameStateHashTable = mapToHashTable(gameState)
+  if (store.gameState!.dieRoll !== null) {
+    store.lastDieRoll = store.gameState!.dieRoll
+  }
 
   drawPlayers(gameState)
   drawStones(gameState)
   drawHud()
   drawDie()
   drawOverlay()
-  store.gameStateHashTable = mapToHashTable(gameState)
-  if (store.gameState!.dieRoll !== null) {
-    store.lastDieRoll = store.gameState!.dieRoll
-  }
   playAiIfApplicable()
 }
