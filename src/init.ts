@@ -14,6 +14,7 @@ export async function setup() {
   initUserId()
   drawOverlay()
   drawMap(store.currentMap)
+  document.getElementById('loading')!.remove()
 }
 
 export async function introSequence() {
