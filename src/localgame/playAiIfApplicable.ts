@@ -6,7 +6,7 @@ import { submitMove } from '../game/submitMove'
 import { placeStone } from '../game/placeStone'
 import { playerPiecesWithMoves } from '../game/playerPiecesWithMoves'
 import { getUserData } from '../data/userId'
-import { selectedBestPieceToMove } from './ai'
+import { createAI, selectedBestPieceToMove } from './ai'
 
 let aiPlaying = false
 
@@ -46,9 +46,16 @@ export async function playAiIfApplicable() {
     await sleep(100)
 
     const legalStonePlacements = getLegalStonePlacements()
-    const randomStonePlacement =
-      legalStonePlacements[Math.floor(Math.random() * legalStonePlacements.length)]
-    placeStone(randomStonePlacement.id)
+    const AI = createAI({
+      forwardPriority: 0.1,
+      stonePriority: 2,
+      killPriority: 1,
+      stoneLookahead: 5,
+      stoneForwardPriority: 0.03,
+      ditherRange: 0.1,
+    })
+    const placement = AI.getBestStonePlacement(legalStonePlacements)
+    placeStone(placement.id)
   }
 }
 

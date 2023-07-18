@@ -23,8 +23,9 @@ function addToHashTable(
   }
 
   const circle = hashTable[circleId].circle!
+  const isStone = !!hashTable[circleId].stone
   for (const neighbourId of circle.neighbours) {
     if (visited.includes(neighbourId)) continue
-    addToHashTable(hashTable, neighbourId, distance + 1, [...visited, neighbourId])
+    addToHashTable(hashTable, neighbourId, distance + (isStone ? 6 : 1), [...visited, neighbourId])
   }
 }

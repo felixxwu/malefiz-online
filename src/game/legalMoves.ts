@@ -41,6 +41,14 @@ function findLegalMoves(circle: Circle, movesLeft: number, visited: Circle[] = [
   for (const neighbour of neighbours) {
     if (visited.map(c => c.id).includes(neighbour.id)) continue
     if (hashTable[neighbour.id].stone && movesLeft !== 1) continue
+    if (
+      hashTable[neighbour.id].pieces &&
+      hashTable[neighbour.id].circle?.safeZone &&
+      movesLeft === 1
+    ) {
+      continue
+    }
+
     legalMoves.push(...findLegalMoves(neighbour, movesLeft - 1, visited.concat(circle)))
   }
   return legalMoves
