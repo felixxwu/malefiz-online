@@ -2,7 +2,7 @@ import { colour1 } from '../data/cssVars'
 import { store } from '../data/store'
 import { getLegalMoves, getLegalStonePlacements } from '../game/legalMoves'
 import { isMyTurn } from '../game/playerTurns'
-import { Circle } from '../types/mapTypes'
+import { Move } from '../types/gameTypes'
 import { circle, line, polygon } from '../utils/el'
 import { getCircleFromPiece } from '../utils/getCircleFromPiece'
 import { hudGroup } from '../utils/getSvgGroup'
@@ -26,13 +26,13 @@ export function drawHud() {
   }
 }
 
-function drawLegalMoves(legalMoves: Circle[]) {
+function drawLegalMoves(legalMoves: Move[]) {
   const myColour = store.gameState!.players.find(
     player => player.id === store.gameState!.playerTurn
   )!.colour
   for (const legalMove of legalMoves) {
-    const x = legalMove.position.x * 100
-    const y = legalMove.position.y * 100
+    const x = legalMove.to.position.x * 100
+    const y = legalMove.to.position.y * 100
     hudGroup!.appendChild(
       circle({
         attributes: {
@@ -62,21 +62,21 @@ function drawIndicatorOverMyPieces() {
         const y = circle!.position.y * 100 - 50
         hudGroup!.appendChild(HudElement(x, y))
         for (const legalMove of legalMoves) {
-          hudGroup!.appendChild(MoveLine(circle!, legalMove))
+          hudGroup!.appendChild(MoveLine(legalMove))
         }
       }
     }
   }
 }
 
-function MoveLine(circle: Circle, move: Circle) {
+function MoveLine(move: Move) {
   const myColour = store.gameState!.players.find(
     player => player.id === store.gameState!.playerTurn
   )!.colour
-  const x1 = circle!.position.x * 100
-  const y1 = circle!.position.y * 100
-  const x2 = move.position.x * 100
-  const y2 = move.position.y * 100
+  const x1 = move.from.position.x * 100
+  const y1 = move.from.position.y * 100
+  const x2 = move.to.position.x * 100
+  const y2 = move.to.position.y * 100
   return line({
     attributes: {
       style: {
@@ -103,7 +103,7 @@ function drawIndicatorOverSelectedPiece() {
   const legalMoves = getLegalMoves(selectedCircle!.id)
   hudGroup!.appendChild(HudElement(x, y))
   for (const legalMove of legalMoves) {
-    hudGroup!.appendChild(MoveLine(selectedCircle!, legalMove))
+    hudGroup!.appendChild(MoveLine(legalMove))
   }
 }
 

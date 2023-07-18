@@ -8,12 +8,17 @@ import { playerPiecesWithMoves } from '../game/playerPiecesWithMoves'
 import { getUserData } from '../data/userId'
 import { selectedBestPieceToMove } from './ai'
 
+let aiPlaying = false
+
 export async function playAiIfApplicable() {
   if (!canAiPlay()) return
-  await sleep(1000)
-  if (!canAiPlay()) return
+  if (aiPlaying) return
+  aiPlaying = true
+  await sleep(2000)
 
   if (store.gameState!.dieRoll === null) {
+    aiPlaying = false
+    if (!canAiPlay()) return
     await rollDie()
     return
   }
@@ -24,16 +29,17 @@ export async function playAiIfApplicable() {
 
   // re-roll if no legal moves
   if (piecesWithLegalMoves.length === 0) {
+    aiPlaying = false
+    if (!canAiPlay()) return
     await rollDie()
     return
   }
 
-  await sleep(1000)
+  const bestMove = selectedBestPieceToMove(piecesWithLegalMoves)
+
+  aiPlaying = false
   if (!canAiPlay()) return
-
-  const { bestMove, piece } = selectedBestPieceToMove(piecesWithLegalMoves)
-
-  await submitMove(piece.pieceId, bestMove.id)
+  await submitMove(bestMove)
 
   // place stone if taken
   if (store.gameState!.stones.some(stone => stone.circleId === null)) {
@@ -52,4 +58,5 @@ function canAiPlay() {
   const playerTurn = store.gameState.playerTurn
   const player = store.gameState.players.find(player => player.id === playerTurn)
   if (player?.isAI) return true
+  return false
 }

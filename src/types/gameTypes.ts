@@ -1,4 +1,4 @@
-import { Map } from './mapTypes'
+import { Circle, Map } from './mapTypes'
 
 export type Player = {
   id: string
@@ -32,4 +32,14 @@ export type GameState = {
   stones: Stone[]
   stonePit: { x: number; y: number }
   diePit: { x: number; y: number }
+}
+
+export type Move = {
+  from: Circle
+  to: Circle
+}
+
+export type MoveWithScore = {
+  move: Move
+  score: number
 }

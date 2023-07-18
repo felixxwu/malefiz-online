@@ -31,9 +31,8 @@ export async function handleCircleClick(clickedCircleId: string) {
     if (pieceBelongsToMe(store.pieceSelected)) {
       const circle = getCircleFromPiece(store.pieceSelected!)
       const legalMoves = getLegalMoves(circle!.id)
-      if (legalMoves.map(circle => circle.id).includes(clickedCircleId)) {
-        submitMove(store.pieceSelected!, clickedCircleId)
-      }
+      const selectedMove = legalMoves.find(move => move.to.id === clickedCircleId)!
+      submitMove(selectedMove)
     }
     store.pieceSelected = null
   }

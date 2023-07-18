@@ -1,9 +1,12 @@
 import { store } from '../data/store'
+import { Move } from '../types/gameTypes'
 import { movePiece } from './movePiece'
 import { takePiece } from './takePiece'
 import { takeStone } from './takeStone'
 
-export async function submitMove(pieceToMove: string, destinationCircleId: string) {
+export async function submitMove(move: Move) {
+  const pieceToMove = store.gameStateHashTable[move.from.id].pieces![0].pieceId
+  const destinationCircleId = move.to.id
   if (store.gameState!.stones.find(stone => stone.circleId === destinationCircleId)) {
     // move and take stone
     await takeStone(pieceToMove, destinationCircleId)

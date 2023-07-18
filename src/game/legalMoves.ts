@@ -1,14 +1,19 @@
 import { store } from '../data/store'
+import { Move } from '../types/gameTypes'
 import { Circle } from '../types/mapTypes'
 
-export function getLegalMoves(targetCircleId: string) {
+export function getLegalMoves(targetCircleId: string): Move[] {
   const position = store.gameStateHashTable[targetCircleId]!
   if (!store.gameState!.dieRoll) return []
-  return findLegalMoves(position.circle!, store.gameState!.dieRoll, [position.circle!]).filter(
-    c =>
-      !c.start &&
-      !store.gameStateHashTable[c.id].pieces?.some(p => p.playerId === store.gameState!.playerTurn)
-  )
+  return findLegalMoves(position.circle!, store.gameState!.dieRoll, [position.circle!])
+    .filter(
+      c =>
+        !c.start &&
+        !store.gameStateHashTable[c.id].pieces?.some(
+          p => p.playerId === store.gameState!.playerTurn
+        )
+    )
+    .map(c => ({ from: position.circle!, to: c }))
 }
 
 export function getLegalStonePlacements() {

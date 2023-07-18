@@ -1,8 +1,6 @@
 import { GameState } from '../types/gameTypes'
 import { store } from '../data/store'
 import { getNextPlayer } from './playerTurns'
-import { sleep } from '../utils/sleep'
-import { CONSTS } from '../data/consts'
 import { updateGameState } from '../utils/updateGameState'
 
 export async function takePiece(pieceId: string, circleId: string, opponentPieceId: string) {
@@ -10,6 +8,7 @@ export async function takePiece(pieceId: string, circleId: string, opponentPiece
     (gameState: GameState): Partial<GameState> => ({
       players: gameState.players.map(player => {
         if (store.gameState!.playerTurn === player.id) {
+          // move current player piece
           return {
             ...player,
             positions: player.positions
@@ -17,6 +16,7 @@ export async function takePiece(pieceId: string, circleId: string, opponentPiece
               .concat({ pieceId, circleId }),
           }
         } else if (player.positions.some(pos => pos.pieceId === opponentPieceId)) {
+          // move opponent piece to start
           return {
             ...player,
             positions: player.positions
@@ -34,6 +34,4 @@ export async function takePiece(pieceId: string, circleId: string, opponentPiece
       dieRoll: null,
     })
   )
-
-  await sleep(CONSTS.PLAYER_TRANSITION)
 }

@@ -16,9 +16,9 @@ D       S
     O       O
     -       -
 S-O-O-O-O-O-O-O-S
--               -
-X               X
--               -
+-       -       -
+X       X       X
+-       -       -
 X-X-X-X-X-X-X-X-X
     -       -
     1   P   2
