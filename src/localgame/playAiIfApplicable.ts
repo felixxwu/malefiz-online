@@ -14,7 +14,7 @@ export async function playAiIfApplicable() {
   if (!canAiPlay()) return
   if (aiPlaying) return
   aiPlaying = true
-  await sleep(1500)
+  await sleep(1700)
 
   if (store.gameState!.dieRoll === null) {
     aiPlaying = false

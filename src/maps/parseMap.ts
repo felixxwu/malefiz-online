@@ -24,9 +24,11 @@ type Coordinate = {
 
 export const players = [
   { id: '1', colour: 'hsl(0 70% 65% / 1)', name: 'Red' },
-  { id: '2', colour: 'hsl(240 70% 70% / 1)', name: 'Blue' },
+  { id: '2', colour: 'hsl(240 70% 75% / 1)', name: 'Blue' },
   { id: '3', colour: 'hsl(140 70% 60% / 1)', name: 'Green' },
   { id: '4', colour: 'hsl(60 70% 60% / 1)', name: 'Yellow' },
+  { id: '5', colour: 'hsl(300 70% 60% / 1)', name: 'Purple' },
+  { id: '6', colour: 'hsl(30 70% 60% / 1)', name: 'Orange' },
 ]
 
 export function parseMap(template: string): GameState {
@@ -43,12 +45,12 @@ export function parseMap(template: string): GameState {
     ...player,
     coords: getCoordinates(mapGrid, [player.id]),
   }))
-  const lineCoordinates = getCoordinates(mapGrid, ['-'])
-  const surroundingCircles = getSurroundingCircles(lineCoordinates, circleCoordinates)
+  const lineCoordinates = getCoordinates(mapGrid, ['-', '|', '/'])
+  const surroundingCircles = getSurroundingCirclesForAllLines(lineCoordinates, circleCoordinates)
   const circleNeighbours = getCircleNeighbours(circleCoordinates, surroundingCircles)
   const createdMap: Map = circleNeighbours.map(c => ({
     id: c.circle.id,
-    position: { x: Math.floor(c.circle.x / 2), y: Math.floor(c.circle.y / 2) },
+    position: { x: c.circle.x / 2, y: c.circle.y / 2 },
     neighbours: c.neighbours,
     start: players.find(p => p.id === c.circle.matchedSymbol)?.id ?? null,
     finish: c.circle.matchedSymbol === 'F',
@@ -76,8 +78,8 @@ export function parseMap(template: string): GameState {
     playerTurn: '1',
     dieRoll: null,
     gameStateHash: '',
-    stonePit: { x: Math.floor(stonePit.x / 2), y: Math.floor(stonePit.y / 2) },
-    diePit: { x: Math.floor(diePit.x / 2), y: Math.floor(diePit.y / 2) },
+    stonePit: { x: stonePit.x / 2, y: stonePit.y / 2 },
+    diePit: { x: diePit.x / 2, y: diePit.y / 2 },
   }
   return gameState
 }
@@ -111,18 +113,22 @@ function getCircleNeighbours(circleCoordinates: Coordinate[], surroundingCircles
   return circleNeighbours
 }
 
-function getSurroundingCircles(lineCoordinates: Coordinate[], circleCoordinates: Coordinate[]) {
+function getSurroundingCirclesForAllLines(
+  lineCoordinates: Coordinate[],
+  circleCoordinates: Coordinate[]
+) {
   const surroundingCircles = []
   for (const line of lineCoordinates) {
-    const surroundingCircle = getSurroundingCircle(line, circleCoordinates)
-    surroundingCircles.push(surroundingCircle)
+    const surroundingCirclesForThisLine = getSurroundingCirclesForOneLine(line, circleCoordinates)
+    surroundingCircles.push(surroundingCirclesForThisLine)
   }
   return surroundingCircles
 }
 
-function getSurroundingCircle(line: Coordinate, circleCoordinates: Coordinate[]) {
+function getSurroundingCirclesForOneLine(line: Coordinate, circleCoordinates: Coordinate[]) {
   const surroundingCircles = []
   for (const circle of circleCoordinates) {
+    // horizontals / verticals
     if (circle.x === line.x - 1 && circle.y === line.y) {
       surroundingCircles.push(circle)
     }
@@ -134,6 +140,26 @@ function getSurroundingCircle(line: Coordinate, circleCoordinates: Coordinate[])
     }
     if (circle.x === line.x && circle.y === line.y + 1) {
       surroundingCircles.push(circle)
+    }
+
+    if (line.matchedSymbol === '/') {
+      // diagonals
+      if (circle.x === line.x - 1 && circle.y === line.y + 1) {
+        surroundingCircles.push(circle)
+      }
+      if (circle.x === line.x + 1 && circle.y === line.y - 1) {
+        surroundingCircles.push(circle)
+      }
+    }
+
+    if (line.matchedSymbol === '|') {
+      // diagonals
+      if (circle.x === line.x - 1 && circle.y === line.y - 1) {
+        surroundingCircles.push(circle)
+      }
+      if (circle.x === line.x + 1 && circle.y === line.y + 1) {
+        surroundingCircles.push(circle)
+      }
     }
   }
   return surroundingCircles
