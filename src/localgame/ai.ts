@@ -2,23 +2,24 @@ import { store } from '../data/store'
 import { Move } from '../types/gameTypes'
 import { Circle } from '../types/mapTypes'
 
+export const AI1 = createAI({
+  forwardPriority: 0.05,
+  stonePriority: 1,
+  killPriority: 2,
+  stoneLookahead: 5,
+  stoneForwardPriority: 0.03,
+  ditherRange: 0.1,
+})
+
 export function selectedBestPieceToMove(
   pieces: { moves: Move[]; pieceId: string; circleId: string }[]
 ) {
-  const AI = createAI({
-    forwardPriority: 0.1,
-    stonePriority: 2,
-    killPriority: 1,
-    stoneLookahead: 5,
-    stoneForwardPriority: 0.03,
-    ditherRange: 0.1,
-  })
-  const bestMoves = pieces.map(piece => ({ move: AI.selectMove(piece.moves), piece }))
-  const bestBestMove = AI.selectMove(bestMoves.map(bestMove => bestMove.move))
+  const bestMoves = pieces.map(piece => ({ move: AI1.selectMove(piece.moves), piece }))
+  const bestBestMove = AI1.selectMove(bestMoves.map(bestMove => bestMove.move))
   return bestBestMove
 }
 
-export function createAI({
+function createAI({
   stonePriority,
   killPriority,
   forwardPriority,

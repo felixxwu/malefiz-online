@@ -7,6 +7,8 @@ import { handleCircleClick } from '../game/handleCircleClick'
 import { polygonToXY } from '../utils/polygon'
 import { getMapPosition } from '../maps/mapUtils'
 import { store } from '../data/store'
+import { players } from '../maps/parseMap'
+import { joinGame } from '../game/joinGame'
 
 export function drawMap(map: Map) {
   mapGroup!.innerHTML = ''
@@ -38,30 +40,7 @@ function drawCircles(map: Map) {
   let pathData = ''
   for (const circleData of map) {
     if (circleData.start) {
-      mapGroup!.appendChild(
-        polygon({
-          attributes: {
-            id: circleData.id,
-            style: {
-              cursor: 'pointer',
-              fill: 'black',
-              strokeLinejoin: 'round',
-              stroke: 'black',
-              strokeWidth: '60',
-            },
-            onclick: circleData.onClick ?? (() => handleCircleClick(circleData.id)),
-          },
-          readonlyAttributes: {
-            points: [0, 1, 2, 3, 4]
-              .map(i => polygonToXY(i, 5, 30))
-              .map(
-                ({ x, y }) =>
-                  `${circleData.position.x * 100 + x},${circleData.position.y * 100 + y}`
-              )
-              .join(' '),
-          },
-        })
-      )
+      drawStart(circleData)
     } else {
       pathData += `M ${circleData.position.x * 100}, ${circleData.position.y * 100} m ${
         CONSTS.CIRCLE_RADIUS
@@ -107,6 +86,69 @@ function drawCircles(map: Map) {
     mapGroup!.appendChild(FinishCircle(finish, CONSTS.CIRCLE_RADIUS - 5))
     mapGroup!.appendChild(FinishCircle(finish, CONSTS.CIRCLE_RADIUS - 15))
   }
+}
+
+function drawStart(circleData: Circle) {
+  mapGroup!.appendChild(
+    polygon({
+      attributes: {
+        id: circleData.id,
+        style: {
+          cursor: 'pointer',
+          fill: 'black',
+          strokeLinejoin: 'round',
+          stroke: 'black',
+          strokeWidth: '60',
+        },
+        onclick: circleData.onClick ?? (() => handleCircleClick(circleData.id)),
+      },
+      readonlyAttributes: {
+        points: [0, 1, 2, 3, 4]
+          .map(i => polygonToXY(i, 5, 30))
+          .map(
+            ({ x, y }) => `${circleData.position.x * 100 + x},${circleData.position.y * 100 + y}`
+          )
+          .join(' '),
+      },
+    })
+  )
+  mapGroup!.appendChild(
+    foreignObject({
+      attributes: {
+        id: 'joinButton' + players.find(p => p.id === circleData.start)?.id,
+        style: {
+          translate: `${circleData.position.x * 100 - 100}px ${circleData.position.y * 100 + 70}px`,
+          width: '200px',
+          height: '40px',
+          borderRadius: '10px',
+          cursor: 'pointer',
+          pointerEvents: 'all',
+          outline: '3px solid black',
+          backgroundColor: players.find(p => p.id === circleData.start)?.colour,
+          display: 'none',
+        },
+        onclick: () => {
+          joinGame(players.find(p => p.id === circleData.start)?.id!, store.gameId!)
+        },
+      },
+      children: [
+        div({
+          attributes: {
+            style: {
+              width: '200px',
+              height: '40px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'black',
+              fontSize: '20px',
+            },
+            innerHTML: 'Play as ' + players.find(p => p.id === circleData.start)?.name,
+          },
+        }),
+      ],
+    })
+  )
 }
 
 function drawText(map: Map) {

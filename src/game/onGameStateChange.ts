@@ -9,6 +9,7 @@ import { drawStones } from '../renderers/drawStones'
 import { GameState } from '../types/gameTypes'
 import { isMyTurn } from './playerTurns'
 import { rollDie } from './rollDie'
+import { checkForOnlinePlayers } from './updateLastOnline'
 
 export function onGameStateChange(gameState: GameState | null) {
   if (!gameState) return
@@ -30,5 +31,6 @@ export function onGameStateChange(gameState: GameState | null) {
   drawHud()
   drawDie()
   drawOverlay()
+  checkForOnlinePlayers()
   playAiIfApplicable()
 }

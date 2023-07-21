@@ -6,7 +6,7 @@ export function pieceBelongsToMe(pieceId: string | null) {
   for (const player of store.gameState!.players) {
     for (const position of player.positions) {
       if (position.pieceId === pieceId) {
-        return player.id === getUserData().playerToControl
+        return player.id === getUserData()?.playerToControl
       }
     }
   }

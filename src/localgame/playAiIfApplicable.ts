@@ -6,7 +6,7 @@ import { submitMove } from '../game/submitMove'
 import { placeStone } from '../game/placeStone'
 import { playerPiecesWithMoves } from '../game/playerPiecesWithMoves'
 import { getUserData } from '../data/userId'
-import { createAI, selectedBestPieceToMove } from './ai'
+import { AI1, selectedBestPieceToMove } from './ai'
 
 let aiPlaying = false
 
@@ -46,22 +46,14 @@ export async function playAiIfApplicable() {
     await sleep(100)
 
     const legalStonePlacements = getLegalStonePlacements()
-    const AI = createAI({
-      forwardPriority: 0.1,
-      stonePriority: 2,
-      killPriority: 1,
-      stoneLookahead: 5,
-      stoneForwardPriority: 0.03,
-      ditherRange: 0.1,
-    })
-    const placement = AI.getBestStonePlacement(legalStonePlacements)
+    const placement = AI1.getBestStonePlacement(legalStonePlacements)
     placeStone(placement.id)
   }
 }
 
 function canAiPlay() {
   if (!store.gameState) return false
-  if (!getUserData() || !getUserData().isHost) return false
+  if (!getUserData() || !getUserData()!.isHost) return false
   const playerTurn = store.gameState.playerTurn
   const player = store.gameState.players.find(player => player.id === playerTurn)
   if (player?.isAI) return true

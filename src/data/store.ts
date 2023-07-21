@@ -10,6 +10,7 @@ import { HashTable } from '../maps/mapToHashTable'
 import { clearPlayersAndStones, drawPlayers } from '../renderers/drawPlayers'
 import { drawStones } from '../renderers/drawStones'
 import { fitToScreen } from '../utils/zoom'
+import { updatePlayerStyles } from '../renderers/updatePlayerStyles'
 
 const init = {
   mouseDownData: <
@@ -77,15 +78,8 @@ const onChange: OnChange<keyof typeof init> = {
     menuOpacity.set(value ? '1' : '0')
     menuPointerEvents.set(value ? 'all' : 'none')
   },
-  onlinePlayers(value) {
-    for (const player of store.gameState!.players) {
-      if (player.isAI) continue
-      for (const position of player.positions) {
-        document.getElementById('p' + position.pieceId)!.style.opacity = value.includes(player.id)
-          ? '1'
-          : '0.3'
-      }
-    }
+  onlinePlayers() {
+    updatePlayerStyles(store.gameState!)
   },
   pieceSelected() {
     drawHud()

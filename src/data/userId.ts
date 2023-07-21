@@ -12,8 +12,9 @@ export function initUserId() {
   }
 }
 
-export function getUserData(): User {
-  return store.gameState!.users.find(user => user.id === store.userId)!
+export function getUserData(): User | null {
+  if (!store.gameState) return null
+  return store.gameState.users.find(user => user.id === store.userId)!
 }
 
 export function currentPlayer() {

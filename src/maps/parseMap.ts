@@ -22,7 +22,7 @@ type Coordinate = {
   matchedSymbol: string
 }
 
-const players = [
+export const players = [
   { id: '1', colour: 'hsl(0 70% 65% / 1)', name: 'Red' },
   { id: '2', colour: 'hsl(240 70% 70% / 1)', name: 'Blue' },
   { id: '3', colour: 'hsl(140 70% 60% / 1)', name: 'Green' },

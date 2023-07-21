@@ -84,7 +84,7 @@ function MoveLine(move: Move) {
         strokeWidth: '3px',
         strokeLinecap: 'round',
         strokeDasharray: '1,10',
-        opacity: '0.5',
+        opacity: '1',
       },
     },
     readonlyAttributes: {
