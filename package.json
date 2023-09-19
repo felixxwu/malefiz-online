@@ -16,6 +16,7 @@
   "dependencies": {
     "firebase": "^10.0.0",
     "object-hash": "^3.0.0",
-    "qrcode-generator": "^1.4.4"
+    "qrcode-generator": "^1.4.4",
+    "vite-plugin-singlefile": "^0.13.5"
   }
 }
