@@ -11,13 +11,17 @@ const playerSize = 25
 
 export function drawPlayers(gameState: GameState) {
   for (const player of gameState.players) {
-    for (const [i, position] of player.positions.entries()) {
+    let startCirclePlayersIndex = 0
+    for (const position of player.positions) {
       const circleData = gameState.map.find(circle => circle.id === position.circleId)!
       const pos = circleData.start
-        ? {
-            x: circleData.position.x + polygonToXY(i, spokes, spacing).x,
-            y: circleData.position.y + polygonToXY(i, spokes, spacing).y,
-          }
+        ? (() => {
+            const index = startCirclePlayersIndex++
+            return {
+              x: circleData.position.x + polygonToXY(index, spokes, spacing).x,
+              y: circleData.position.y + polygonToXY(index, spokes, spacing).y,
+            }
+          })()
         : circleData.position
       const existingPiece = playersGroup!.querySelector<SVGElement>(`#p${position.pieceId}`)
       if (existingPiece) {
