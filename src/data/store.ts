@@ -11,6 +11,9 @@ import { clearPlayersAndStones, drawPlayers } from '../renderers/drawPlayers'
 import { drawStones } from '../renderers/drawStones'
 import { fitToScreen } from '../utils/zoom'
 import { updatePlayerStyles } from '../renderers/updatePlayerStyles'
+import { getCircleFromPiece } from '../utils/getCircleFromPiece'
+import { getLegalMoves } from '../game/legalMoves'
+import { Circle } from '../types/mapTypes'
 
 const init = {
   mouseDownData: <
@@ -41,6 +44,7 @@ const init = {
   lastDieRoll: <number | null>null,
   mapSelectionScreen: <GameState | null>null,
   playerSetupMenu: false,
+  zoomInOnLegalMoves: localStorage.zoomInOnLegalMoves ?? false,
 }
 
 const onChange: OnChange<keyof typeof init> = {
@@ -81,17 +85,22 @@ const onChange: OnChange<keyof typeof init> = {
   onlinePlayers() {
     updatePlayerStyles(store.gameState!)
   },
-  pieceSelected() {
+  pieceSelected(value) {
     drawHud()
 
-    // zoom into legal moves
-    // if (value) {
-    //   const circle = getCircleFromPiece(store.pieceSelected!)!
-    //   const legalMoves = getLegalMoves(circle.id)
-    //   fitToScreen(legalMoves.concat(circle), {})
-    // } else {
-    //   fitToScreen(store.currentMap, {})
-    // }
+    if (store.zoomInOnLegalMoves) {
+      if (value) {
+        const circle = getCircleFromPiece(store.pieceSelected!)!
+        const legalMoves = getLegalMoves(circle.id)
+        const legalMovesMap: Circle[] = [circle]
+        for (const legalMove of legalMoves) {
+          legalMovesMap.push(legalMove.to)
+        }
+        fitToScreen(legalMovesMap, {})
+      } else {
+        fitToScreen(store.currentMap, {})
+      }
+    }
   },
   actionButton() {
     drawOverlay()
@@ -110,6 +119,10 @@ const onChange: OnChange<keyof typeof init> = {
     }
   },
   playerSetupMenu() {
+    drawOverlay()
+  },
+  zoomInOnLegalMoves() {
+    localStorage.zoomInOnLegalMoves = store.zoomInOnLegalMoves
     drawOverlay()
   },
 }

@@ -51,6 +51,14 @@ export function Menu() {
             },
           }),
         ]),
+        ToggleZoomInOnLegalMoves([
+          div({
+            attributes: {
+              innerHTML: `Auto Zoom: ${store.zoomInOnLegalMoves ? 'On' : 'Off'}`,
+              style: { color: 'black' },
+            },
+          }),
+        ]),
         LeaveGame([div({ attributes: { innerHTML: 'Leave Game', style: { color: 'black' } } })]),
         CloseMenu([crossIcon(15, 'black')]),
       ]),
@@ -108,6 +116,27 @@ function LeaveGame(children: Node[]) {
         alignItems: 'center',
       },
       onclick: leaveGame,
+    },
+    children,
+  })
+}
+
+function ToggleZoomInOnLegalMoves(children: Node[]) {
+  return div({
+    attributes: {
+      style: {
+        width: '200px',
+        height: '40px',
+        borderRadius: '5px',
+        backgroundColor: colour1.value,
+        cursor: 'pointer',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      onclick: () => {
+        store.zoomInOnLegalMoves = !store.zoomInOnLegalMoves
+      },
     },
     children,
   })
