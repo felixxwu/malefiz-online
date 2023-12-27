@@ -5,9 +5,9 @@ import { Circle } from '../types/mapTypes'
 export const AI1 = createAI({
   forwardPriority: 0.05,
   stonePriority: 1,
-  killPriority: 2,
+  killPriority: 3,
   stoneLookahead: 5,
-  stoneForwardPriority: 0.03,
+  stoneForwardPriority: 0.1,
   ditherRange: 0.1,
 })
 

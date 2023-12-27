@@ -16,8 +16,8 @@ export function fitToScreen(
   const screenCenterX = window.innerWidth / 2
   const screenCenterY = window.innerHeight / 2
 
-  const widthZoom = window.innerWidth / (mapWidth * 100 + CONSTS.CIRCLE_RADIUS * 2)
-  const heightZoom = window.innerHeight / (mapHeight * 100 + CONSTS.CIRCLE_RADIUS * 2)
+  const widthZoom = (window.innerWidth - 10) / (mapWidth * 100 + CONSTS.CIRCLE_RADIUS * 2)
+  const heightZoom = (window.innerHeight - 150) / (mapHeight * 100 + CONSTS.CIRCLE_RADIUS * 2)
   const smallestZoom = Math.min(widthZoom, heightZoom)
   const smallestScreenLength = Math.min(window.innerWidth, window.innerHeight)
 
@@ -34,7 +34,7 @@ export function fitToScreen(
     store.svgZoom =
       smallestZoom === Infinity
         ? smallestScreenLength / CONSTS.CIRCLE_RADIUS / 5
-        : Math.min(smallestZoom * 0.8, 2)
+        : Math.min(smallestZoom, 2)
   }, zoomDelay)
 }
 
