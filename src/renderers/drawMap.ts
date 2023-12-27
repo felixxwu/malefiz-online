@@ -14,6 +14,7 @@ export function drawMap(map: Map) {
   mapGroup!.innerHTML = ''
   drawLinesBetweenCircles(map)
   drawCircles(map)
+  drawSafeCircles(map)
   drawText(map)
 
   const mapPosition = getMapPosition(map)
@@ -42,11 +43,7 @@ function drawCircles(map: Map) {
     if (circleData.start) {
       drawStart(circleData)
     } else {
-      pathData += `M ${circleData.position.x * 100}, ${circleData.position.y * 100} m ${
-        CONSTS.CIRCLE_RADIUS
-      }, 0 a ${CONSTS.CIRCLE_RADIUS},${CONSTS.CIRCLE_RADIUS} 0 1,0 ${
-        CONSTS.CIRCLE_RADIUS * -2
-      },0 a ${CONSTS.CIRCLE_RADIUS},${CONSTS.CIRCLE_RADIUS} 0 1,0 ${CONSTS.CIRCLE_RADIUS * 2},0`
+      pathData += getCirclePathData(circleData)
     }
   }
   mapGroup!.appendChild(path({ readonlyAttributes: { d: pathData } }))
@@ -86,6 +83,19 @@ function drawCircles(map: Map) {
     mapGroup!.appendChild(FinishCircle(finish, CONSTS.CIRCLE_RADIUS - 5))
     mapGroup!.appendChild(FinishCircle(finish, CONSTS.CIRCLE_RADIUS - 15))
   }
+}
+
+function drawSafeCircles(map: Map) {
+  let pathData = ''
+  for (const circleData of map) {
+    if (circleData.safeZone) {
+      pathData += getCirclePathData(circleData)
+    }
+  }
+
+  mapGroup!.appendChild(
+    path({ readonlyAttributes: { d: pathData, fill: colour1.value, opacity: '0.33' } })
+  )
 }
 
 function drawStart(circleData: Circle) {
@@ -250,4 +260,12 @@ function FinishCircle(circleData: Circle, radius: number) {
       r: `${radius - 2.5}`,
     },
   })
+}
+
+function getCirclePathData(circleData: Circle) {
+  return `M ${circleData.position.x * 100}, ${circleData.position.y * 100} m ${
+    CONSTS.CIRCLE_RADIUS
+  }, 0 a ${CONSTS.CIRCLE_RADIUS},${CONSTS.CIRCLE_RADIUS} 0 1,0 ${CONSTS.CIRCLE_RADIUS * -2},0 a ${
+    CONSTS.CIRCLE_RADIUS
+  },${CONSTS.CIRCLE_RADIUS} 0 1,0 ${CONSTS.CIRCLE_RADIUS * 2},0`
 }
