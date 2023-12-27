@@ -109,6 +109,7 @@ function ViewControls(children: Node[]) {
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
+        zIndex: '1',
       },
     },
     children,
