@@ -3,12 +3,12 @@ import { Move } from '../types/gameTypes'
 import { Circle } from '../types/mapTypes'
 
 export const AI1 = createAI({
-  forwardPriority: 0.05,
+  forwardPriority: 0.08,
   stonePriority: 1,
   killPriority: 3,
   stoneLookahead: 5,
   stoneForwardPriority: 0.1,
-  ditherRange: 0.1,
+  ditherRange: 0.05,
 })
 
 export function selectedBestPieceToMove(
