@@ -81,7 +81,7 @@ function MoveLine(move: Move) {
     attributes: {
       style: {
         stroke: myColour,
-        strokeWidth: '3px',
+        strokeWidth: '4px',
         strokeLinecap: 'round',
         strokeDasharray: '1,10',
         opacity: '1',
@@ -118,7 +118,7 @@ function HudElement(x: number, y: number) {
       },
     },
     readonlyAttributes: {
-      points: `${x - 10},${y} ${x + 10},${y} ${x},${y + 20}`,
+      points: `${x - 15},${y} ${x + 15},${y} ${x},${y + 30}`,
       class: 'upAndDown',
     },
   })

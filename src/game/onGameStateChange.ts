@@ -1,4 +1,5 @@
 import { store } from '../data/store'
+import { currentPlayer } from '../data/userId'
 import { playAiIfApplicable } from '../localgame/playAiIfApplicable'
 import { mapToHashTable } from '../maps/mapToHashTable'
 import { drawOverlay } from '../overlay'
@@ -19,7 +20,10 @@ export function onGameStateChange(gameState: GameState | null) {
   } else if (gameState!.dieRoll === null && isMyTurn()) {
     store.actionButton = { text: 'Roll', onClick: () => rollDie(), flashing: true }
   } else {
-    store.actionButton = null
+    store.actionButton = {
+      text: isMyTurn() ? 'Your turn' : `${currentPlayer().name}'s turn`,
+      flashing: false,
+    }
   }
   store.gameStateHashTable = mapToHashTable(gameState)
   if (store.gameState!.dieRoll !== null) {
