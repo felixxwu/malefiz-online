@@ -1,33 +1,40 @@
 import { parseMap } from './parseMap'
 
-export const map3 = parseMap(`
-                F
-                -
-O-O-O-O-O-O-O-O-S-O-O-O-O-O-O-O-O
--                               -
-O                               O
--                               -
-O-O-O-O-O-O-O-O-S-O-O-O-O-O-O-O-O
-                -
-D               S
-                -
-            O-O-S-O-O
+export const map3 = parseMap(
+  3,
+  `
+D     1         2         3
+       |        -        /
+        X-X-X-X-X-X-X-X-X
             -       -
-            O       O
-            -       -
-        O-O-S-O-O-O-S-O-O
-        -               -
-        O               O
-        -               -
-    O-O-O-O-O-O-Z-O-O-O-O-O-O
-    -       -       -       -
-    O       O       O       O 
-    -       -       -       -
-S-O-O-O-S-O-O-O-S-O-O-O-S-O-O-O-S
--       -       -       -       -
-X       X       X       X       X
--       -       -       -       -
 X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X
-    -       -       -       -
-    1       2   P   3       4
-`)
+-                               -
+X                               X
+-                               -
+S-O-O-O-O-O-O-O-S-O-O-O-O-O-O-O-S
+                -
+O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O
+-                               -
+O               O               O
+-              /-|              -
+O   O-O-O-O-O O S O O-O-O-O-O   O
+-   -       | / - | /       -   -
+S-S-S        S  F  S        S-S-S
+-   -       / | - / |       -   -
+O   O-O-O-O-O O S O O-O-O-O-O   O
+-              |-/              -
+O               Z               O
+-                               -
+O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O-O
+                -
+S-O-O-O-O-O-O-O-S-O-O-O-O-O-O-O-S
+-                               -
+X               P               X
+-                               -
+X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X
+            -       -
+        X-X-X-X-X-X-X-X-X
+       /        -        |
+      4         5         6
+`
+)

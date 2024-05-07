@@ -1,4 +1,4 @@
-import { GameState } from '../types/gameTypes'
+import { GameState, Player } from '../types/gameTypes'
 import { Map } from '../types/mapTypes'
 
 /*
@@ -29,14 +29,17 @@ export const players = [
   { id: '4', colour: 'hsl(60 70% 60% / 1)', name: 'Yellow' },
   { id: '5', colour: 'hsl(300 70% 60% / 1)', name: 'Purple' },
   { id: '6', colour: 'hsl(30 70% 60% / 1)', name: 'Orange' },
-]
+] as const
 
-export function parseMap(template: string) {
+export function parseMap(mapNum: number, template: string): { map: Map; gameState: GameState } {
   let pieceId = 0
   const mapGrid = mapStringTo2dArray(template)
   const stonePit = getCoordinates(mapGrid, ['P'])[0]
   const diePit = getCoordinates(mapGrid, ['D'])[0]
-  const circleCoordinates = getCoordinates(mapGrid, ['O', 'F', 'Z', 'S', 'X'].concat(players.map(p => p.id)))
+  const circleCoordinates = getCoordinates(
+    mapGrid,
+    ['O', 'F', 'Z', 'S', 'X'].concat(players.map(p => p.id))
+  )
   const stoneCoordinates = getCoordinates(mapGrid, ['S'])
   const playerCoordinates = players.map(player => ({
     ...player,
@@ -54,31 +57,32 @@ export function parseMap(template: string) {
     zoomInPoint: c.circle.matchedSymbol === 'Z',
     safeZone: c.circle.matchedSymbol === 'X',
   }))
-  // const gameState: GameState = {
-  //   map: createdMap,
-  //   players: playerCoordinates
-  //     .map((player, i) => ({
-  //       ...player,
-  //       isAI: i !== 0,
-  //       positions: multiplyPieces(player.coords, 5).map(c => ({
-  //         pieceId: `${pieceId++}`,
-  //         circleId: findCircle(c.x, c.y, circleCoordinates)!.id,
-  //       })),
-  //     }))
-  //     .filter(p => p.positions.length > 0),
-  //   stones: stoneCoordinates.map(c => ({
-  //     stoneId: c.id,
-  //     circleId: findCircle(c.x, c.y, circleCoordinates)!.id,
-  //   })),
-  //   created: Date.now(),
-  //   users: [],
-  //   playerTurn: '1',
-  //   dieRoll: null,
-  //   gameStateHash: '',
-  //   stonePit: { x: stonePit.x / 2, y: stonePit.y / 2 },
-  //   diePit: { x: diePit.x / 2, y: diePit.y / 2 },
-  // }
-  return createdMap
+
+  return {
+    map: createdMap,
+    gameState: {
+      mapNum,
+      stones: stoneCoordinates.map(c => ({
+        stoneId: c.id,
+        circleId: findCircle(c.x, c.y, circleCoordinates)!.id,
+      })),
+      players: playerCoordinates
+        .map((player, i) => ({
+          ...player,
+          isAI: i !== 0,
+          positions: multiplyPieces(player.coords, 5).map(c => ({
+            pieceId: `${pieceId++}`,
+            circleId: findCircle(c.x, c.y, circleCoordinates)!.id,
+          })),
+        }))
+        .filter(p => p.positions.length > 0) as Player[],
+      created: Date.now(),
+      playerTurn: players[0].id,
+      dieRoll: null,
+      stonePit: { x: stonePit.x / 2, y: stonePit.y / 2 },
+      diePit: { x: diePit.x / 2, y: diePit.y / 2 },
+    },
+  }
 }
 
 function multiplyPieces(coords: Coordinate[], multiplier: number) {
@@ -91,7 +95,7 @@ function multiplyPieces(coords: Coordinate[], multiplier: number) {
   return multipliedCoords
 }
 
-function findCircle(x: number, y: number, circleCoordinates: Coordinate[]) {
+export function findCircle(x: number, y: number, circleCoordinates: Coordinate[]) {
   return circleCoordinates.find(c => c.x === x && c.y === y)
 }
 
@@ -110,7 +114,10 @@ function getCircleNeighbours(circleCoordinates: Coordinate[], surroundingCircles
   return circleNeighbours
 }
 
-function getSurroundingCirclesForAllLines(lineCoordinates: Coordinate[], circleCoordinates: Coordinate[]) {
+function getSurroundingCirclesForAllLines(
+  lineCoordinates: Coordinate[],
+  circleCoordinates: Coordinate[]
+) {
   const surroundingCircles = []
   for (const line of lineCoordinates) {
     const surroundingCirclesForThisLine = getSurroundingCirclesForOneLine(line, circleCoordinates)

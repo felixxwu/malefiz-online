@@ -17,7 +17,7 @@ export function fitToScreen(
   const screenCenterY = window.innerHeight / 2
 
   const widthZoom = (window.innerWidth - 10) / (mapWidth * 100 + consts.circleRadius * 2)
-  const heightZoom = (window.innerHeight - 150) / (mapHeight * 100 + consts.circleRadius * 2)
+  const heightZoom = (window.innerHeight - 200) / (mapHeight * 100 + consts.circleRadius * 2)
   const smallestZoom = Math.min(widthZoom, heightZoom)
   const smallestScreenLength = Math.min(window.innerWidth, window.innerHeight)
 

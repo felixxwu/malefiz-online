@@ -1,7 +1,9 @@
-import { Circle, Map } from './mapTypes'
+import { Circle } from './mapTypes'
+
+type PlayerID = string
 
 export type Player = {
-  id: string
+  id: PlayerID
   colour: string
   positions: { pieceId: string; circleId: string }[]
   name: string
@@ -14,24 +16,21 @@ export type Stone = {
 }
 
 export type User = {
-  id: string
-  playerToControl: string
-  lastOnline: number
-  isAI: boolean
-  isHost: boolean
+  playerToControl: PlayerID
+  timeJoined: number
+  name: string
 }
 
 export type GameState = {
-  map: Map
-  players: Player[]
+  mapNum: number
   created: number
-  users: User[]
-  playerTurn: string
+  players: Player[]
+  playerTurn: PlayerID
   dieRoll: number | null
-  gameStateHash: string
   stones: Stone[]
   stonePit: { x: number; y: number }
   diePit: { x: number; y: number }
+  [user: `user${string}`]: User
 }
 
 export type Move = {

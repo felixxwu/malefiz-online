@@ -1,4 +1,5 @@
 import { Map } from '../types/mapTypes'
+import { createGame } from '../utils/createGame'
 
 export const homePageMap: Map = [
   {
@@ -12,7 +13,7 @@ export const homePageMap: Map = [
     text: `2 Players`,
     fontSize: 12,
     onClick: async () => {
-      console.log('clicked 2')
+      createGame(0)
     },
   },
   {
@@ -26,7 +27,7 @@ export const homePageMap: Map = [
     text: `3 Players`,
     fontSize: 12,
     onClick: async () => {
-      console.log('clicked 3')
+      createGame(1)
     },
   },
   {
@@ -40,7 +41,7 @@ export const homePageMap: Map = [
     text: `4 Players`,
     fontSize: 12,
     onClick: async () => {
-      console.log('clicked 4')
+      createGame(2)
     },
   },
   {
@@ -54,7 +55,7 @@ export const homePageMap: Map = [
     text: `6 Players`,
     fontSize: 12,
     onClick: async () => {
-      console.log('clicked 6')
+      createGame(3)
     },
   },
 ]
