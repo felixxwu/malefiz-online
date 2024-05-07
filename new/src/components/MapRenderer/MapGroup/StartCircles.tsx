@@ -1,6 +1,7 @@
 import { styled } from 'goober'
 import { map } from '../../../signals'
 import { players } from '../../../maps/parseMap'
+import { joinGame } from '../../../utils/joinGame'
 
 export function StartCircles() {
   const startCircles = map.value.filter(circle => circle.start)
@@ -24,6 +25,9 @@ export function StartCircles() {
               .join(' ')}
           />
           <JoinButton
+            onClick={() => {
+              joinGame(players.find(p => p.id === circle.start)?.id!)
+            }}
             style={{
               translate: `${circle.position.x * 100 - 100}px ${circle.position.y * 100 + 70}px`,
               backgroundColor: players.find(p => p.id === circle.start)?.colour,
