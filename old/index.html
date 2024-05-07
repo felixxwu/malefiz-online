@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Malefiz Online</title>
+    <meta
+      name="description"
+      content="Play Malefiz / Barricade online with your friends or against AI."
+    />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;900&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;900&display=swap"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div id="loading">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path
+          fill="#DDDDDD"
+          d="M0 11c.511-6.158 5.685-11 12-11s11.489 4.842 12 11h-2.009c-.506-5.046-4.793-9-9.991-9s-9.485 3.954-9.991 9h-2.009zm21.991 2c-.506 5.046-4.793 9-9.991 9s-9.485-3.954-9.991-9h-2.009c.511 6.158 5.685 11 12 11s11.489-4.842 12-11h-2.009z"
+        />
+      </svg>
+    </div>
+    <svg id="svg">
+      <g id="zoom">
+        <g id="translate">
+          <g id="map"></g>
+          <g id="players" style="pointer-events: none"></g>
+          <g id="hud" style="pointer-events: none"></g>
+          <g id="die"></g>
+        </g>
+      </g>
+    </svg>
+    <div id="overlay"></div>
+    <script type="module" src="/src/main.ts"></script>
+    <style>
+      body {
+        margin: 0;
+        background-color: black;
+      }
+
+      #loading {
+        color: rgb(217, 217, 217);
+        height: 100vh;
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #loading > svg {
+        animation-name: rotate;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </body>
+</html>
