@@ -2,9 +2,12 @@ import { styled } from 'goober'
 import { map } from '../../../signals'
 import { players } from '../../../maps/parseMap'
 import { joinGame } from '../../../utils/joinGame'
+import { getMyPlayerId, getUsers } from '../../../utils/getUsers'
 
 export function StartCircles() {
   const startCircles = map.value.filter(circle => circle.start)
+  const myPlayerId = getMyPlayerId()
+  const users = getUsers()
 
   function polygonToXY(i: number, spokes: number, spacing: number) {
     return {
@@ -15,28 +18,40 @@ export function StartCircles() {
 
   return (
     <>
-      {startCircles.map(circle => (
-        <>
-          <Polygon
-            key={circle.id}
-            points={[0, 1, 2, 3, 4]
-              .map(i => polygonToXY(i, 5, 30))
-              .map(({ x, y }) => `${circle.position.x * 100 + x},${circle.position.y * 100 + y}`)
-              .join(' ')}
-          />
-          <JoinButton
-            onClick={() => {
-              joinGame(players.find(p => p.id === circle.start)?.id!)
-            }}
-            style={{
-              translate: `${circle.position.x * 100 - 100}px ${circle.position.y * 100 + 70}px`,
-              backgroundColor: players.find(p => p.id === circle.start)?.colour,
-            }}
-          >
-            <JoinText>Play as {players.find(p => p.id === circle.start)?.name}</JoinText>
-          </JoinButton>
-        </>
-      ))}
+      {startCircles.map(circle => {
+        const player = players.find(p => p.id === circle.start)!
+        const userControllingPlayer = users.find(u => u.playerToControl === player.id)
+
+        const joinText = (() => {
+          if (player.id === myPlayerId) return `Playing as ${player.name}`
+          if (myPlayerId) return `${player.name} (${userControllingPlayer ? 'Human' : 'AI'})`
+          if (userControllingPlayer) return `${player.name} (Human)`
+          return `Play as ${player.name}`
+        })()
+
+        return (
+          <>
+            <Polygon
+              key={circle.id}
+              points={[0, 1, 2, 3, 4]
+                .map(i => polygonToXY(i, 5, 30))
+                .map(({ x, y }) => `${circle.position.x * 100 + x},${circle.position.y * 100 + y}`)
+                .join(' ')}
+            />
+            <JoinButton
+              onClick={() => {
+                if (!myPlayerId && !userControllingPlayer) joinGame(player.id)
+              }}
+              style={{
+                translate: `${circle.position.x * 100 - 100}px ${circle.position.y * 100 + 70}px`,
+                backgroundColor: player.colour,
+              }}
+            >
+              <JoinText>{joinText}</JoinText>
+            </JoinButton>
+          </>
+        )
+      })}
     </>
   )
 }

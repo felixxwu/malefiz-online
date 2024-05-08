@@ -15,6 +15,7 @@ export async function firstRender() {
   window.addEventListener('resize', () => {
     screenWidth.value = window.innerWidth
     screenHeight.value = window.innerHeight
+    fitToScreen(map.value, { transition: 0 })
   })
 
   if (gameId) {

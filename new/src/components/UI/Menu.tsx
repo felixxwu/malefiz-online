@@ -1,0 +1,139 @@
+import { styled } from 'goober'
+import { menuOpen } from '../../signals'
+import qrcode from 'qrcode-generator'
+import { MenuIcon } from '../Icons'
+import { colours } from '../../config/colours'
+import { consts } from '../../config/consts'
+import { gameId } from '../../utils/gameId'
+
+export function Menu() {
+  if (!gameId) return null
+
+  function openMenu(e: MouseEvent) {
+    menuOpen.value = true
+    e.stopPropagation()
+  }
+
+  function closeMenu(e: MouseEvent) {
+    menuOpen.value = false
+    e.stopPropagation()
+  }
+
+  const qr = qrcode(0, 'L')
+  qr.addData(window.location.href)
+  qr.make()
+  const svgString = qr.createSvgTag({ cellSize: 2, margin: 0, scalable: true })
+
+  return (
+    <Div
+      onClick={closeMenu}
+      style={
+        menuOpen.value
+          ? {
+              backdropFilter: 'blur(20px)',
+              backgroundColor: 'rgba(0,0,0,0.5)',
+            }
+          : {
+              pointerEvents: 'none',
+            }
+      }
+    >
+      {menuOpen.value ? (
+        <MenuContent>
+          <Share>
+            Invite Players:
+            <QRCode dangerouslySetInnerHTML={{ __html: svgString }}></QRCode>
+            <Link href={window.location.href}>{window.location.href}</Link>
+          </Share>
+          <Button onClick={() => (window.location.href = '/')}>Leave Game</Button>
+        </MenuContent>
+      ) : (
+        <OpenButton onClick={openMenu}>
+          <MenuIcon size={12} />
+        </OpenButton>
+      )}
+    </Div>
+  )
+}
+
+const Div = styled('div')`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+`
+
+const OpenButton = styled('div')`
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border-radius: 100vw;
+  background-color: black;
+  left: 30px;
+  top: 30px;
+  pointer-events: all;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${colours.highlight};
+  }
+`
+
+const MenuContent = styled('div')`
+  color: white;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  max-width: 400px;
+`
+
+const Share = styled('div')`
+  background-color: ${colours.background};
+  padding: 30px;
+  border-radius: ${consts.borderRadius};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  color: black;
+`
+
+const QRCode = styled('div')`
+  width: 100%;
+
+  & rect {
+    fill: ${colours.background};
+  }
+`
+
+const Link = styled('a')`
+  color: black;
+  text-decoration: underline;
+  cursor: pointer;
+  text-align: center;
+  word-break: break-all;
+`
+
+const Button = styled('div')`
+  cursor: pointer;
+  padding: 10px;
+  border-radius: ${consts.borderRadius};
+  background-color: ${colours.background};
+  color: black;
+  text-align: center;
+  width: 100%;
+  transition: 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`

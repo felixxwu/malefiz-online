@@ -7,4 +7,5 @@ export const consts = {
   panSlowdown: 2,
   playerTransition: 500,
   mapPositionRef: 'mapPositionRef',
+  borderRadius: '10px',
 }
