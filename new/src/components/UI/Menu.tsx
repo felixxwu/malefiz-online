@@ -74,8 +74,8 @@ const OpenButton = styled('div')`
   height: 40px;
   border-radius: 100vw;
   background-color: black;
-  left: 30px;
-  top: 30px;
+  left: 10px;
+  top: 10px;
   pointer-events: all;
   display: flex;
   justify-content: center;

@@ -3,6 +3,7 @@ import { screenHeight, screenWidth, svgTransition, svgTranslation, svgZoom } fro
 import { MapGroup } from './MapGroup'
 import { handleClick } from './utils/handleClick'
 import { PlayerGroup } from './PlayerGroup'
+import { StoneGroup } from './StoneGroup'
 
 export function MapRenderer() {
   return (
@@ -21,6 +22,7 @@ export function MapRenderer() {
         >
           <MapGroup />
           <PlayerGroup />
+          <StoneGroup />
           <HudGroup></HudGroup>
           <DieGroup></DieGroup>
         </TranslateGroup>
