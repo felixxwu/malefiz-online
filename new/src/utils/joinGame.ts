@@ -1,4 +1,4 @@
-import { userId } from '../signals'
+import { action, userId } from '../signals'
 import { PlayerID, UserID } from '../types/gameTypes'
 import { updateGame } from './updateGame'
 
@@ -10,4 +10,12 @@ export async function joinGame(playerId: PlayerID) {
       timeJoined: Date.now(),
     },
   })
+  // TODO: check if place is already taken
+
+  action.value = {
+    text: 'Start Game',
+    onClick: () => {
+      console.log('start')
+    },
+  }
 }

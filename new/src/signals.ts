@@ -5,7 +5,9 @@ import { GameState } from './types/gameTypes'
 
 export const screenWidth = signal(window.innerWidth)
 export const screenHeight = signal(window.innerHeight)
+
 export const menuOpen = signal(false)
+export const action = signal<{ text: string; onClick: () => void } | null>(null)
 
 export const map = signal(homePageMap)
 export const svgZoom = signal(1)

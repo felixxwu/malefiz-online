@@ -1,5 +1,5 @@
 export const consts = {
-  circleRadius: 35,
+  circleRadius: 30,
   pathStrokeWidth: 5,
   minZoom: 0.1,
   maxZoom: 20,

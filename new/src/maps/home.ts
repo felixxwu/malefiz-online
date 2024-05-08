@@ -11,49 +11,49 @@ export const homePageMap: Map = [
     zoomInPoint: true,
     safeZone: false,
     text: `2 Players`,
-    fontSize: 12,
+    fontSize: 10,
     onClick: async () => {
       createGame(0)
     },
   },
   {
     id: '2',
-    position: { x: 2, y: 1 },
-    neighbours: ['4'],
+    position: { x: 1.5, y: 2 },
+    neighbours: ['3'],
     start: null,
     finish: false,
     zoomInPoint: false,
     safeZone: false,
     text: `3 Players`,
-    fontSize: 12,
+    fontSize: 10,
     onClick: async () => {
       createGame(1)
     },
   },
   {
     id: '3',
-    position: { x: 1, y: 2 },
-    neighbours: ['1'],
+    position: { x: 2, y: 1 },
+    neighbours: ['4'],
     start: null,
     finish: false,
     zoomInPoint: false,
     safeZone: false,
     text: `4 Players`,
-    fontSize: 12,
+    fontSize: 10,
     onClick: async () => {
       createGame(2)
     },
   },
   {
     id: '4',
-    position: { x: 2, y: 2 },
+    position: { x: 2.5, y: 2 },
     neighbours: ['3'],
     start: null,
     finish: false,
     zoomInPoint: false,
     safeZone: false,
     text: `6 Players`,
-    fontSize: 12,
+    fontSize: 10,
     onClick: async () => {
       createGame(3)
     },
