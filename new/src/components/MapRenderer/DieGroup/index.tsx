@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
 import { gameState } from '../../../signals'
 import { randomOffsetAndRotation } from './randomOffsetAndRotation'
 import { styled } from 'goober'
@@ -11,6 +11,11 @@ export function DieGroup() {
   const { x, y, rotation } = randomOffsetAndRotation()
   const [transform, setTransform] = useState(`rotate(${rotation}deg) translate(${x}px, ${y}px)`)
   const [transformOrigin, setTransformOrigin] = useState(`${x + 50}px ${y + 50}px`)
+
+  useEffect(() => {
+    setTransform(`rotate(${rotation}deg) translate(${x}px, ${y}px)`)
+    setTransformOrigin(`${x + 50}px ${y + 50}px`)
+  }, [gameState.value])
 
   return (
     <Group
