@@ -1,6 +1,6 @@
 import { styled } from 'goober'
 import { colours } from '../../config/colours'
-import { gameState } from '../../signals'
+import { gameState, lastDieRoll } from '../../signals'
 import { updateGame } from '../../utils/updateGame'
 import { players } from '../../utils/parseMap'
 import { rollDie } from '../../utils/rollDie'
@@ -27,6 +27,14 @@ export function Action() {
     return <Div>Place stone</Div>
   }
 
+  if (myTurn && dieNotRolled && lastDieRoll.value === 6) {
+    return (
+      <Div onClick={rollDie} className='clickable'>
+        Roll again
+      </Div>
+    )
+  }
+
   if (myTurn && dieNotRolled) {
     return (
       <Div onClick={rollDie} className='clickable'>
@@ -49,8 +57,6 @@ export function Action() {
 const Div = styled('div')`
   height: 40px;
   border-radius: 100vw;
-  background-color: black;
-  color: ${colours.background};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,10 +65,13 @@ const Div = styled('div')`
   left: 50%;
   transform: translateX(-50%);
   padding: 0 30px;
+  color: black;
 
   &.clickable {
     animation: flash 1s infinite ease-in-out;
     cursor: pointer;
+    background-color: black;
+    color: ${colours.background};
 
     &:hover {
       background-color: ${colours.highlight};

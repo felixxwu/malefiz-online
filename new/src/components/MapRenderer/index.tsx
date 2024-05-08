@@ -5,6 +5,7 @@ import { handleClick } from './utils/handleClick'
 import { PlayerGroup } from './PlayerGroup'
 import { StoneGroup } from './StoneGroup'
 import { HudGroup } from './HudGroup'
+import { DieGroup } from './DieGroup'
 
 export function MapRenderer() {
   return (
@@ -25,7 +26,7 @@ export function MapRenderer() {
           <PlayerGroup />
           <StoneGroup />
           <HudGroup />
-          <DieGroup></DieGroup>
+          <DieGroup />
         </TranslateGroup>
       </ZoomGroup>
     </Svg>
@@ -37,4 +38,3 @@ const ZoomGroup = styled('g')`
   transform-origin: 50% 50%;
 `
 const TranslateGroup = styled('g')``
-const DieGroup = styled('g')``
