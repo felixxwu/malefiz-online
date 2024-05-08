@@ -16,3 +16,10 @@ export function getMyPlayerId() {
 
   return gameStateValue[`user${userId.value}`]?.playerToControl
 }
+
+export function getMyPlayer() {
+  const gameStateValue = gameState.value
+  if (!gameStateValue) return
+
+  return gameStateValue.players.find(player => player.id === getMyPlayerId())
+}

@@ -77,7 +77,7 @@ export function parseMap(mapNum: number, template: string): { map: Map; gameStat
         }))
         .filter(p => p.positions.length > 0) as Player[],
       created: Date.now(),
-      playerTurn: players[0].id,
+      playerTurn: null,
       dieRoll: null,
       stonePit: { x: stonePit.x / 2, y: stonePit.y / 2 },
       diePit: { x: diePit.x / 2, y: diePit.y / 2 },

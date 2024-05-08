@@ -1,6 +1,7 @@
 import { consts } from '../../../config/consts'
 import { getMapPosition } from '../../../maps/mapUtils'
 import { map } from '../../../signals'
+import { handleCircleClick } from './handleCircleClick'
 
 export function handleClick(event: MouseEvent) {
   const rect = document.getElementById(consts.mapPositionRef)!.getBoundingClientRect()
@@ -24,7 +25,7 @@ export function handleClick(event: MouseEvent) {
         circle.onClick()
         return
       } else {
-        // handleCircleClick(circle.id)
+        handleCircleClick(circle.id)
         return
       }
     }

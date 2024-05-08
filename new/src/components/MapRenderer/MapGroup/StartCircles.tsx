@@ -1,5 +1,5 @@
 import { styled } from 'goober'
-import { map } from '../../../signals'
+import { gameState, map } from '../../../signals'
 import { players } from '../../../maps/parseMap'
 import { joinGame } from '../../../utils/joinGame'
 import { getMyPlayerId, getUsers } from '../../../utils/getUsers'
@@ -23,6 +23,8 @@ export function StartCircles() {
           return `Play as ${player.name}`
         })()
 
+        const showJoinButton = !gameState.value?.playerTurn
+
         return (
           <>
             <Polygon
@@ -32,17 +34,19 @@ export function StartCircles() {
                 .map(({ x, y }) => `${circle.position.x * 100 + x},${circle.position.y * 100 + y}`)
                 .join(' ')}
             />
-            <JoinButton
-              onClick={() => {
-                if (!myPlayerId && !userControllingPlayer) joinGame(player.id)
-              }}
-              style={{
-                translate: `${circle.position.x * 100 - 100}px ${circle.position.y * 100 + 70}px`,
-                backgroundColor: player.colour,
-              }}
-            >
-              <JoinText>{joinText}</JoinText>
-            </JoinButton>
+            {showJoinButton && (
+              <JoinButton
+                onClick={() => {
+                  if (!myPlayerId && !userControllingPlayer) joinGame(player.id)
+                }}
+                style={{
+                  translate: `${circle.position.x * 100 - 100}px ${circle.position.y * 100 + 70}px`,
+                  backgroundColor: player.colour,
+                }}
+              >
+                <JoinText>{joinText}</JoinText>
+              </JoinButton>
+            )}
           </>
         )
       })}

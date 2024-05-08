@@ -26,7 +26,7 @@ export type GameState = {
   mapNum: number
   created: number
   players: Player[]
-  playerTurn: PlayerID
+  playerTurn: PlayerID | null
   dieRoll: number | null
   stones: Stone[]
   stonePit: { x: number; y: number }
