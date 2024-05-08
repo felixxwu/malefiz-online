@@ -1,8 +1,10 @@
-import { gameState, pieceSelected, waitingForServer } from '../../../signals'
-import { getCircleFromPiece } from '../../../utils/getCircleFromPiece'
-import { getPieceFromCircle } from '../../../utils/getPieceFromCircle'
-import { getLegalMoves, getLegalStonePlacements } from '../../../utils/legalMoves'
-import { pieceBelongsToMe } from '../../../utils/pieceBelongsToMe'
+import { gameState, pieceSelected, waitingForServer } from '../signals'
+import { getCircleFromPiece } from './getCircleFromPiece'
+import { getPieceFromCircle } from './getPieceFromCircle'
+import { getLegalMoves, getLegalStonePlacements } from './legalMoves'
+import { pieceBelongsToMe } from './pieceBelongsToMe'
+import { placeStone } from './placeStone'
+import { submitMove } from './submitMove'
 
 export async function handleCircleClick(clickedCircleId: string) {
   if (waitingForServer.value) return
@@ -11,8 +13,7 @@ export async function handleCircleClick(clickedCircleId: string) {
   if (gameState.value!.stones.find(stone => stone.circleId === null)) {
     const legalStonePlacements = getLegalStonePlacements()
     if (legalStonePlacements.map(circle => circle.id).includes(clickedCircleId)) {
-      console.log('place stone')
-      // placeStone(clickedCircleId)
+      placeStone(clickedCircleId)
     }
     return
   }
@@ -24,7 +25,6 @@ export async function handleCircleClick(clickedCircleId: string) {
     // select piece
     if (getLegalMoves(clickedCircleId).length > 0) {
       pieceSelected.value = pieceId
-      console.log(`piece selected`, pieceId)
     }
   } else {
     // make move
@@ -32,8 +32,7 @@ export async function handleCircleClick(clickedCircleId: string) {
       const circle = getCircleFromPiece(pieceSelected.value!)
       const legalMoves = getLegalMoves(circle!.id)
       const selectedMove = legalMoves.find(move => move.to.id === clickedCircleId)!
-      console.log(`submitMove`, selectedMove)
-      // submitMove(selectedMove)
+      submitMove(selectedMove)
     }
     pieceSelected.value = null
   }

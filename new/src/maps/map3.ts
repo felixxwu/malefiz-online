@@ -1,4 +1,4 @@
-import { parseMap } from './parseMap'
+import { parseMap } from '../utils/parseMap'
 
 export const map3 = parseMap(
   3,

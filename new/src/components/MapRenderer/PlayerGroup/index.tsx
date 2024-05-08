@@ -43,6 +43,8 @@ export function PlayerGroup() {
     }
   }
 
+  pieces.sort((a, b) => (a.pieceID < b.pieceID ? -1 : 1))
+
   return (
     <Group>
       {pieces.map(piece => (
@@ -60,25 +62,24 @@ export function PlayerGroup() {
 
 function PlayerModel(props: { id: string; colour: string; x: number; y: number }) {
   return (
-    <PlayerCircle
+    <circle
       id={'piece' + props.id}
       cx={0}
       cy={0}
       r={25}
       fill={props.colour}
-      style={{ transform: `translate(${props.x * 100}px, ${props.y * 100}px)` }}
+      style={{
+        transform: `translate(${props.x * 100}px, ${props.y * 100}px)`,
+        stroke: 'black',
+        strokeWidth: 2,
+        transition: '300ms',
+        filter: 'drop-shadow(0 0 3px rgba(0, 0, 0, 0.3))',
+        willChange: 'transform',
+      }}
       opacity={textOpacity.value}
     />
   )
 }
-
-const PlayerCircle = styled('circle')`
-  stroke: black;
-  stroke-width: 2;
-  transition: 300ms;
-  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.3));
-  will-change: transform;
-`
 
 const Group = styled('g')`
   pointer-events: none;

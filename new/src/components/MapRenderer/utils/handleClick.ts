@@ -1,7 +1,7 @@
 import { consts } from '../../../config/consts'
-import { getMapPosition } from '../../../maps/mapUtils'
-import { map } from '../../../signals'
-import { handleCircleClick } from './handleCircleClick'
+import { getMapPosition } from '../../../utils/getMapPosition'
+import { map, pieceSelected } from '../../../signals'
+import { handleCircleClick } from '../../../utils/handleCircleClick'
 
 export function handleClick(event: MouseEvent) {
   const rect = document.getElementById(consts.mapPositionRef)!.getBoundingClientRect()
@@ -30,5 +30,5 @@ export function handleClick(event: MouseEvent) {
       }
     }
   }
-  // store.pieceSelected = null
+  pieceSelected.value = null
 }

@@ -2,6 +2,7 @@ import { styled } from 'goober'
 import { Circle } from '../../../types/mapTypes'
 import { map } from '../../../signals'
 import { consts } from '../../../config/consts'
+import { colours } from '../../../config/colours'
 
 export function LinePath() {
   function getLinePathData() {
@@ -34,6 +35,6 @@ export function LinePath() {
 }
 
 const Path = styled('path')`
-  stroke: black;
+  stroke: ${colours.safeCircle};
   stroke-width: ${consts.pathStrokeWidth};
 `

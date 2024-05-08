@@ -1,5 +1,5 @@
 import { styled } from 'goober'
-import { getMapPosition } from '../../../maps/mapUtils'
+import { getMapPosition } from '../../../utils/getMapPosition'
 import { CirclePath } from './CirclePath'
 import { LinePath } from './LinePath'
 import { StartCircles } from './StartCircles'

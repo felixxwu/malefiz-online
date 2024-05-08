@@ -1,5 +1,5 @@
 import { consts } from '../config/consts'
-import { getMapPosition } from '../maps/mapUtils'
+import { getMapPosition } from './getMapPosition'
 import { svgTransition, svgTranslation, svgZoom } from '../signals'
 import { Map } from '../types/mapTypes'
 
