@@ -3,18 +3,12 @@ import { map } from '../../../signals'
 import { players } from '../../../maps/parseMap'
 import { joinGame } from '../../../utils/joinGame'
 import { getMyPlayerId, getUsers } from '../../../utils/getUsers'
+import { polygonToXY } from '../../../utils/polygonToXY'
 
 export function StartCircles() {
   const startCircles = map.value.filter(circle => circle.start)
   const myPlayerId = getMyPlayerId()
   const users = getUsers()
-
-  function polygonToXY(i: number, spokes: number, spacing: number) {
-    return {
-      x: spacing * Math.cos(Math.PI * ((i * 2) / spokes) - Math.PI * 0.5),
-      y: spacing * Math.sin(Math.PI * ((i * 2) / spokes) - Math.PI * 0.5),
-    }
-  }
 
   return (
     <>

@@ -2,6 +2,7 @@ import { styled } from 'goober'
 import { screenHeight, screenWidth, svgTransition, svgTranslation, svgZoom } from '../../signals'
 import { MapGroup } from './MapGroup'
 import { handleClick } from './utils/handleClick'
+import { PlayerGroup } from './PlayerGroup'
 
 export function MapRenderer() {
   return (
@@ -19,7 +20,7 @@ export function MapRenderer() {
           }}
         >
           <MapGroup />
-          <PlayerGroup></PlayerGroup>
+          <PlayerGroup />
           <HudGroup></HudGroup>
           <DieGroup></DieGroup>
         </TranslateGroup>
@@ -33,9 +34,6 @@ const ZoomGroup = styled('g')`
   transform-origin: 50% 50%;
 `
 const TranslateGroup = styled('g')``
-const PlayerGroup = styled('g')`
-  pointer-events: none;
-`
 const HudGroup = styled('g')`
   pointer-events: none;
 `
