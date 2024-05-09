@@ -4,9 +4,7 @@ import './css/styles.css'
 import { MapRenderer } from './components/MapRenderer'
 import { useEffect } from 'preact/hooks'
 import { firstRender } from './utils/firstRender'
-import { Menu } from './components/UI/Menu'
-import { Action } from './components/UI/Action'
-import { Navigation } from './components/UI/Navigation'
+import { UI } from './components/UI'
 
 export function App() {
   useEffect(() => {
@@ -16,9 +14,7 @@ export function App() {
   return (
     <Div>
       <MapRenderer />
-      <Menu />
-      <Action />
-      <Navigation />
+      <UI />
     </Div>
   )
 }

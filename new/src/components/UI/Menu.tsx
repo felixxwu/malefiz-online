@@ -47,7 +47,7 @@ export function Menu() {
             <QRCode dangerouslySetInnerHTML={{ __html: svgString }}></QRCode>
             <Link href={window.location.href}>{window.location.href}</Link>
           </Share>
-          <Button onClick={() => (window.location.href = '/')}>Leave Game</Button>
+          <Button onClick={() => (window.location.href = '/')}>Leave game</Button>
         </MenuContent>
       ) : (
         <OpenButton onClick={openMenu}>

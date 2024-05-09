@@ -1,6 +1,6 @@
 import { styled } from 'goober'
 import { colours } from '../../config/colours'
-import { gameState, lastDieRoll, waitingForServer } from '../../signals'
+import { gameOver, gameState, lastDieRoll, waitingForServer } from '../../signals'
 import { updateGame } from '../../utils/updateGame'
 import { players } from '../../utils/parseMap'
 import { rollDie } from '../../utils/rollDie'
@@ -18,6 +18,8 @@ export function Action() {
   const playerWhoIsPlaying = gameState.value?.players.find(
     player => player.id === gameState.value!.playerTurn
   )
+
+  if (gameOver.value) return null
 
   if (waitingForServer.value)
     return (

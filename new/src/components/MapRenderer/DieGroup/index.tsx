@@ -14,7 +14,8 @@ export function DieGroup() {
 
   return (
     <Group
-      onClick={() => {
+      onClick={(e: PointerEvent) => {
+        e.stopPropagation()
         const diePit = gameState.value!.diePit
         setTransform(`rotate(0deg) translate(${diePit.x * 100}px, ${diePit.y * 100}px)`)
         setTransformOrigin(`0 0`)

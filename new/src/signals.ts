@@ -4,6 +4,7 @@ import { storedSignal } from './utils/storedSignal'
 import { GameState } from './types/gameTypes'
 import { HashTable, mapToHashTable } from './utils/mapToHashTable'
 import { Circle } from './types/mapTypes'
+import { zoomIntoCircle } from './utils/zoomIntoCircle'
 
 export const screenWidth = signal(window.innerWidth)
 export const screenHeight = signal(window.innerHeight)
@@ -22,10 +23,23 @@ gameState.subscribe(() => {
   if (gameState.value && gameState.value!.dieRoll !== null) {
     lastDieRoll.value = gameState.value!.dieRoll
   }
+  setTimeout(() => {
+    for (const key in gameStateHashTable.value) {
+      const pos = gameStateHashTable.value[key]
+      if (pos.circle?.finish && pos.pieces) {
+        const playerName = gameState.value!.players.find(
+          player => player.id === pos.pieces![0].playerId
+        )!.name
+        gameOver.value = playerName
+        zoomIntoCircle({ circle: pos.circle })
+      }
+    }
+  })
 })
 export const gameStateHashTable = computed<HashTable>(() => {
   return gameState.value ? mapToHashTable(gameState.value) : {}
 })
+export const gameOver = signal<string | null>(null)
 export const lastDieRoll = signal<number | null>(null)
 export const userId = storedSignal('userId', new Date().getTime().toString())
 
