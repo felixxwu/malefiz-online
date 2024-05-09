@@ -1,5 +1,3 @@
-import { doc, updateDoc, deleteField } from 'firebase/firestore'
-
 import { getUsers } from '../utils/getUsers'
 import { zoomIntoCircle } from '../utils/zoomIntoCircle'
 import {
@@ -10,8 +8,7 @@ import {
   gameOver,
   userId,
 } from './signals'
-import { db } from '../config/firebase'
-import { gameId } from '../utils/gameId'
+import { leaveGame } from '../utils/leaveGame'
 
 export function onGameStateChange() {
   resolveMultipleUsersPerPlayer()
@@ -44,10 +41,7 @@ function resolveMultipleUsersPerPlayer() {
       const myUserIndex = usersForPlayer.findIndex(user => user.userId === `user${userId.value}`)
       // i'm not the first to join
       if (myUserIndex !== 0) {
-        // leave game
-        updateDoc(doc(db, 'games', gameId!), {
-          [`user${userId.value}`]: deleteField(),
-        })
+        leaveGame()
       }
     }
   }

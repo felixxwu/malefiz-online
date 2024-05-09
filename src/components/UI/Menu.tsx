@@ -5,6 +5,7 @@ import { MenuIcon } from '../Icons'
 import { colours } from '../../config/colours'
 import { consts } from '../../config/consts'
 import { gameId } from '../../utils/gameId'
+import { leaveGame } from '../../utils/leaveGame'
 
 export function Menu() {
   if (!gameId) return null
@@ -17,6 +18,11 @@ export function Menu() {
   function closeMenu(e: MouseEvent) {
     menuOpen.value = false
     e.stopPropagation()
+  }
+
+  async function handleLeaveGame() {
+    await leaveGame()
+    window.location.href = '/'
   }
 
   const qr = qrcode(0, 'L')
@@ -47,7 +53,7 @@ export function Menu() {
             <QRCode dangerouslySetInnerHTML={{ __html: svgString }}></QRCode>
             <Link href={window.location.href}>{window.location.href}</Link>
           </Share>
-          <Button onClick={() => (window.location.href = '/')}>Leave game</Button>
+          <Button onClick={handleLeaveGame}>Leave game</Button>
         </MenuContent>
       ) : (
         <OpenButton onClick={openMenu}>

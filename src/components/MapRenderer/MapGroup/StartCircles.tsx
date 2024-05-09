@@ -23,7 +23,7 @@ export function StartCircles() {
           return `Play as ${player.name}`
         })()
 
-        const showJoinButton = !gameState.value?.playerTurn
+        const showJoinButton = !gameState.value?.playerTurn || !getMyPlayerId()
 
         return (
           <>
