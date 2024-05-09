@@ -1,4 +1,5 @@
 import {
+  circleHovered,
   evCache,
   mouseDownData,
   pieceDragged,
@@ -7,8 +8,11 @@ import {
   svgZoom,
 } from '../../../signals/signals'
 import { getDistance } from '../../../utils/getDistance'
+import { getCircleFromMousePos } from './utils/getCircleFromMousePos'
 
 export function HandlePointerMove(event: PointerEvent) {
+  circleHovered.value = getCircleFromMousePos(event)
+
   if (!mouseDownData.value) return
 
   if (pieceDragged.value) return
@@ -16,7 +20,6 @@ export function HandlePointerMove(event: PointerEvent) {
   const index = evCache.value.findIndex(cachedEv => cachedEv.pointerId === event.pointerId)
   evCache.value[index] = event
   svgTransition.value = 0
-  // translateGroup!.style.pointerEvents = 'none'
 
   if (evCache.value.length === 2) {
     const euclideanDistance = getDistance(evCache.value[0], evCache.value[1])

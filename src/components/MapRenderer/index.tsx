@@ -14,7 +14,6 @@ import { PlayerGroup } from './PlayerGroup'
 import { StoneGroup } from './StoneGroup'
 import { HudGroup } from './HudGroup'
 import { DieGroup } from './DieGroup'
-import { handleMouseMove } from './handlers/handleMouseMove'
 import { HoverGroup } from './HoverGroup'
 import { handlePointerDown } from './handlers/handlePointerDown'
 import { HandlePointerMove } from './handlers/handlePointerMove'
@@ -33,7 +32,6 @@ export function MapRenderer() {
       height={screenHeight.value}
       style={{ cursor: circleHovered.value ? 'pointer' : 'default' }}
       onClick={handleClick}
-      onMouseMove={handleMouseMove}
       onPointerDown={handlePointerDown}
       onPointerMove={HandlePointerMove}
       onPointerUp={handlePointerUp}
