@@ -8,6 +8,7 @@ import { zoomIntoCircle } from './zoomIntoCircle'
 import { db } from '../config/firebase'
 import { GameState } from '../types/gameTypes'
 import { mapList } from '../maps/mapList'
+import { playAiIfApplicable } from './playAiIfApplicable'
 
 export async function firstRender() {
   window.document.body.style.backgroundColor = colours.background
@@ -39,6 +40,10 @@ export async function firstRender() {
         // }, 2000)
       }
     })
+
+    setInterval(() => {
+      playAiIfApplicable()
+    }, 2000)
   } else {
     introSequence()
   }

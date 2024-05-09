@@ -18,7 +18,6 @@ export const textOpacity = signal(0)
 
 export const gameState = signal<GameState | null>(null)
 gameState.subscribe(() => {
-  console.log('gameState', gameState.value)
   if (gameState.value && gameState.value!.dieRoll !== null) {
     lastDieRoll.value = gameState.value!.dieRoll
   }

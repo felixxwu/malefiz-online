@@ -1,5 +1,12 @@
 import { styled } from 'goober'
-import { screenHeight, screenWidth, svgTransition, svgTranslation, svgZoom } from '../../signals'
+import {
+  gameState,
+  screenHeight,
+  screenWidth,
+  svgTransition,
+  svgTranslation,
+  svgZoom,
+} from '../../signals'
 import { MapGroup } from './MapGroup'
 import { handleClick } from './utils/handleClick'
 import { PlayerGroup } from './PlayerGroup'
@@ -26,7 +33,7 @@ export function MapRenderer() {
           <PlayerGroup />
           <StoneGroup />
           <HudGroup />
-          <DieGroup />
+          {gameState.value?.dieRoll && <DieGroup />}
         </TranslateGroup>
       </ZoomGroup>
     </Svg>

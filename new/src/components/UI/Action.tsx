@@ -4,8 +4,11 @@ import { gameState, lastDieRoll, waitingForServer } from '../../signals'
 import { updateGame } from '../../utils/updateGame'
 import { players } from '../../utils/parseMap'
 import { rollDie } from '../../utils/rollDie'
-import { getMyPlayerId } from '../../utils/getUsers'
+import { getMyPlayer, getMyPlayerId } from '../../utils/getUsers'
 import { WaitingForServer } from './WaitingForServer'
+import { getLegalMoves } from '../../utils/legalMoves'
+import { getCircleFromPiece } from '../../utils/getCircleFromPiece'
+import { RandomDie } from './RandomDie'
 
 export function Action() {
   const myTurn = gameState.value?.playerTurn === getMyPlayerId()
@@ -37,22 +40,43 @@ export function Action() {
 
   if (myTurn && dieNotRolled && lastDieRoll.value === 6) {
     return (
-      <Div onClick={rollDie} className='clickable'>
-        Roll again
-      </Div>
+      <>
+        <RandomDie />
+        <Div onClick={rollDie} className='clickable'>
+          Roll again
+        </Div>
+      </>
     )
   }
 
   if (myTurn && dieNotRolled) {
     return (
-      <Div onClick={rollDie} className='clickable'>
-        Roll
-      </Div>
+      <>
+        <RandomDie />
+        <Div onClick={rollDie} className='clickable'>
+          Roll
+        </Div>
+      </>
     )
   }
 
   if (myTurn && gameState.value && !dieNotRolled) {
-    return <Div>Your turn</Div>
+    const myPieces = getMyPlayer()!.positions
+    const myLegalMoves = myPieces
+      .map(position => getLegalMoves(getCircleFromPiece(position.pieceId)!.id))
+      .reduce((acc, val) => acc.concat(val), [])
+    if (myLegalMoves.length > 0) {
+      return <Div>Your turn</Div>
+    } else {
+      return (
+        <>
+          <RandomDie />
+          <Div onClick={rollDie} className='clickable'>
+            Roll again (no legal moves)
+          </Div>
+        </>
+      )
+    }
   }
 
   if (!myTurn && gameState.value && playerWhoIsPlaying) {
@@ -74,6 +98,7 @@ const Div = styled('div')`
   transform: translateX(-50%);
   padding: 0 30px;
   color: black;
+  white-space: nowrap;
 
   &.clickable {
     animation: flash 1s infinite ease-in-out;

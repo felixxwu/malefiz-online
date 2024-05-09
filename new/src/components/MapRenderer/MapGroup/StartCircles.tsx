@@ -42,6 +42,7 @@ export function StartCircles() {
                 style={{
                   translate: `${circle.position.x * 100 - 100}px ${circle.position.y * 100 + 70}px`,
                   backgroundColor: player.colour,
+                  cursor: !myPlayerId && !userControllingPlayer ? 'pointer' : 'default',
                 }}
               >
                 <JoinText>{joinText}</JoinText>
@@ -66,7 +67,6 @@ const JoinButton = styled('foreignObject')`
   width: 200px;
   height: 40px;
   border-radius: 10px;
-  cursor: pointer;
   pointer-events: all;
   outline: 3px solid black;
 `
