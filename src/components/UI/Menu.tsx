@@ -101,7 +101,7 @@ const MenuContent = styled('div')`
   display: flex;
   gap: 20px;
   flex-direction: column;
-  max-width: 400px;
+  max-width: 350px;
 `
 
 const Share = styled('div')`

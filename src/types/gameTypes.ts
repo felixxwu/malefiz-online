@@ -14,9 +14,16 @@ export type Stone = {
   circleId: string | null
 }
 
+export type PlayerModel = {
+  eyes: number
+  mouth: number
+  head: number
+}
+
 export type User = {
   playerToControl: PlayerID
   timeJoined: number
+  playerModel: PlayerModel
 }
 
 export type UserID = `user${string}`

@@ -1,7 +1,20 @@
+import { doc, updateDoc, deleteField } from 'firebase/firestore'
+
+import { getUsers } from '../utils/getUsers'
 import { zoomIntoCircle } from '../utils/zoomIntoCircle'
-import { gameState, lastDieRoll, circleHovered, gameStateHashTable, gameOver } from './signals'
+import {
+  gameState,
+  lastDieRoll,
+  circleHovered,
+  gameStateHashTable,
+  gameOver,
+  userId,
+} from './signals'
+import { db } from '../config/firebase'
+import { gameId } from '../utils/gameId'
 
 export function onGameStateChange() {
+  resolveMultipleUsersPerPlayer()
   if (gameState.value && gameState.value!.dieRoll !== null) {
     lastDieRoll.value = gameState.value!.dieRoll
   }
@@ -18,4 +31,24 @@ export function onGameStateChange() {
       }
     }
   })
+}
+
+function resolveMultipleUsersPerPlayer() {
+  if (!gameState.value) return
+  const users = getUsers()
+  const players = gameState.value.players
+  for (const player of players) {
+    const usersForPlayer = users.filter(user => user.playerToControl === player.id)
+    if (usersForPlayer.length > 1) {
+      usersForPlayer.sort((a, b) => a.timeJoined - b.timeJoined)
+      const myUserIndex = usersForPlayer.findIndex(user => user.userId === `user${userId.value}`)
+      // i'm not the first to join
+      if (myUserIndex !== 0) {
+        // leave game
+        updateDoc(doc(db, 'games', gameId!), {
+          [`user${userId.value}`]: deleteField(),
+        })
+      }
+    }
+  }
 }

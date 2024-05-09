@@ -1,7 +1,7 @@
 import { computed, signal } from '@preact/signals'
 import { homePageMap } from '../maps/home'
 import { storedSignal } from '../utils/storedSignal'
-import { GameState } from '../types/gameTypes'
+import { GameState, PlayerModel } from '../types/gameTypes'
 import { HashTable, mapToHashTable } from '../utils/mapToHashTable'
 import { Circle } from '../types/mapTypes'
 import { onGameStateChange } from './onGameStateChange'
@@ -26,7 +26,6 @@ export const gameStateHashTable = computed<HashTable>(() => {
 })
 export const gameOver = signal<string | null>(null)
 export const lastDieRoll = signal<number | null>(null)
-export const userId = storedSignal('userId', new Date().getTime().toString())
 
 export const pieceSelected = signal<string | null>(null)
 export const circleHovered = signal<Circle | null>(null)
@@ -39,6 +38,9 @@ export const mouseDownData = signal<{
   svgZoom: number
   pinchDistance: number
 } | null>(null)
+
+export const userId = storedSignal('userId', new Date().getTime().toString())
+export const playerModel = storedSignal<PlayerModel>('playerModel', { eyes: 0, mouth: 0, head: 0 })
 
 export const test = signal(0)
 test.subscribe(() => {
