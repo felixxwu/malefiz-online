@@ -18,7 +18,7 @@ export const homePageMap: Map = [
   },
   {
     id: '2',
-    position: { x: 2, y: 1 },
+    position: { x: 2, y: 1.2 },
     neighbours: ['3'],
     start: null,
     finish: false,
@@ -46,7 +46,7 @@ export const homePageMap: Map = [
   },
   {
     id: '4',
-    position: { x: 4, y: 1 },
+    position: { x: 4, y: 1.2 },
     neighbours: ['3'],
     start: null,
     finish: false,

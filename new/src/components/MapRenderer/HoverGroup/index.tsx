@@ -2,13 +2,14 @@ import { styled } from 'goober'
 import { circleHovered, gameState } from '../../../signals'
 import { consts } from '../../../config/consts'
 import { getMyPlayer } from '../../../utils/getUsers'
+import { colours } from '../../../config/colours'
 
 export function HoverGroup() {
   const circleHoveredValue = circleHovered.value
   if (!circleHoveredValue) return null
   if (circleHoveredValue.start) return null
-  if (gameState.value?.playerTurn !== getMyPlayer()?.id) return null
-  if (gameState.value?.dieRoll === null) return null
+  if (gameState.value && gameState.value.playerTurn !== getMyPlayer()?.id) return null
+  if (gameState.value && gameState.value.dieRoll === null) return null
 
   const { x, y } = {
     x: circleHoveredValue.position.x * 100,
@@ -26,7 +27,7 @@ export function HoverGroup() {
         cy='0'
         r={consts.circleRadius - 2}
         fill='none'
-        stroke={getMyPlayer()?.colour}
+        stroke={getMyPlayer()?.colour ?? colours.highlight}
       />
     </Group>
   )

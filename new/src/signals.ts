@@ -23,6 +23,7 @@ gameState.subscribe(() => {
   if (gameState.value && gameState.value!.dieRoll !== null) {
     lastDieRoll.value = gameState.value!.dieRoll
   }
+  circleHovered.value = null
   setTimeout(() => {
     for (const key in gameStateHashTable.value) {
       const pos = gameStateHashTable.value[key]
