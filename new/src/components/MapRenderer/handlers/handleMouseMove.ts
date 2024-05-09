@@ -1,29 +1,6 @@
-import { consts } from '../../../config/consts'
-import { circleHovered, map } from '../../../signals/signals'
-import { getMapPosition } from '../../../utils/getMapPosition'
+import { circleHovered } from '../../../signals/signals'
+import { getCircleFromMousePos } from './utils/getCircleFromMousePos'
 
 export function handleMouseMove(event: MouseEvent) {
-  const rect = document.getElementById(consts.mapPositionRef)!.getBoundingClientRect()
-  const mapSize = getMapPosition(map.value)
-  const circleSize = rect.width / mapSize.mapWidth || rect.height / mapSize.mapHeight
-  const mapCoords = circleSize
-    ? {
-        x: (event.clientX - rect.left) / circleSize + mapSize.mapLeft,
-        y: (event.clientY - rect.top) / circleSize + mapSize.mapTop,
-      }
-    : {
-        x: mapSize.mapLeft,
-        y: mapSize.mapTop,
-      }
-  for (const circle of map.value) {
-    if (
-      Math.abs(circle.position.x - mapCoords.x) < 0.5 &&
-      Math.abs(circle.position.y - mapCoords.y) < 0.5
-    ) {
-      circleHovered.value = circle
-      return
-    }
-  }
-
-  circleHovered.value = null
+  circleHovered.value = getCircleFromMousePos(event)
 }

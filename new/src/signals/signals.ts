@@ -30,6 +30,7 @@ export const userId = storedSignal('userId', new Date().getTime().toString())
 
 export const pieceSelected = signal<string | null>(null)
 export const circleHovered = signal<Circle | null>(null)
+export const pieceDragged = signal<{ id: string; from: Circle } | null>(null)
 
 export const evCache = signal<PointerEvent[]>([])
 export const mouseDownData = signal<{

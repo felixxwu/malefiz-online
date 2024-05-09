@@ -1,7 +1,25 @@
-import { evCache, mouseDownData, svgTranslation, svgZoom } from '../../../signals/signals'
+import {
+  evCache,
+  mouseDownData,
+  pieceDragged,
+  pieceSelected,
+  svgTranslation,
+  svgZoom,
+} from '../../../signals/signals'
 import { getDistance } from '../../../utils/getDistance'
+import { getPieceFromCircle } from '../../../utils/getPieceFromCircle'
+import { pieceBelongsToMe } from '../../../utils/pieceBelongsToMe'
+import { getCircleFromMousePos } from './utils/getCircleFromMousePos'
 
 export function handlePointerDown(event: PointerEvent) {
+  const circle = getCircleFromMousePos(event)
+  const piece = circle ? getPieceFromCircle(circle.id) : null
+  const myPiece = pieceBelongsToMe(piece)
+  if (piece && myPiece && circle) {
+    pieceDragged.value = { id: piece, from: circle }
+    pieceSelected.value = piece
+  }
+
   evCache.value.push(event)
   if (evCache.value.length === 1) {
     mouseDownData.value = {

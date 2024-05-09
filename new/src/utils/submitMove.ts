@@ -5,6 +5,7 @@ import { takePiece } from './takePiece'
 import { takeStone } from './takeStone'
 
 export async function submitMove(move: Move) {
+  if (!move) return
   const pieceToMove = gameStateHashTable.value[move.from.id].pieces![0].pieceId
   const destinationCircleId = move.to.id
   if (gameState.value!.stones.find(stone => stone.circleId === destinationCircleId)) {

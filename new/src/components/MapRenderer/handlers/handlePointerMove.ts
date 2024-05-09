@@ -1,6 +1,7 @@
 import {
   evCache,
   mouseDownData,
+  pieceDragged,
   svgTransition,
   svgTranslation,
   svgZoom,
@@ -9,6 +10,8 @@ import { getDistance } from '../../../utils/getDistance'
 
 export function HandlePointerMove(event: PointerEvent) {
   if (!mouseDownData.value) return
+
+  if (pieceDragged.value) return
 
   const index = evCache.value.findIndex(cachedEv => cachedEv.pointerId === event.pointerId)
   evCache.value[index] = event

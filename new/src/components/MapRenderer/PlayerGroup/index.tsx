@@ -1,5 +1,5 @@
 import { styled } from 'goober'
-import { gameState, textOpacity } from '../../../signals/signals'
+import { circleHovered, gameState, pieceDragged, textOpacity } from '../../../signals/signals'
 import { mapList } from '../../../maps/mapList'
 import { polygonToXY } from '../../../utils/polygonToXY'
 
@@ -47,15 +47,14 @@ export function PlayerGroup() {
 
   return (
     <Group>
-      {pieces.map(piece => (
-        <PlayerModel
-          key={piece.pieceID}
-          id={piece.pieceID}
-          colour={piece.colour}
-          x={piece.x}
-          y={piece.y}
-        />
-      ))}
+      {pieces.map(piece => {
+        const circleHoveredValue = circleHovered.value
+        const pieceIsBeingDragged = piece.pieceID === pieceDragged.value?.id && circleHoveredValue
+        const { x, y } = pieceIsBeingDragged ? circleHoveredValue.position : piece
+        return (
+          <PlayerModel key={piece.pieceID} id={piece.pieceID} colour={piece.colour} x={x} y={y} />
+        )
+      })}
     </Group>
   )
 }

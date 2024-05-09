@@ -54,8 +54,8 @@ export function MapRenderer() {
           }}
         >
           <MapGroup />
-          <PlayerGroup />
           <StoneGroup />
+          <PlayerGroup />
           <HudGroup />
           <HoverGroup />
           {gameState.value?.dieRoll && <DieGroup />}
