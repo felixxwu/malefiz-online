@@ -3,6 +3,7 @@ import { homePageMap } from './maps/home'
 import { storedSignal } from './utils/storedSignal'
 import { GameState } from './types/gameTypes'
 import { HashTable, mapToHashTable } from './utils/mapToHashTable'
+import { Circle } from './types/mapTypes'
 
 export const screenWidth = signal(window.innerWidth)
 export const screenHeight = signal(window.innerHeight)
@@ -28,5 +29,6 @@ export const gameStateHashTable = computed<HashTable>(() => {
 export const lastDieRoll = signal<number | null>(null)
 
 export const pieceSelected = signal<string | null>(null)
+export const circleHovered = signal<Circle | null>(null)
 
 export const userId = storedSignal('userId', new Date().getTime().toString())

@@ -1,5 +1,6 @@
 import { styled } from 'goober'
 import {
+  circleHovered,
   gameState,
   screenHeight,
   screenWidth,
@@ -8,15 +9,23 @@ import {
   svgZoom,
 } from '../../signals'
 import { MapGroup } from './MapGroup'
-import { handleClick } from './utils/handleClick'
+import { handleClick } from './handlers/handleClick'
 import { PlayerGroup } from './PlayerGroup'
 import { StoneGroup } from './StoneGroup'
 import { HudGroup } from './HudGroup'
 import { DieGroup } from './DieGroup'
+import { handleMouseMove } from './handlers/handleMouseMove'
+import { HoverGroup } from './HoverGroup'
 
 export function MapRenderer() {
   return (
-    <Svg width={screenWidth.value} height={screenHeight.value} onClick={handleClick}>
+    <Svg
+      width={screenWidth.value}
+      height={screenHeight.value}
+      onClick={handleClick}
+      onMouseMove={handleMouseMove}
+      style={{ cursor: circleHovered.value ? 'pointer' : 'default' }}
+    >
       <ZoomGroup
         style={{
           transform: `scale(${svgZoom.value})`,
@@ -33,6 +42,7 @@ export function MapRenderer() {
           <PlayerGroup />
           <StoneGroup />
           <HudGroup />
+          <HoverGroup />
           {gameState.value?.dieRoll && <DieGroup />}
         </TranslateGroup>
       </ZoomGroup>
