@@ -16,15 +16,30 @@ import { HudGroup } from './HudGroup'
 import { DieGroup } from './DieGroup'
 import { handleMouseMove } from './handlers/handleMouseMove'
 import { HoverGroup } from './HoverGroup'
+import { handlePointerDown } from './handlers/handlePointerDown'
+import { HandlePointerMove } from './handlers/handlePointerMove'
+import { handlePointerUp } from './handlers/handlePointerUp'
+import { handleWheel } from './handlers/handleWheel'
+import { handleKeydown } from './handlers/handleKeyDown'
+import { useEffect } from 'preact/hooks'
 
 export function MapRenderer() {
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeydown)
+  }, [])
   return (
     <Svg
       width={screenWidth.value}
       height={screenHeight.value}
+      style={{ cursor: circleHovered.value ? 'pointer' : 'default' }}
       onClick={handleClick}
       onMouseMove={handleMouseMove}
-      style={{ cursor: circleHovered.value ? 'pointer' : 'default' }}
+      onPointerDown={handlePointerDown}
+      onPointerMove={HandlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerLeave={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+      onWheel={handleWheel}
     >
       <ZoomGroup
         style={{

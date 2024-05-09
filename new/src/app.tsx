@@ -6,6 +6,7 @@ import { useEffect } from 'preact/hooks'
 import { firstRender } from './utils/firstRender'
 import { Menu } from './components/UI/Menu'
 import { Action } from './components/UI/Action'
+import { Navigation } from './components/UI/Navigation'
 
 export function App() {
   useEffect(() => {
@@ -17,6 +18,7 @@ export function App() {
       <MapRenderer />
       <Menu />
       <Action />
+      <Navigation />
     </Div>
   )
 }

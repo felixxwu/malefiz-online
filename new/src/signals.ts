@@ -27,8 +27,15 @@ export const gameStateHashTable = computed<HashTable>(() => {
   return gameState.value ? mapToHashTable(gameState.value) : {}
 })
 export const lastDieRoll = signal<number | null>(null)
+export const userId = storedSignal('userId', new Date().getTime().toString())
 
 export const pieceSelected = signal<string | null>(null)
 export const circleHovered = signal<Circle | null>(null)
 
-export const userId = storedSignal('userId', new Date().getTime().toString())
+export const evCache = signal<PointerEvent[]>([])
+export const mouseDownData = signal<{
+  coords: { x: number; y: number }
+  svgTranslation: { x: number; y: number }
+  svgZoom: number
+  pinchDistance: number
+} | null>(null)
