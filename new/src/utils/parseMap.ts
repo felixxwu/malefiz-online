@@ -23,12 +23,12 @@ type Coordinate = {
 }
 
 export const players = [
-  { id: '1', colour: 'hsl(0 50% 65% / 1)', name: 'Red' },
-  { id: '2', colour: 'hsl(240 50% 75% / 1)', name: 'Blue' },
-  { id: '3', colour: 'hsl(140 50% 60% / 1)', name: 'Green' },
-  { id: '4', colour: 'hsl(60 50% 60% / 1)', name: 'Yellow' },
-  { id: '5', colour: 'hsl(300 50% 60% / 1)', name: 'Purple' },
-  { id: '6', colour: 'hsl(30 50% 60% / 1)', name: 'Orange' },
+  { id: '1', colour: 'hsl(0 55% 65% / 1)', name: 'Red' },
+  { id: '2', colour: 'hsl(240 55% 75% / 1)', name: 'Blue' },
+  { id: '3', colour: 'hsl(140 55% 60% / 1)', name: 'Green' },
+  { id: '4', colour: 'hsl(60 55% 60% / 1)', name: 'Yellow' },
+  { id: '5', colour: 'hsl(300 55% 60% / 1)', name: 'Purple' },
+  { id: '6', colour: 'hsl(30 55% 60% / 1)', name: 'Orange' },
 ] as const
 
 export function parseMap(mapNum: number, template: string): { map: Map; gameState: GameState } {

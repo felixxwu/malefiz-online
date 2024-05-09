@@ -34,7 +34,6 @@ export async function playAiIfApplicable() {
   }
 
   const bestMove = selectedBestPieceToMove(piecesWithLegalMoves)
-  console.log(`submitMove`)
   await submitMove(bestMove)
 }
 

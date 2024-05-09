@@ -1,5 +1,5 @@
 import { styled } from 'goober'
-import { menuOpen } from '../../signals'
+import { gameState, menuOpen } from '../../signals'
 import qrcode from 'qrcode-generator'
 import { MenuIcon } from '../Icons'
 import { colours } from '../../config/colours'
@@ -24,6 +24,8 @@ export function Menu() {
   qr.make()
   const svgString = qr.createSvgTag({ cellSize: 2, margin: 0, scalable: true })
 
+  const showInviteHint = gameState.value?.playerTurn === null
+
   return (
     <Div
       onClick={closeMenu}
@@ -41,7 +43,7 @@ export function Menu() {
       {menuOpen.value ? (
         <MenuContent>
           <Share>
-            Invite Players:
+            Invite players:
             <QRCode dangerouslySetInnerHTML={{ __html: svgString }}></QRCode>
             <Link href={window.location.href}>{window.location.href}</Link>
           </Share>
@@ -49,6 +51,7 @@ export function Menu() {
         </MenuContent>
       ) : (
         <OpenButton onClick={openMenu}>
+          {showInviteHint && <InviteHint>Invite players here</InviteHint>}
           <MenuIcon size={12} />
         </OpenButton>
       )}
@@ -85,6 +88,12 @@ const OpenButton = styled('div')`
   &:hover {
     background-color: ${colours.highlight};
   }
+`
+
+const InviteHint = styled('div')`
+  position: fixed;
+  white-space: nowrap;
+  left: 60px;
 `
 
 const MenuContent = styled('div')`
