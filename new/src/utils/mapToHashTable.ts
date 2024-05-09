@@ -1,4 +1,4 @@
-import { map } from '../signals'
+import { map } from '../signals/signals'
 import { GameState, Stone } from '../types/gameTypes'
 import { Circle } from '../types/mapTypes'
 import { addDistancesToFinish } from './distanceToFinish'

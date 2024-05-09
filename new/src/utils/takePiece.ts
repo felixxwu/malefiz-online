@@ -1,4 +1,4 @@
-import { gameState, lastDieRoll, map } from '../signals'
+import { gameState, lastDieRoll, map } from '../signals/signals'
 import { getNextPlayer } from './playerTurns'
 import { updateGame } from './updateGame'
 

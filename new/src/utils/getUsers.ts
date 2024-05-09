@@ -1,4 +1,4 @@
-import { gameState, userId } from '../signals'
+import { gameState, userId } from '../signals/signals'
 import { UserID } from '../types/gameTypes'
 
 export function getUsers() {

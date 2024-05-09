@@ -1,3 +1,5 @@
+import { JSX } from 'preact/jsx-runtime'
+
 export type Circle = {
   id: string
   position: {
@@ -11,6 +13,7 @@ export type Circle = {
   zoomInPoint: boolean
   text?: string
   fontSize?: number
+  custom?: () => JSX.Element
   onClick?: () => void
 }
 

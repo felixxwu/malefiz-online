@@ -5,9 +5,10 @@ import { LinePath } from './LinePath'
 import { StartCircles } from './StartCircles'
 import { SafeCirclePath } from './SafeCirclePath'
 import { FinishCircles } from './FinishCircles'
-import { map } from '../../../signals'
+import { map } from '../../../signals/signals'
 import { Text } from './Text'
 import { consts } from '../../../config/consts'
+import { CustomElements } from './CustomElements'
 
 export function MapGroup() {
   const mapPosition = getMapPosition(map.value)
@@ -20,6 +21,7 @@ export function MapGroup() {
       <StartCircles />
       <FinishCircles />
       <Text />
+      <CustomElements />
       <MapPositionRef
         id={consts.mapPositionRef}
         x={mapPosition.mapLeft * 100}

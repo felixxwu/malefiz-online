@@ -1,4 +1,4 @@
-import { evCache, mouseDownData } from '../../../signals'
+import { evCache, mouseDownData } from '../../../signals/signals'
 
 export function handlePointerUp(event: PointerEvent) {
   mouseDownData.value = null

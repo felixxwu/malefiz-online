@@ -1,4 +1,11 @@
-import { gameState, map, menuOpen, svgTransition, svgTranslation, svgZoom } from '../../../signals'
+import {
+  gameState,
+  map,
+  menuOpen,
+  svgTransition,
+  svgTranslation,
+  svgZoom,
+} from '../../../signals/signals'
 import { fitToScreen } from '../../../utils/fitToScreen'
 import { isMyTurn } from '../../../utils/playerTurns'
 import { rollDie } from '../../../utils/rollDie'

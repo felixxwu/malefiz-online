@@ -1,4 +1,4 @@
-import { gameState, pieceSelected, waitingForServer } from '../signals'
+import { gameState, pieceSelected, waitingForServer } from '../signals/signals'
 import { getCircleFromPiece } from './getCircleFromPiece'
 import { getPieceFromCircle } from './getPieceFromCircle'
 import { getLegalMoves, getLegalStonePlacements } from './legalMoves'

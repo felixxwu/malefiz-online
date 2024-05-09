@@ -1,5 +1,5 @@
 import { styled } from 'goober'
-import { gameState, menuOpen } from '../../signals'
+import { gameState, menuOpen } from '../../signals/signals'
 import qrcode from 'qrcode-generator'
 import { MenuIcon } from '../Icons'
 import { colours } from '../../config/colours'

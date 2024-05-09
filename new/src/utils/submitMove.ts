@@ -1,4 +1,4 @@
-import { gameState, gameStateHashTable } from '../signals'
+import { gameState, gameStateHashTable } from '../signals/signals'
 import { Move } from '../types/gameTypes'
 import { movePiece } from './movePiece'
 import { takePiece } from './takePiece'

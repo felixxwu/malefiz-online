@@ -1,5 +1,5 @@
 import { styled } from 'goober'
-import { circleHovered, gameState } from '../../../signals'
+import { circleHovered, gameState } from '../../../signals/signals'
 import { consts } from '../../../config/consts'
 import { getMyPlayer } from '../../../utils/getUsers'
 import { colours } from '../../../config/colours'

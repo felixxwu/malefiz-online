@@ -1,7 +1,7 @@
 import { styled } from 'goober'
 import { Dot, dotLayouts } from '../MapRenderer/DieGroup/Dot'
 import { Square } from '../MapRenderer/DieGroup/Square'
-import { textOpacity } from '../../signals'
+import { textOpacity } from '../../signals/signals'
 
 export function RandomDie() {
   return (

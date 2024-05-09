@@ -1,5 +1,5 @@
 import { consts } from '../config/consts'
-import { gameState } from '../signals'
+import { gameState } from '../signals/signals'
 import { sleep } from '../utils/sleep'
 import { updateGame } from './updateGame'
 

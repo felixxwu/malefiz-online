@@ -1,6 +1,6 @@
 import { styled } from 'goober'
 import { colours } from '../../config/colours'
-import { gameOver, gameState, lastDieRoll, waitingForServer } from '../../signals'
+import { gameOver, gameState, lastDieRoll, waitingForServer } from '../../signals/signals'
 import { updateGame } from '../../utils/updateGame'
 import { players } from '../../utils/parseMap'
 import { rollDie } from '../../utils/rollDie'

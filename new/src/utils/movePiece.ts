@@ -1,6 +1,6 @@
 import { getNextPlayer } from './playerTurns'
 import { sleep } from '../utils/sleep'
-import { gameState, lastDieRoll } from '../signals'
+import { gameState, lastDieRoll } from '../signals/signals'
 import { consts } from '../config/consts'
 import { updateGame } from './updateGame'
 

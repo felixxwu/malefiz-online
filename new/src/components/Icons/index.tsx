@@ -1,5 +1,5 @@
 import { colours } from '../../config/colours'
-import { textOpacity } from '../../signals'
+import { textOpacity } from '../../signals/signals'
 
 function Icon(props: { pathString: string; size?: number; colour?: string }) {
   const { pathString, size = 12, colour = colours.background } = props

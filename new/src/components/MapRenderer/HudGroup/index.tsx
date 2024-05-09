@@ -1,5 +1,5 @@
 import { isMyTurn } from '../../../utils/playerTurns'
-import { gameState, pieceSelected, waitingForServer } from '../../../signals'
+import { gameState, pieceSelected, waitingForServer } from '../../../signals/signals'
 import { getCircleFromPiece } from '../../../utils/getCircleFromPiece'
 import { getLegalMoves, getLegalStonePlacements } from '../../../utils/legalMoves'
 import { PieceIndicator } from './PieceIndicator'

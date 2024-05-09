@@ -1,5 +1,6 @@
 import { Map } from '../types/mapTypes'
 import { createGame } from '../utils/createGame'
+import { PlayerCustomisation } from './PlayerCustomisation'
 
 export const homePageMap: Map = [
   {
@@ -57,5 +58,15 @@ export const homePageMap: Map = [
     onClick: async () => {
       createGame(3)
     },
+  },
+  {
+    id: '5',
+    position: { x: 2, y: 3 },
+    neighbours: [],
+    start: null,
+    finish: false,
+    zoomInPoint: false,
+    safeZone: false,
+    custom: PlayerCustomisation,
   },
 ]

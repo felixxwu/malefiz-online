@@ -1,4 +1,4 @@
-import { evCache, mouseDownData, svgTranslation, svgZoom } from '../../../signals'
+import { evCache, mouseDownData, svgTranslation, svgZoom } from '../../../signals/signals'
 import { getDistance } from '../../../utils/getDistance'
 
 export function handlePointerDown(event: PointerEvent) {

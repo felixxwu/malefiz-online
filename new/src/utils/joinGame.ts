@@ -1,4 +1,4 @@
-import { userId } from '../signals'
+import { userId } from '../signals/signals'
 import { PlayerID, UserID } from '../types/gameTypes'
 import { updateGame } from './updateGame'
 

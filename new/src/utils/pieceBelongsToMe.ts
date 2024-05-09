@@ -1,4 +1,4 @@
-import { gameState } from '../signals'
+import { gameState } from '../signals/signals'
 import { getMyPlayerId } from './getUsers'
 
 export function pieceBelongsToMe(pieceId: string | null) {

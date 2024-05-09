@@ -1,5 +1,5 @@
 import { styled } from 'goober'
-import { gameState, textOpacity } from '../../../signals'
+import { gameState, textOpacity } from '../../../signals/signals'
 import { mapList } from '../../../maps/mapList'
 import { polygonToXY } from '../../../utils/polygonToXY'
 

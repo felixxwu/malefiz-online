@@ -1,4 +1,4 @@
-import { gameState } from '../signals'
+import { gameState } from '../signals/signals'
 import { AI1, selectedBestPieceToMove } from './ai'
 import { getMyPlayerId, getUsers } from './getUsers'
 import { getLegalStonePlacements } from './legalMoves'

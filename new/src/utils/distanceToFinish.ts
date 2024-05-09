@@ -1,4 +1,4 @@
-import { map } from '../signals'
+import { map } from '../signals/signals'
 import { HashTable } from './mapToHashTable'
 
 export function addDistancesToFinish(hashTable: HashTable) {

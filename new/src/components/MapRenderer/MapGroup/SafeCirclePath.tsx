@@ -1,5 +1,5 @@
 import { colours } from '../../../config/colours'
-import { map } from '../../../signals'
+import { map } from '../../../signals/signals'
 import { singleCirclePathData } from './utils/singleCirclePathData'
 
 export function SafeCirclePath() {

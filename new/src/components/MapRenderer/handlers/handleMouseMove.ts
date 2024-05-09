@@ -1,5 +1,5 @@
 import { consts } from '../../../config/consts'
-import { circleHovered, map } from '../../../signals'
+import { circleHovered, map } from '../../../signals/signals'
 import { getMapPosition } from '../../../utils/getMapPosition'
 
 export function handleMouseMove(event: MouseEvent) {

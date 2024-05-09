@@ -1,5 +1,5 @@
 import { consts } from '../../../config/consts'
-import { svgTransition, svgTranslation, svgZoom } from '../../../signals'
+import { svgTransition, svgTranslation, svgZoom } from '../../../signals/signals'
 
 export function handleWheel(event: WheelEvent) {
   event.preventDefault()

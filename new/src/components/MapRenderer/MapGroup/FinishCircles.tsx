@@ -1,5 +1,5 @@
 import { styled } from 'goober'
-import { map } from '../../../signals'
+import { map } from '../../../signals/signals'
 import { colours } from '../../../config/colours'
 import { consts } from '../../../config/consts'
 

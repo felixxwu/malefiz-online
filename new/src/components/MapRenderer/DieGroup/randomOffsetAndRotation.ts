@@ -1,4 +1,4 @@
-import { map } from '../../../signals'
+import { map } from '../../../signals/signals'
 import { getMapPosition } from '../../../utils/getMapPosition'
 
 export function randomOffsetAndRotation() {

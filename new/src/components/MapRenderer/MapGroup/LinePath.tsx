@@ -1,6 +1,6 @@
 import { styled } from 'goober'
 import { Circle } from '../../../types/mapTypes'
-import { map } from '../../../signals'
+import { map } from '../../../signals/signals'
 import { consts } from '../../../config/consts'
 import { colours } from '../../../config/colours'
 

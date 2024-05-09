@@ -1,4 +1,4 @@
-import { gameState } from '../signals'
+import { gameState } from '../signals/signals'
 
 export function getPieceFromCircle(circleId: string) {
   for (const player of gameState.value!.players) {

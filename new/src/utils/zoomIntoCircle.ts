@@ -1,5 +1,5 @@
 import { consts } from '../config/consts'
-import { map, svgTransition, svgTranslation, svgZoom } from '../signals'
+import { map, svgTransition, svgTranslation, svgZoom } from '../signals/signals'
 import { Circle } from '../types/mapTypes'
 
 export async function zoomIntoCircle({

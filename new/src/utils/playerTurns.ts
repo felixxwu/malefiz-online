@@ -1,5 +1,5 @@
 import { players } from './parseMap'
-import { gameState } from '../signals'
+import { gameState } from '../signals/signals'
 import { getMyPlayerId } from './getUsers'
 
 export function getNextPlayer(): string {

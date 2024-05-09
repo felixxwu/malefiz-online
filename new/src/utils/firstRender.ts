@@ -1,6 +1,6 @@
 import { doc, onSnapshot } from 'firebase/firestore'
 import { colours } from '../config/colours'
-import { gameState, map, screenHeight, screenWidth, textOpacity } from '../signals'
+import { gameState, map, screenHeight, screenWidth, textOpacity } from '../signals/signals'
 import { fitToScreen } from './fitToScreen'
 import { gameId } from './gameId'
 import { sleep } from './sleep'

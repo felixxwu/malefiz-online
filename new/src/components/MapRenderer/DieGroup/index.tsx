@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks'
-import { gameState } from '../../../signals'
+import { gameState } from '../../../signals/signals'
 import { randomOffsetAndRotation } from './randomOffsetAndRotation'
 import { styled } from 'goober'
 import { Square } from './Square'

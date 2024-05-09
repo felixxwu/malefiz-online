@@ -1,6 +1,6 @@
 import { consts } from '../../../config/consts'
 import { getMapPosition } from '../../../utils/getMapPosition'
-import { map, pieceSelected } from '../../../signals'
+import { map, pieceSelected } from '../../../signals/signals'
 import { handleCircleClick } from '../../../utils/handleCircleClick'
 
 export function handleClick(event: MouseEvent) {

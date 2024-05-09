@@ -7,7 +7,7 @@ import {
   svgTransition,
   svgTranslation,
   svgZoom,
-} from '../../signals'
+} from '../../signals/signals'
 import { MapGroup } from './MapGroup'
 import { handleClick } from './handlers/handleClick'
 import { PlayerGroup } from './PlayerGroup'

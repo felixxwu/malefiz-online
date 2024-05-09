@@ -1,10 +1,12 @@
 import { Map } from '../types/mapTypes'
 
 export function getMapPosition(map: Map) {
-  const mapTop = map.reduce((acc, node) => Math.min(acc, node.position.y), Infinity)
-  const mapLeft = map.reduce((acc, node) => Math.min(acc, node.position.x), Infinity)
-  const mapRight = map.reduce((acc, node) => Math.max(acc, node.position.x), 0)
-  const mapBottom = map.reduce((acc, node) => Math.max(acc, node.position.y), 0)
+  const filtered = map.filter(node => !node.custom)
+
+  const mapTop = filtered.reduce((acc, node) => Math.min(acc, node.position.y), Infinity)
+  const mapLeft = filtered.reduce((acc, node) => Math.min(acc, node.position.x), Infinity)
+  const mapRight = filtered.reduce((acc, node) => Math.max(acc, node.position.x), 0)
+  const mapBottom = filtered.reduce((acc, node) => Math.max(acc, node.position.y), 0)
   const mapWidth = mapRight - mapLeft
   const mapHeight = mapBottom - mapTop
   const mapCenterX = mapLeft + mapWidth / 2

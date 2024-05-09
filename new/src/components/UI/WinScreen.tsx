@@ -1,5 +1,5 @@
 import { styled } from 'goober'
-import { gameOver } from '../../signals'
+import { gameOver } from '../../signals/signals'
 
 export function WinScreen() {
   if (!gameOver.value) return null

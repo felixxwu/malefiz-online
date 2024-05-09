@@ -1,5 +1,5 @@
 import { styled } from 'goober'
-import { gameState, map } from '../../../signals'
+import { gameState, map } from '../../../signals/signals'
 import { players } from '../../../utils/parseMap'
 import { joinGame } from '../../../utils/joinGame'
 import { getMyPlayerId, getUsers } from '../../../utils/getUsers'

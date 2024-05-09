@@ -1,10 +1,10 @@
 import { computed, signal } from '@preact/signals'
-import { homePageMap } from './maps/home'
-import { storedSignal } from './utils/storedSignal'
-import { GameState } from './types/gameTypes'
-import { HashTable, mapToHashTable } from './utils/mapToHashTable'
-import { Circle } from './types/mapTypes'
-import { zoomIntoCircle } from './utils/zoomIntoCircle'
+import { homePageMap } from '../maps/home'
+import { storedSignal } from '../utils/storedSignal'
+import { GameState } from '../types/gameTypes'
+import { HashTable, mapToHashTable } from '../utils/mapToHashTable'
+import { Circle } from '../types/mapTypes'
+import { onGameStateChange } from './onGameStateChange'
 
 export const screenWidth = signal(window.innerWidth)
 export const screenHeight = signal(window.innerHeight)
@@ -19,24 +19,8 @@ export const svgTransition = signal(0)
 export const textOpacity = signal(0)
 
 export const gameState = signal<GameState | null>(null)
-gameState.subscribe(() => {
-  if (gameState.value && gameState.value!.dieRoll !== null) {
-    lastDieRoll.value = gameState.value!.dieRoll
-  }
-  circleHovered.value = null
-  setTimeout(() => {
-    for (const key in gameStateHashTable.value) {
-      const pos = gameStateHashTable.value[key]
-      if (pos.circle?.finish && pos.pieces) {
-        const playerName = gameState.value!.players.find(
-          player => player.id === pos.pieces![0].playerId
-        )!.name
-        gameOver.value = playerName
-        zoomIntoCircle({ circle: pos.circle })
-      }
-    }
-  })
-})
+gameState.subscribe(onGameStateChange)
+
 export const gameStateHashTable = computed<HashTable>(() => {
   return gameState.value ? mapToHashTable(gameState.value) : {}
 })
