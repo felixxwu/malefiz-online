@@ -7,6 +7,7 @@ import { colours } from '../../../config/colours'
 export function HoverGroup() {
   const circleHoveredValue = circleHovered.value
   if (!circleHoveredValue) return null
+  if (circleHoveredValue.custom) return null
   if (circleHoveredValue.start) return null
   if (gameState.value && gameState.value.playerTurn !== getMyPlayer()?.id) return null
   if (gameState.value && gameState.value.dieRoll === null) return null

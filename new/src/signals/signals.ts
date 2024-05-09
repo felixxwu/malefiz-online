@@ -38,3 +38,8 @@ export const mouseDownData = signal<{
   svgZoom: number
   pinchDistance: number
 } | null>(null)
+
+export const test = signal(0)
+test.subscribe(() => {
+  console.log(`test.value`, test.value)
+})

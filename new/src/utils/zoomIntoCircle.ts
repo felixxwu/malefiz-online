@@ -1,6 +1,7 @@
 import { consts } from '../config/consts'
 import { map, svgTransition, svgTranslation, svgZoom } from '../signals/signals'
 import { Circle } from '../types/mapTypes'
+import { sleep } from './sleep'
 
 export async function zoomIntoCircle({
   circle,
@@ -31,4 +32,6 @@ export async function zoomIntoCircle({
     svgTransition.value = transition ?? 500
     svgZoom.value = longestScreenLength / consts.circleRadius
   }, zoomDelay)
+
+  await sleep(transition ?? 500 + (zoomDelay ?? 0))
 }

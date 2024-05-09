@@ -1,4 +1,3 @@
-import { styled } from 'goober'
 import { map } from '../../../signals/signals'
 import { consts } from '../../../config/consts'
 
@@ -10,19 +9,15 @@ export function CustomElements() {
       {customElements.map(circle => {
         const Custom = circle.custom!
         return (
-          <ForeignObject
+          <foreignObject
             x={circle.position.x * 100 - consts.circleRadius}
             y={circle.position.y * 100 - consts.circleRadius}
             style={{ overflow: 'visible' }}
           >
             <Custom />
-          </ForeignObject>
+          </foreignObject>
         )
       })}
     </>
   )
 }
-
-const ForeignObject = styled('foreignObject')`
-  pointer-events: none;
-`

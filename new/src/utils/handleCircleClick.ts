@@ -1,4 +1,4 @@
-import { gameState, pieceSelected, waitingForServer } from '../signals/signals'
+import { gameState, gameStateHashTable, pieceSelected, waitingForServer } from '../signals/signals'
 import { getCircleFromPiece } from './getCircleFromPiece'
 import { getPieceFromCircle } from './getPieceFromCircle'
 import { getLegalMoves, getLegalStonePlacements } from './legalMoves'
@@ -8,6 +8,9 @@ import { submitMove } from './submitMove'
 
 export async function handleCircleClick(clickedCircleId: string) {
   if (waitingForServer.value) return
+  const circle = gameStateHashTable.value[clickedCircleId]?.circle
+  if (!circle) return
+  if (circle?.custom) return
 
   // place stone
   if (gameState.value!.stones.find(stone => stone.circleId === null)) {

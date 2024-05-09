@@ -11,7 +11,13 @@ import { mapList } from '../maps/mapList'
 import { playAiIfApplicable } from './playAiIfApplicable'
 
 export async function firstRender() {
-  window.document.body.style.backgroundColor = colours.background
+  window.document.body.style.opacity = '0'
+  window.document.body.style.transition = '1s'
+
+  setTimeout(() => {
+    window.document.body.style.backgroundColor = colours.background
+    window.document.body.style.opacity = '1'
+  }, 100)
 
   window.addEventListener('resize', () => {
     screenWidth.value = window.innerWidth
