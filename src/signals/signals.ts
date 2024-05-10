@@ -8,6 +8,7 @@ import { onGameStateChange } from './onGameStateChange'
 import { eyesList } from '../playermodel/eyes'
 import { mouthList } from '../playermodel/mouthes'
 import { headList } from '../playermodel/heads'
+import { updatePlayerModelMidGame } from '../utils/updatePlayerModelMidGame'
 
 export const screenWidth = signal(window.innerWidth)
 export const screenHeight = signal(window.innerHeight)
@@ -17,7 +18,7 @@ export const waitingForServer = signal(false)
 
 export const map = signal(homePageMap)
 export const svgZoom = signal(1)
-export const svgTranslation = signal({ x: 0, y: 0 })
+export const svgTranslation = signal({ x: -1000, y: 0 })
 export const svgTransition = signal(0)
 export const textOpacity = signal(0)
 
@@ -48,3 +49,5 @@ export const playerModel = storedSignal<PlayerModel>('playerModel', {
   mouth: Math.floor(Math.random() * mouthList.length),
   head: Math.floor(Math.random() * headList.length),
 })
+playerModel.subscribe(updatePlayerModelMidGame)
+export const customiseInMenu = storedSignal('customiseInMenu', false)

@@ -30,7 +30,7 @@ export function mapToHashTable(gameState: GameState) {
   }
 
   for (const player of gameState.players) {
-    for (const position of player.positions) {
+    for (const position of player.positions.slice().reverse()) {
       if (hashTable[position.circleId].pieces) {
         hashTable[position.circleId].pieces!.push({
           playerId: player.id,

@@ -3,7 +3,7 @@ import { PlayerID, UserID } from '../types/gameTypes'
 import { updateGame } from './updateGame'
 
 export async function joinGame(playerId: PlayerID) {
-  const userKey: UserID = `user${userId}`
+  const userKey: UserID = `user${userId.value}`
   await updateGame({
     [userKey]: {
       playerToControl: playerId,
@@ -11,5 +11,4 @@ export async function joinGame(playerId: PlayerID) {
       playerModel: playerModel.value,
     },
   })
-  // TODO: check if place is already taken
 }
