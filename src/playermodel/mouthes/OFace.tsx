@@ -6,8 +6,8 @@ export function OFace(_: ModelProps) {
       <ellipse
         cx={0}
         cy={9}
-        rx={4}
-        ry={5}
+        rx={3}
+        ry={4}
         fill={'none'}
         style={{
           stroke: 'black',

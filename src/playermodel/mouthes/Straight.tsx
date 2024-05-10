@@ -4,8 +4,8 @@ export function Straight(_: ModelProps) {
   return (
     <g>
       <line
-        x1={-7}
-        x2={7}
+        x1={-6}
+        x2={6}
         y1={8}
         y2={8}
         style={{ strokeWidth: 3, stroke: 'black', strokeLinecap: 'round' }}

@@ -4,7 +4,7 @@ export function Gasp(_: ModelProps) {
   return (
     <g>
       <path
-        d='M -5 10 q 5 -10 10 0 Z'
+        d='M -6 10 q 6 -8 12 0 Z'
         style={{
           strokeWidth: 3,
           stroke: 'black',

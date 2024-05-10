@@ -18,7 +18,9 @@ export function Text() {
           height={`${consts.circleRadius * 2}px`}
         >
           <FlexDiv style={{ fontSize: `${circle.fontSize}px` }}>
-            <TextDiv style={{ opacity: textOpacity.value }}>{circle.text}</TextDiv>
+            <TextDiv style={{ ...circle.textStyles, opacity: textOpacity.value }}>
+              {circle.text}
+            </TextDiv>
           </FlexDiv>
         </ForeignObject>
       ))}
@@ -42,4 +44,5 @@ const FlexDiv = styled('div')`
 const TextDiv = styled('div')`
   text-align: center;
   transition: 1000ms;
+  width: min-content;
 `

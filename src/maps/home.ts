@@ -13,13 +13,16 @@ export const homePageMap: Map = [
     safeZone: false,
     text: `2 Players`,
     fontSize: 10,
+    textStyles: {
+      transform: 'translateY(-2px)',
+    },
     onClick: async () => {
       createGame(0)
     },
   },
   {
     id: '2',
-    position: { x: 2, y: 1.2 },
+    position: { x: 2, y: 0.5 },
     neighbours: ['3'],
     start: null,
     finish: false,
@@ -27,13 +30,16 @@ export const homePageMap: Map = [
     safeZone: false,
     text: `3 Players`,
     fontSize: 10,
+    textStyles: {
+      transform: 'translateY(-2px)',
+    },
     onClick: async () => {
       createGame(1)
     },
   },
   {
     id: '3',
-    position: { x: 3, y: 0.8 },
+    position: { x: 3, y: 0.5 },
     neighbours: ['4'],
     start: null,
     finish: false,
@@ -41,6 +47,9 @@ export const homePageMap: Map = [
     safeZone: false,
     text: `4 Players`,
     fontSize: 10,
+    textStyles: {
+      transform: 'translateY(-2px)',
+    },
     onClick: async () => {
       createGame(2)
     },
@@ -55,13 +64,16 @@ export const homePageMap: Map = [
     safeZone: false,
     text: `6 Players`,
     fontSize: 10,
+    textStyles: {
+      transform: 'translateY(-2px)',
+    },
     onClick: async () => {
       createGame(3)
     },
   },
   {
     id: '5',
-    position: { x: 2.2, y: 2.5 },
+    position: { x: 2.1, y: 1.3 },
     neighbours: [],
     start: null,
     finish: false,
