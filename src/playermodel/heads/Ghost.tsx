@@ -10,7 +10,7 @@ export function Ghost(props: ModelProps) {
         strokeLinecap: 'round',
         strokeLinejoin: 'round',
         fill: props.colour,
-        transform: 'translate(0, 8px)',
+        transform: 'translate(0, 7px)',
       }}
     />
   )

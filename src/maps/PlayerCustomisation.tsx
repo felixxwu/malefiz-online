@@ -1,7 +1,6 @@
 import { styled } from 'goober'
 import { PlayerModelGroup } from '../components/MapRenderer/PlayerGroup'
 import { playerModel } from '../signals/signals'
-import { players } from '../utils/players'
 import { ChevronLeft, ChevronRight } from '../components/Icons'
 import { headList } from '../playermodel/heads'
 import { ModelProps } from '../playermodel/types'
@@ -9,6 +8,7 @@ import { JSX } from 'preact/jsx-runtime'
 import { PlayerModel } from '../types/gameTypes'
 import { eyesList } from '../playermodel/eyes'
 import { mouthList } from '../playermodel/mouthes'
+import { colours } from '../config/colours'
 
 export function PlayerCustomisation() {
   const Eyes = eyesList[playerModel.value.eyes]
@@ -29,7 +29,13 @@ export function PlayerCustomisation() {
   return (
     <Div>
       <svg viewBox={'-25 -25 50 50'} style={{ overflow: 'visible' }} width={50} height={50}>
-        <PlayerModelGroup x={0} y={0} id='1' colour={players[0].colour} model={playerModel.value} />
+        <PlayerModelGroup
+          x={0}
+          y={0}
+          id='1'
+          colour={colours.neutralPlayer}
+          model={playerModel.value}
+        />
       </svg>
 
       <Rows>
@@ -43,7 +49,7 @@ export function PlayerCustomisation() {
             width={50}
             height={50}
           >
-            <Head colour={players[0].colour} />
+            <Head colour={colours.neutralPlayer} />
           </svg>
           <Chevron onClick={() => changeModel(headList, 'head', 1)}>
             <ChevronRight colour='black' />
@@ -60,7 +66,7 @@ export function PlayerCustomisation() {
             width={50}
             height={50}
           >
-            <Eyes colour={players[0].colour} />
+            <Eyes colour={colours.neutralPlayer} />
           </svg>
           <Chevron onClick={() => changeModel(eyesList, 'eyes', 1)}>
             <ChevronRight colour='black' />
@@ -77,7 +83,7 @@ export function PlayerCustomisation() {
             width={50}
             height={50}
           >
-            <Mouth colour={players[0].colour} />
+            <Mouth colour={colours.neutralPlayer} />
           </svg>
           <Chevron onClick={() => changeModel(mouthList, 'mouth', 1)}>
             <ChevronRight colour='black' />

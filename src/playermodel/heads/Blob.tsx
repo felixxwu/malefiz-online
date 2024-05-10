@@ -10,6 +10,7 @@ export function Blob(props: ModelProps) {
         strokeLinecap: 'round',
         strokeLinejoin: 'round',
         fill: props.colour,
+        transform: 'translate(0px, -1px)',
       }}
     />
   )
