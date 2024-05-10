@@ -5,6 +5,8 @@ export function Square(props: ModelProps) {
     <rect
       width={50}
       height={50}
+      rx={10}
+      ry={10}
       fill={props.colour}
       style={{
         stroke: 'black',
