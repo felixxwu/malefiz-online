@@ -41,8 +41,3 @@ export const mouseDownData = signal<{
 
 export const userId = storedSignal('userId', new Date().getTime().toString())
 export const playerModel = storedSignal<PlayerModel>('playerModel', { eyes: 0, mouth: 0, head: 0 })
-
-export const test = signal(0)
-test.subscribe(() => {
-  console.log(`test.value`, test.value)
-})

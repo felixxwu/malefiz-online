@@ -12,7 +12,7 @@ export function CustomElements() {
           <foreignObject
             x={circle.position.x * 100 - consts.circleRadius}
             y={circle.position.y * 100 - consts.circleRadius}
-            style={{ overflow: 'visible' }}
+            style={{ overflow: 'visible', pointerEvents: 'all' }}
           >
             <Custom />
           </foreignObject>

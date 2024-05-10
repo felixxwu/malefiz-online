@@ -10,11 +10,15 @@ export function getUsers() {
   return userKeys.map(key => ({ ...gameStateValue[key], userId: key }))
 }
 
-export function getMyPlayerId() {
+export function getUserFromGameState(userId: string) {
   const gameStateValue = gameState.value
   if (!gameStateValue) return
 
-  return gameStateValue[`user${userId.value}`]?.playerToControl
+  return gameStateValue[`user${userId}`]
+}
+
+export function getMyPlayerId() {
+  return getUserFromGameState(userId.value)?.playerToControl
 }
 
 export function getMyPlayer() {

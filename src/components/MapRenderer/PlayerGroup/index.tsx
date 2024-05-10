@@ -2,13 +2,19 @@ import { styled } from 'goober'
 import { circleHovered, gameState, pieceDragged, textOpacity } from '../../../signals/signals'
 import { mapList } from '../../../maps/mapList'
 import { polygonToXY } from '../../../utils/polygonToXY'
+import { getUserControllingPlayer } from '../../../utils/getUserControllingPlayer'
+import { players } from '../../../utils/parseMap'
+import { headList } from '../../../playermodel/heads'
+import { PlayerModel } from '../../../types/gameTypes'
+import { eyesList } from '../../../playermodel/eyes'
+import { mouthList } from '../../../playermodel/mouthes'
 
 const spacing = 0.3
 const spokes = 5
 
 export function PlayerGroup() {
-  const players = gameState.value?.players
-  if (!players) return null
+  const gameStatePlayers = gameState.value?.players
+  if (!gameStatePlayers) return null
 
   const pieces: {
     playerID: string
@@ -18,7 +24,7 @@ export function PlayerGroup() {
     y: number
   }[] = []
 
-  for (const player of players) {
+  for (const player of gameStatePlayers) {
     let startCirclePlayersIndex = 1
     for (const position of player.positions) {
       const circleData = mapList[gameState.value!.mapNum].map.find(
@@ -46,37 +52,52 @@ export function PlayerGroup() {
   pieces.sort((a, b) => (a.pieceID < b.pieceID ? -1 : 1))
 
   return (
-    <Group>
+    <Group opacity={textOpacity.value}>
       {pieces.map(piece => {
         const circleHoveredValue = circleHovered.value
         const pieceIsBeingDragged = piece.pieceID === pieceDragged.value?.id && circleHoveredValue
         const { x, y } = pieceIsBeingDragged ? circleHoveredValue.position : piece
+        const userForPlayer = getUserControllingPlayer(piece.playerID)
+        const model =
+          userForPlayer?.playerModel ?? players.find(p => p.id === piece.playerID)?.model!
         return (
-          <PlayerModel key={piece.pieceID} id={piece.pieceID} colour={piece.colour} x={x} y={y} />
+          <PlayerModelGroup
+            key={piece.pieceID}
+            id={piece.pieceID}
+            colour={piece.colour}
+            x={x}
+            y={y}
+            model={model}
+          />
         )
       })}
     </Group>
   )
 }
 
-function PlayerModel(props: { id: string; colour: string; x: number; y: number }) {
+export function PlayerModelGroup(props: {
+  id: string
+  colour: string
+  x: number
+  y: number
+  model: PlayerModel
+}) {
+  const Eyes = eyesList[props.model.eyes]
+  const Head = headList[props.model.head]
+  const Mouth = mouthList[props.model.mouth]
   return (
-    <circle
-      id={'piece' + props.id}
-      cx={0}
-      cy={0}
-      r={25}
-      fill={props.colour}
+    <g
       style={{
         transform: `translate(${props.x * 100}px, ${props.y * 100}px)`,
-        stroke: 'black',
-        strokeWidth: 2,
         transition: '300ms',
         filter: 'drop-shadow(0 0 3px rgba(0, 0, 0, 0.3))',
         willChange: 'transform',
       }}
-      opacity={textOpacity.value}
-    />
+    >
+      <Head colour={props.colour} />
+      <Eyes colour={props.colour} />
+      <Mouth colour={props.colour} />
+    </g>
   )
 }
 

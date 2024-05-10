@@ -18,7 +18,8 @@ export function getCircleFromMousePos(event: MouseEvent | PointerEvent) {
   for (const circle of map.value) {
     if (
       Math.abs(circle.position.x - mapCoords.x) < 0.5 &&
-      Math.abs(circle.position.y - mapCoords.y) < 0.5
+      Math.abs(circle.position.y - mapCoords.y) < 0.5 &&
+      !circle.custom
     ) {
       return circle
     }

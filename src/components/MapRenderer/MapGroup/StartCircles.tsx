@@ -2,19 +2,19 @@ import { styled } from 'goober'
 import { gameState, map } from '../../../signals/signals'
 import { players } from '../../../utils/parseMap'
 import { joinGame } from '../../../utils/joinGame'
-import { getMyPlayerId, getUsers } from '../../../utils/getUsers'
+import { getMyPlayerId } from '../../../utils/getUsers'
 import { polygonToXY } from '../../../utils/polygonToXY'
+import { getUserControllingPlayer } from '../../../utils/getUserControllingPlayer'
 
 export function StartCircles() {
   const startCircles = map.value.filter(circle => circle.start)
   const myPlayerId = getMyPlayerId()
-  const users = getUsers()
 
   return (
     <>
       {startCircles.map(circle => {
         const player = players.find(p => p.id === circle.start)!
-        const userControllingPlayer = users.find(u => u.playerToControl === player.id)
+        const userControllingPlayer = getUserControllingPlayer(player.id)
 
         const joinText = (() => {
           if (player.id === myPlayerId) return `Playing as ${player.name}`

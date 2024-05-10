@@ -1,5 +1,6 @@
 import { gameState } from '../signals/signals'
 import { AI1, selectedBestPieceToMove } from './ai'
+import { getUserControllingPlayer } from './getUserControllingPlayer'
 import { getMyPlayerId, getUsers } from './getUsers'
 import { getLegalStonePlacements } from './legalMoves'
 import { placeStone } from './placeStone'
@@ -61,6 +62,5 @@ function isUserHost() {
 
 function isPlayerAi(playerId?: string) {
   if (!playerId) return false
-  const users = getUsers()
-  return !users.find(u => u.playerToControl === playerId)
+  return !getUserControllingPlayer(playerId)
 }
