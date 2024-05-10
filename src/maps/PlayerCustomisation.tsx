@@ -1,7 +1,7 @@
 import { styled } from 'goober'
 import { PlayerModelGroup } from '../components/MapRenderer/PlayerGroup'
 import { playerModel } from '../signals/signals'
-import { players } from '../utils/parseMap'
+import { players } from '../utils/players'
 import { ChevronLeft, ChevronRight } from '../components/Icons'
 import { headList } from '../playermodel/heads'
 import { ModelProps } from '../playermodel/types'
@@ -34,7 +34,7 @@ export function PlayerCustomisation() {
 
       <Rows>
         <Row>
-          <Chevron onClick={() => changeModel(headList, 'head', 1)}>
+          <Chevron onClick={() => changeModel(headList, 'head', -1)}>
             <ChevronLeft colour='black' />
           </Chevron>
           <svg

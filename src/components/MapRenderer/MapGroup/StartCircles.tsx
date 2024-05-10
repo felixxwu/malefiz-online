@@ -1,6 +1,6 @@
 import { styled } from 'goober'
 import { gameState, map } from '../../../signals/signals'
-import { players } from '../../../utils/parseMap'
+import { players } from '../../../utils/players'
 import { joinGame } from '../../../utils/joinGame'
 import { getMyPlayerId } from '../../../utils/getUsers'
 import { polygonToXY } from '../../../utils/polygonToXY'

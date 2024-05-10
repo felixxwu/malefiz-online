@@ -1,4 +1,4 @@
-import { players } from './parseMap'
+import { players } from './players'
 import { gameState } from '../signals/signals'
 import { getMyPlayerId } from './getUsers'
 

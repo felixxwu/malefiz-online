@@ -5,6 +5,9 @@ import { GameState, PlayerModel } from '../types/gameTypes'
 import { HashTable, mapToHashTable } from '../utils/mapToHashTable'
 import { Circle } from '../types/mapTypes'
 import { onGameStateChange } from './onGameStateChange'
+import { eyesList } from '../playermodel/eyes'
+import { mouthList } from '../playermodel/mouthes'
+import { headList } from '../playermodel/heads'
 
 export const screenWidth = signal(window.innerWidth)
 export const screenHeight = signal(window.innerHeight)
@@ -40,4 +43,8 @@ export const mouseDownData = signal<{
 } | null>(null)
 
 export const userId = storedSignal('userId', new Date().getTime().toString())
-export const playerModel = storedSignal<PlayerModel>('playerModel', { eyes: 0, mouth: 0, head: 0 })
+export const playerModel = storedSignal<PlayerModel>('playerModel', {
+  eyes: Math.floor(Math.random() * eyesList.length),
+  mouth: Math.floor(Math.random() * mouthList.length),
+  head: Math.floor(Math.random() * headList.length),
+})

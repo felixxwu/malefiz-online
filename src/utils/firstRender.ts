@@ -34,22 +34,12 @@ export async function firstRender() {
         firstDataLoad = false
         map.value = mapList[docData.mapNum].map
         introSequence()
-
-        // keep user online
-        // setInterval(async () => {
-        //   updateLastOnline(Date.now())
-        // }, 5000)
-
-        // // check for offline players
-        // setInterval(() => {
-        //   checkForOnlinePlayers()
-        // }, 2000)
       }
     })
 
     setInterval(() => {
       playAiIfApplicable()
-    }, 2000)
+    }, 1500)
   } else {
     introSequence()
   }

@@ -3,7 +3,7 @@ import { circleHovered, gameState, pieceDragged, textOpacity } from '../../../si
 import { mapList } from '../../../maps/mapList'
 import { polygonToXY } from '../../../utils/polygonToXY'
 import { getUserControllingPlayer } from '../../../utils/getUserControllingPlayer'
-import { players } from '../../../utils/parseMap'
+import { players } from '../../../utils/players'
 import { headList } from '../../../playermodel/heads'
 import { PlayerModel } from '../../../types/gameTypes'
 import { eyesList } from '../../../playermodel/eyes'
