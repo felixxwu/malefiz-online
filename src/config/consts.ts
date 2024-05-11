@@ -9,4 +9,6 @@ export const consts = {
   mapPositionRef: 'mapPositionRef',
   borderRadius: '10px',
   placeholderEmoji: `🫥`,
+  temperIncrease: 3,
+  temperDecrease: 0.3,
 }

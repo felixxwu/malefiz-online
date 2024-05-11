@@ -1,11 +1,12 @@
 import { gameState, gameStateHashTable } from '../signals/signals'
 import { Move } from '../types/gameTypes'
 import { Circle } from '../types/mapTypes'
+import { currentPlayer } from './currentPlayer'
 
 export const AI1 = createAI({
   forwardPriority: 0.08,
   stonePriority: 1,
-  killPriority: 3,
+  killPriority: 2,
   stoneLookahead: 5,
   stoneForwardPriority: 0.1,
   ditherRange: 0.05,
@@ -62,7 +63,8 @@ function createAI({
       if (stoneTaken) score += stonePriority
 
       const playerTaken = !!to.pieces
-      if (playerTaken) score += killPriority
+      const temper = currentPlayer().aiTemper
+      if (playerTaken) score += killPriority + temper
 
       const finishReached = to.circle!.finish
       if (finishReached) score += 1000000000

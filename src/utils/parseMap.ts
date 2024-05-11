@@ -59,13 +59,13 @@ export function parseMap(mapNum: number, template: string): { map: Map; gameStat
         circleId: findCircle(c.x, c.y, circleCoordinates)!.id,
       })),
       players: playerCoordinates
-        .map((player, i) => ({
+        .map(player => ({
           ...player,
-          isAI: i !== 0,
           positions: multiplyPieces(player.coords, 5).map(c => ({
             pieceId: `${pieceId++}`,
             circleId: findCircle(c.x, c.y, circleCoordinates)!.id,
           })),
+          aiTemper: 0,
         }))
         .filter(p => p.positions.length > 0) as Player[],
       created: Date.now(),

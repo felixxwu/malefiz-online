@@ -12,6 +12,7 @@ export async function takeStone(pieceId: string, circleId: string) {
           positions: player.positions
             .filter(pos => pos.pieceId !== pieceId)
             .concat({ pieceId, circleId }),
+          aiTemper: Math.max(0, player.aiTemper - consts.temperDecrease),
         }
       } else {
         return player

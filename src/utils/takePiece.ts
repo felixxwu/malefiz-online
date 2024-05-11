@@ -1,3 +1,4 @@
+import { consts } from '../config/consts'
 import { gameState, lastDieRoll, map } from '../signals/signals'
 import { getNextPlayer } from './playerTurns'
 import { updateGame } from './updateGame'
@@ -23,6 +24,7 @@ export async function takePiece(pieceId: string, circleId: string, opponentPiece
               pieceId: opponentPieceId,
               circleId: map.value.find(circle => circle.start === player.id)!.id,
             }),
+          aiTemper: player.aiTemper + consts.temperIncrease,
         }
       } else {
         return player
