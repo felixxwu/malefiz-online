@@ -1,10 +1,11 @@
 import { styled } from 'goober'
-import { gameState, map } from '../../../signals/signals'
+import { gameState, map, pickEmoji } from '../../../signals/signals'
 import { players } from '../../../utils/players'
 import { joinGame } from '../../../utils/joinGame'
 import { getMyPlayerId } from '../../../utils/getUsers'
 import { polygonToXY } from '../../../utils/polygonToXY'
 import { getUserControllingPlayer } from '../../../utils/getUserControllingPlayer'
+import { emojiToShow } from '../../../utils/emojiToShow'
 
 export function StartCircles() {
   const startCircles = map.value.filter(circle => circle.start)
@@ -34,7 +35,7 @@ export function StartCircles() {
                 .map(({ x, y }) => `${circle.position.x * 100 + x},${circle.position.y * 100 + y}`)
                 .join(' ')}
             />
-            {showJoinButton && (
+            {showJoinButton ? (
               <>
                 <rect
                   onClick={() => {
@@ -62,6 +63,23 @@ export function StartCircles() {
                   text-anchor='middle'
                 >
                   {joinText}
+                </text>
+              </>
+            ) : (
+              <>
+                <text
+                  x={circle.position.x * 100}
+                  y={circle.position.y * 100 + 100}
+                  dominant-baseline='middle'
+                  text-anchor='middle'
+                  font-size={60}
+                  style={{
+                    cursor: 'pointer',
+                    pointerEvents: 'all',
+                  }}
+                  onClick={() => (getMyPlayerId() === player.id ? (pickEmoji.value = true) : {})}
+                >
+                  {emojiToShow(player.id)}
                 </text>
               </>
             )}

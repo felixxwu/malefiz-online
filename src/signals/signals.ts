@@ -14,6 +14,7 @@ export const screenWidth = signal(window.innerWidth)
 export const screenHeight = signal(window.innerHeight)
 
 export const menuOpen = signal(false)
+export const pickEmoji = signal(false)
 export const waitingForServer = signal(false)
 
 export const map = signal(homePageMap)

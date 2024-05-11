@@ -1,11 +1,10 @@
 import { styled } from 'goober'
 import { colours } from '../../config/colours'
-import { gameOver, gameState, lastDieRoll, waitingForServer } from '../../signals/signals'
+import { gameOver, gameState, lastDieRoll } from '../../signals/signals'
 import { updateGame } from '../../utils/updateGame'
 import { players } from '../../utils/players'
 import { rollDie } from '../../utils/rollDie'
 import { getMyPlayer, getMyPlayerId } from '../../utils/getUsers'
-import { WaitingForServer } from './WaitingForServer'
 import { getLegalMoves } from '../../utils/legalMoves'
 import { getCircleFromPiece } from '../../utils/getCircleFromPiece'
 import { RandomDie } from './RandomDie'
@@ -21,12 +20,12 @@ export function Action() {
 
   if (gameOver.value) return null
 
-  if (waitingForServer.value)
-    return (
-      <Div>
-        <WaitingForServer />
-      </Div>
-    )
+  // if (waitingForServer.value)
+  //   return (
+  //     <Div>
+  //       <WaitingForServer />
+  //     </Div>
+  //   )
 
   if (getMyPlayerId() && gameNotStarted) {
     return (

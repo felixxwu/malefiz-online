@@ -8,4 +8,5 @@ export const consts = {
   playerTransition: 500,
   mapPositionRef: 'mapPositionRef',
   borderRadius: '10px',
+  placeholderEmoji: `🫥`,
 }

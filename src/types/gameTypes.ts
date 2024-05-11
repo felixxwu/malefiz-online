@@ -24,6 +24,7 @@ export type User = {
   playerToControl: PlayerID
   timeJoined: number
   playerModel: PlayerModel
+  emoji: string | null
 }
 
 export type UserID = `user${string}`

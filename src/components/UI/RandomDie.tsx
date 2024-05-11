@@ -22,6 +22,7 @@ const Svg = styled('svg')`
   left: 50%;
   transition: opacity 300ms;
   animation: slideUp 1.5s;
+  pointer-events: none;
 
   @keyframes slideUp {
     0% {

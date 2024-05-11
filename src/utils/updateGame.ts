@@ -10,3 +10,10 @@ export async function updateGame(update: Partial<GameState>) {
   await updateDoc(doc(db, 'games', gameId), update)
   waitingForServer.value = false
 }
+
+export async function updateGameNested(update: any) {
+  if (!gameId) return
+  waitingForServer.value = true
+  await updateDoc(doc(db, 'games', gameId), update)
+  waitingForServer.value = false
+}
