@@ -4,7 +4,7 @@ import { consts } from '../../../config/consts'
 import { leaveGame } from '../../../utils/leaveGame'
 import qrcode from 'qrcode-generator'
 import { customiseInMenu } from '../../../signals/signals'
-import { PlayerCustomisation } from '../../../maps/PlayerCustomisation'
+import { PlayerCustomisation } from '../../SVG/PlayerCustomisation'
 
 export function MenuContent() {
   const qr = qrcode(0, 'L')
@@ -32,9 +32,11 @@ export function MenuContent() {
       {customiseInMenu.value ? (
         <>
           <Customise onClick={(e: MouseEvent) => e.stopPropagation()}>
-            <div style={{ transform: 'scale(2)' }}>
-              <PlayerCustomisation />
-            </div>
+            <svg style={{ overflow: 'visible', width: '100%' }}>
+              <g style={{ transform: 'scale(1.8) translate(40px, 40px)' }}>
+                <PlayerCustomisation />
+              </g>
+            </svg>
           </Customise>
           <Button onClick={handleInvite}>Invite players</Button>
         </>
@@ -59,16 +61,16 @@ const Div = styled('div')`
   gap: 20px;
   flex-direction: column;
   width: 100%;
-  max-width: 350px;
+  max-width: 300px;
 `
 
 const Customise = styled('div')`
   background-color: ${colours.background};
-  padding: 50px;
   border-radius: ${consts.borderRadius};
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 200px;
 `
 
 const Share = styled('div')`
@@ -110,6 +112,6 @@ const Button = styled('div')`
   transition: 0.2s;
 
   &:hover {
-    opacity: 0.8;
+    filter: invert();
   }
 `

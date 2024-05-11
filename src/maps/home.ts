@@ -1,6 +1,6 @@
 import { Map } from '../types/mapTypes'
 import { createGame } from '../utils/createGame'
-import { PlayerCustomisation } from './PlayerCustomisation'
+import { PlayerCustomisation } from '../components/SVG/PlayerCustomisation'
 
 export const homePageMap: Map = [
   {
@@ -11,11 +11,11 @@ export const homePageMap: Map = [
     finish: false,
     zoomInPoint: true,
     safeZone: false,
-    text: `2 Players`,
-    fontSize: 10,
-    textStyles: {
-      transform: 'translateY(-2px)',
-    },
+    text: [
+      { content: `2`, x: -3, y: -5 },
+      { content: `Players`, x: -22, y: 7 },
+    ],
+    fontSize: 12,
     onClick: async () => {
       createGame(0)
     },
@@ -28,11 +28,11 @@ export const homePageMap: Map = [
     finish: false,
     zoomInPoint: false,
     safeZone: false,
-    text: `3 Players`,
-    fontSize: 10,
-    textStyles: {
-      transform: 'translateY(-2px)',
-    },
+    text: [
+      { content: `3`, x: -3, y: -5 },
+      { content: `Players`, x: -22, y: 7 },
+    ],
+    fontSize: 12,
     onClick: async () => {
       createGame(1)
     },
@@ -45,11 +45,11 @@ export const homePageMap: Map = [
     finish: false,
     zoomInPoint: false,
     safeZone: false,
-    text: `4 Players`,
-    fontSize: 10,
-    textStyles: {
-      transform: 'translateY(-2px)',
-    },
+    text: [
+      { content: `4`, x: -3, y: -5 },
+      { content: `Players`, x: -22, y: 7 },
+    ],
+    fontSize: 12,
     onClick: async () => {
       createGame(2)
     },
@@ -62,18 +62,18 @@ export const homePageMap: Map = [
     finish: false,
     zoomInPoint: false,
     safeZone: false,
-    text: `6 Players`,
-    fontSize: 10,
-    textStyles: {
-      transform: 'translateY(-2px)',
-    },
+    text: [
+      { content: `6`, x: -3, y: -5 },
+      { content: `Players`, x: -22, y: 7 },
+    ],
+    fontSize: 12,
     onClick: async () => {
       createGame(3)
     },
   },
   {
     id: '5',
-    position: { x: 2.1, y: 1.3 },
+    position: { x: 2.1, y: 1.5 },
     neighbours: [],
     start: null,
     finish: false,

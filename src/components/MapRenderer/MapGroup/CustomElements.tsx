@@ -1,5 +1,4 @@
 import { map } from '../../../signals/signals'
-import { consts } from '../../../config/consts'
 
 export function CustomElements() {
   const customElements = map.value.filter(circle => circle.custom)
@@ -9,13 +8,14 @@ export function CustomElements() {
       {customElements.map(circle => {
         const Custom = circle.custom!
         return (
-          <foreignObject
-            x={circle.position.x * 100 - consts.circleRadius}
-            y={circle.position.y * 100 - consts.circleRadius}
-            style={{ overflow: 'visible', pointerEvents: 'all' }}
+          <g
+            style={{
+              pointerEvents: 'all',
+              transform: `translate(${circle.position.x * 100}px, ${circle.position.y * 100}px)`,
+            }}
           >
             <Custom />
-          </foreignObject>
+          </g>
         )
       })}
     </>

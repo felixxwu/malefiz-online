@@ -35,18 +35,35 @@ export function StartCircles() {
                 .join(' ')}
             />
             {showJoinButton && (
-              <JoinButton
-                onClick={() => {
-                  if (!myPlayerId && !userControllingPlayer) joinGame(player.id)
-                }}
-                style={{
-                  translate: `${circle.position.x * 100 - 100}px ${circle.position.y * 100 + 70}px`,
-                  backgroundColor: player.colour,
-                  cursor: !myPlayerId && !userControllingPlayer ? 'pointer' : 'default',
-                }}
-              >
-                <JoinText>{joinText}</JoinText>
-              </JoinButton>
+              <>
+                <rect
+                  onClick={() => {
+                    if (!myPlayerId && !userControllingPlayer) joinGame(player.id)
+                  }}
+                  x={circle.position.x * 100 - 100}
+                  y={circle.position.y * 100 + 70}
+                  rx={20}
+                  width='200'
+                  height='40'
+                  style={{
+                    stroke: 'black',
+                    strokeWidth: 3,
+                    fill: player.colour,
+                    cursor: 'pointer',
+                    pointerEvents: !myPlayerId && !userControllingPlayer ? 'all' : 'none',
+                  }}
+                ></rect>
+                <text
+                  x={circle.position.x * 100}
+                  y={circle.position.y * 100 + 91}
+                  font-family={'Lexend Deca'}
+                  font-size={18}
+                  dominant-baseline='middle'
+                  text-anchor='middle'
+                >
+                  {joinText}
+                </text>
+              </>
             )}
           </>
         )
@@ -61,22 +78,4 @@ const Polygon = styled('polygon')`
   stroke-linejoin: round;
   stroke: black;
   stroke-width: 60;
-`
-
-const JoinButton = styled('foreignObject')`
-  width: 200px;
-  height: 40px;
-  border-radius: 10px;
-  pointer-events: all;
-  outline: 3px solid black;
-`
-
-const JoinText = styled('div')`
-  width: 200px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: black;
-  font-size: 20px;
 `

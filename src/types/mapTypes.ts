@@ -1,4 +1,3 @@
-import { CSSProperties } from 'preact/compat'
 import { JSX } from 'preact/jsx-runtime'
 
 export type Circle = {
@@ -12,9 +11,8 @@ export type Circle = {
   finish: boolean
   safeZone: boolean
   zoomInPoint: boolean
-  text?: string
+  text?: { content: string; x?: number; y?: number }[]
   fontSize?: number
-  textStyles?: CSSProperties
   custom?: () => JSX.Element
   onClick?: () => void
 }
