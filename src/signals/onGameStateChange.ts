@@ -24,7 +24,7 @@ export function onGameStateChange() {
           player => player.id === pos.pieces![0].playerId
         )!.name
         gameOver.value = playerName
-        zoomIntoCircle({ circle: pos.circle })
+        zoomIntoCircle({ circle: pos.circle, zoomDelay: 500 })
       }
     }
   })
