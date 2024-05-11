@@ -47,7 +47,7 @@ export function MenuContent() {
             <QRCode dangerouslySetInnerHTML={{ __html: svgString }}></QRCode>
             <Link href={window.location.href}>{window.location.href}</Link>
           </Share>
-          <Button onClick={handleCustomise}>Customise model</Button>
+          <Button onClick={handleCustomise}>Customise appearance</Button>
         </>
       )}
       <Button onClick={handleLeaveGame}>Leave game</Button>
