@@ -10,5 +10,5 @@ export const consts = {
   borderRadius: '10px',
   placeholderEmoji: `🫥`,
   temperIncrease: 3,
-  temperDecrease: 0.3,
+  temperDecrease: 0.6,
 }
