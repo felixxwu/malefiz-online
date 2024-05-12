@@ -6,10 +6,13 @@ import { zoomIntoCircle } from './zoomIntoCircle'
 import { homePageMap } from '../maps/home'
 import { textOpacity } from '../signals/signals'
 import { sleep } from './sleep'
+import { createGameItems } from '../items'
 
 export async function createGame(mapNum: number) {
-  const gameState: GameState = mapList[mapNum].gameState
-  const gameId = await addDoc(collection(db, 'games'), gameState)
+  const gameState = mapList[mapNum].gameState
+  // items may have changed since map was parsed
+  const gameStateWithItems: GameState = { ...gameState, items: createGameItems() }
+  const gameId = await addDoc(collection(db, 'games'), gameStateWithItems)
   textOpacity.value = 0
   await zoomIntoCircle({ circle: homePageMap[mapNum] })
   await sleep(500)

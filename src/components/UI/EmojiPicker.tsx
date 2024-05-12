@@ -4,8 +4,8 @@ import { consts } from '../../config/consts'
 import { gameState, pickEmoji, userId } from '../../signals/signals'
 import { updateGameNested } from '../../utils/updateGame'
 import { UserID } from '../../types/gameTypes'
+import { emojis } from './emojis'
 
-const emojis = ['🙂', '😂', '😍', '😎', '😜', '😡', '😭', '😱', '😳', '😴']
 let timeoutId: NodeJS.Timeout
 
 export function EmojiPicker() {

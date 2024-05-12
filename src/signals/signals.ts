@@ -9,6 +9,7 @@ import { eyesList } from '../playermodel/eyes'
 import { mouthList } from '../playermodel/mouthes'
 import { headList } from '../playermodel/heads'
 import { updatePlayerModelMidGame } from '../utils/updatePlayerModelMidGame'
+import { ItemName } from '../items'
 
 export const screenWidth = signal(window.innerWidth)
 export const screenHeight = signal(window.innerHeight)
@@ -16,6 +17,8 @@ export const screenHeight = signal(window.innerHeight)
 export const menuOpen = signal(false)
 export const pickEmoji = signal(false)
 export const waitingForServer = signal(false)
+export const arcadeItemSelection = signal<ItemName[]>([])
+export const pickArcadeItems = signal(false)
 
 export const map = signal(homePageMap)
 export const svgZoom = signal(1)

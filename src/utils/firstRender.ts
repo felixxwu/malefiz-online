@@ -17,7 +17,7 @@ export async function firstRender() {
   setTimeout(() => {
     window.document.body.style.backgroundColor = colours.background
     window.document.body.style.opacity = '1'
-  }, 100)
+  })
 
   window.addEventListener('resize', () => {
     screenWidth.value = window.innerWidth
@@ -37,9 +37,7 @@ export async function firstRender() {
       }
     })
 
-    setInterval(() => {
-      playAiIfApplicable()
-    }, 1500)
+    setInterval(playAiIfApplicable, 1500)
   } else {
     introSequence()
   }

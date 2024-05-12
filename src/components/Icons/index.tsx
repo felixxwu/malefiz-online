@@ -1,3 +1,4 @@
+import { JSX } from 'preact/jsx-runtime'
 import { colours } from '../../config/colours'
 import { textOpacity } from '../../signals/signals'
 
@@ -48,4 +49,10 @@ export const ChevronLeftPath = () => (
 )
 export const ChevronRightPath = () => (
   <path d='M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z' />
+)
+export const PencilIconPath = (props: JSX.IntrinsicElements['path']) => (
+  <path
+    {...props}
+    d='M7.127 22.564l-7.126 1.436 1.438-7.125 5.688 5.689zm-4.274-7.104l5.688 5.689 15.46-15.46-5.689-5.689-15.459 15.46z'
+  />
 )

@@ -1,3 +1,4 @@
+import { GameStateItems } from '../items'
 import { Circle } from './mapTypes'
 
 export type PlayerID = string
@@ -30,6 +31,11 @@ export type User = {
 
 export type UserID = `user${string}`
 
+export type Item = {
+  isEnabled: boolean
+  isActive: boolean
+}
+
 export type GameState = {
   mapNum: number
   created: number
@@ -39,6 +45,7 @@ export type GameState = {
   stones: Stone[]
   stonePit: { x: number; y: number }
   diePit: { x: number; y: number }
+  items: GameStateItems
   [user: UserID]: User
 }
 

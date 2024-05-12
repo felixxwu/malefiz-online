@@ -1,6 +1,7 @@
 import { Map } from '../types/mapTypes'
 import { createGame } from '../utils/createGame'
 import { PlayerCustomisation } from '../components/SVG/PlayerCustomisation'
+// import { GamemodeSelector } from '../components/SVG/GamemodeSelector'
 
 export const homePageMap: Map = [
   {
@@ -81,4 +82,14 @@ export const homePageMap: Map = [
     safeZone: false,
     custom: PlayerCustomisation,
   },
+  // {
+  //   id: '6',
+  //   position: { x: 2, y: -0.3 },
+  //   neighbours: [],
+  //   start: null,
+  //   finish: false,
+  //   zoomInPoint: false,
+  //   safeZone: false,
+  //   custom: GamemodeSelector,
+  // },
 ]

@@ -23,7 +23,10 @@ type Coordinate = {
   matchedSymbol: string
 }
 
-export function parseMap(mapNum: number, template: string): { map: Map; gameState: GameState } {
+export function parseMap(
+  mapNum: number,
+  template: string
+): { map: Map; gameState: Omit<GameState, 'items'> } {
   let pieceId = 0
   const mapGrid = mapStringTo2dArray(template)
   const stonePit = getCoordinates(mapGrid, ['P'])[0]
