@@ -4,6 +4,7 @@ import { consts } from '../../config/consts'
 import { arcadeItemSelection, pickArcadeItems } from '../../signals/signals'
 import { objectToArray } from '../../utils/objectToArray'
 import { itemDefs } from '../../items'
+import { polygonToXY } from '../../utils/polygonToXY'
 
 export function ItemPicker() {
   return (
@@ -24,7 +25,7 @@ export function ItemPicker() {
       }
     >
       <Content>
-        {objectToArray(itemDefs).map(({ key }) => {
+        {objectToArray(itemDefs).map(({ value, key }) => {
           function handleClick(e: MouseEvent) {
             e.stopPropagation()
 
@@ -37,8 +38,38 @@ export function ItemPicker() {
 
           return (
             <Row onClick={handleClick}>
-              <input type='checkbox' checked={arcadeItemSelection.value.includes(key)} />
-              {key}
+              <Name>
+                <Svg>
+                  <polygon
+                    style={{
+                      filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.3))',
+                      willChange: 'transform',
+                      transition: '300ms',
+                      fill: value.colour,
+                      strokeLinejoin: 'round',
+                    }}
+                    points={[0, 1, 2, 3, 4]
+                      .map(i => polygonToXY(i, 5, 20))
+                      .map(({ x, y }) => `${x},${y}`)
+                      .join(' ')}
+                  />
+                  <value.icon />
+                </Svg>
+                {key}
+              </Name>
+              <ToggleContainer
+                style={{
+                  opacity: arcadeItemSelection.value.includes(key) ? 1 : 0.5,
+                }}
+              >
+                <Toggle
+                  style={{
+                    transform: `translate(${
+                      arcadeItemSelection.value.includes(key) ? '17' : '2'
+                    }px, 2px)`,
+                  }}
+                />
+              </ToggleContainer>
             </Row>
           )
         })}
@@ -74,6 +105,7 @@ const Content = styled('div')`
 const Row = styled('div')`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   padding: 10px 20px;
   cursor: pointer;
@@ -86,4 +118,32 @@ const Row = styled('div')`
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
+`
+
+const Name = styled('div')`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`
+
+const Svg = styled('svg')`
+  overflow: visible;
+  width: 30px;
+  height: 30px;
+  transform: scale(0.8) translate(10px, 15px);
+`
+
+const ToggleContainer = styled('div')`
+  width: 35px;
+  height: 20px;
+  border-radius: 20px;
+  background-color: ${colours.highlight};
+`
+
+const Toggle = styled('div')`
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: ${colours.background};
+  transition: 0.2s;
 `

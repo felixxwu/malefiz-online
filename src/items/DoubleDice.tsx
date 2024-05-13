@@ -7,7 +7,7 @@ function Dot({ x, y }: { x: number; y: number }) {
     <circle
       r={2}
       style={{
-        fill: 'yellow',
+        fill: DoubleDice.colour,
         transform: `translate(${x}px, ${y}px)`,
       }}
     />
@@ -16,7 +16,7 @@ function Dot({ x, y }: { x: number; y: number }) {
 
 export const DoubleDice = {
   name: 'Double Dice',
-  colour: 'yellow',
+  colour: 'hsl(60, 70%, 50%)',
   icon: () => (
     <g style={{ transform: 'translateY(1px)' }}>
       <rect

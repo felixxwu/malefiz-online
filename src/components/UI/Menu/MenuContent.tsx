@@ -86,7 +86,7 @@ const Share = styled('div')`
 `
 
 const QRCode = styled('div')`
-  width: 100%;
+  width: 200px;
 
   & rect {
     fill: ${colours.background};
