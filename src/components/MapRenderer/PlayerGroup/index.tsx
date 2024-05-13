@@ -8,6 +8,7 @@ import { headList } from '../../../playermodel/heads'
 import { PlayerModel } from '../../../types/gameTypes'
 import { eyesList } from '../../../playermodel/eyes'
 import { mouthList } from '../../../playermodel/mouthes'
+import { seededRandom } from '../../../utils/seededRandom'
 
 const spacing = 0.3
 const spokes = 5
@@ -61,14 +62,21 @@ export function PlayerGroup() {
         const model =
           userForPlayer?.playerModel ?? players.find(p => p.id === piece.playerID)?.model!
         return (
-          <PlayerModelGroup
-            key={piece.pieceID}
-            id={piece.pieceID}
-            colour={piece.colour}
-            x={x}
-            y={y}
-            model={model}
-          />
+          <AnimationGroup
+            style={{
+              animation: `bob ${seededRandom(piece.pieceID) + 3}s infinite`,
+              animationDelay: `${seededRandom(piece.pieceID) * -4}s`,
+            }}
+          >
+            <PlayerModelGroup
+              key={piece.pieceID}
+              id={piece.pieceID}
+              colour={piece.colour}
+              x={x}
+              y={y}
+              model={model}
+            />
+          </AnimationGroup>
         )
       })}
     </Group>
@@ -103,4 +111,18 @@ export function PlayerModelGroup(props: {
 
 const Group = styled('g')`
   pointer-events: none;
+`
+
+const AnimationGroup = styled('g')`
+  @keyframes bob {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-3px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
 `

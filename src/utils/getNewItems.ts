@@ -4,7 +4,7 @@ import { objectToArray } from './objectToArray'
 export function getNewItems(excludeCircleIds: string[]) {
   const gameStateItems = gameState.value!.items
 
-  const addNewItem = Math.random() < 1 / 1
+  const addNewItem = Math.random() < 1 / 3
   if (!addNewItem) return gameStateItems // dont add item this round
 
   const currentItems = gameStateItems
