@@ -10,8 +10,8 @@ export function UI() {
     <>
       <Action />
       <Navigation />
-      <Menu />
       <WinScreen />
+      <Menu />
       <EmojiPicker />
       <ItemPicker />
     </>

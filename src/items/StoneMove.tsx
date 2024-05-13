@@ -1,9 +1,9 @@
 import { Item } from '.'
 import { placeStone } from '../dbactions/placeStone'
-import { rollDie } from '../dbactions/rollDie'
 import { updateGame } from '../dbactions/updateGame'
 import { gameState, gameStateHashTable } from '../signals/signals'
-import { getDeactivatedItems } from '../utils/getDeactivatedItems'
+import { AI1 } from '../utils/ai'
+import { getLegalStonePlacements } from '../utils/legalMoves'
 import { polygonToXY } from '../utils/polygonToXY'
 
 export const StoneMove = {
@@ -52,6 +52,25 @@ export const StoneMove = {
   },
   onPickup: () => {},
   aiAction: () => {
-    rollDie({ items: getDeactivatedItems() })
+    if (gameState.value!.stones.some(stone => stone.circleId === null)) {
+      const legalStonePlacements = getLegalStonePlacements()
+      const placement = AI1.getBestStonePlacement(legalStonePlacements)
+      placeStone(placement.id)
+      return
+    }
+
+    const stoneToPickup = AI1.getBestStoneToPickUp()
+    updateGame({
+      stones: gameState.value!.stones.map(stone => {
+        if (stone.circleId === stoneToPickup?.id) {
+          return {
+            ...stone,
+            circleId: null,
+          }
+        } else {
+          return stone
+        }
+      }),
+    })
   },
 } as const satisfies Item

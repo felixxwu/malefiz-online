@@ -1,11 +1,17 @@
 import { gameState, gameStateHashTable } from '../signals/signals'
+import { objectMap } from './objectMap'
 import { objectToArray } from './objectToArray'
 
 export function getNewItems(excludeCircleIds: string[]) {
   const gameStateItems = gameState.value!.items
 
   const addNewItem = Math.random() < 1 / 3
-  if (!addNewItem) return gameStateItems // dont add item this round
+  if (!addNewItem) {
+    return objectMap(gameStateItems, item => ({
+      ...item,
+      isActive: false,
+    })) // dont add item this round
+  }
 
   const currentItems = gameStateItems
   const itemsArray = objectToArray(currentItems).filter(item => item.value.isEnabled)
@@ -24,15 +30,20 @@ export function getNewItems(excludeCircleIds: string[]) {
       !excludeCircleIds.includes(circle.value.circle.id)
   )
   const randomValidCircle = validCircles[Math.floor(Math.random() * validCircles.length)]
-  return {
-    ...gameStateItems,
-    [randomItem.key]: {
-      isActive: false,
-      isEnabled: true,
-      positions: [
-        ...gameStateItems[randomItem.key].positions,
-        { circleId: randomValidCircle.key, itemId: Date.now().toString() },
-      ],
-    },
-  }
+
+  return objectMap(gameStateItems, (item, key) =>
+    key === randomItem.key
+      ? {
+          isActive: false,
+          isEnabled: true,
+          positions: [
+            ...gameStateItems[randomItem.key].positions,
+            { circleId: randomValidCircle.key, itemId: Date.now().toString() },
+          ],
+        }
+      : {
+          ...item,
+          isActive: false,
+        }
+  )
 }

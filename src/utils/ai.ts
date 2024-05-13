@@ -6,8 +6,8 @@ import { currentPlayer } from './currentPlayer'
 export const AI1 = createAI({
   forwardPriority: 0.08,
   stonePriority: 2,
-  killPriority: 2,
-  itemPriority: 4,
+  killPriority: 3,
+  itemPriority: 6,
   stoneLookahead: 5,
   stoneForwardPriority: 0.1,
   ditherRange: 0.05,
@@ -91,6 +91,19 @@ function createAI({
       }
 
       return bestStonePlacement
+    },
+    getBestStoneToPickUp() {
+      const circlesWithStone = gameState
+        .value!.stones.map(stone => gameStateHashTable.value[stone.circleId!].circle)
+        .filter(Boolean)
+      let worstCircle = circlesWithStone[0]
+      for (const circle of circlesWithStone) {
+        if (this.getStonePlacementScore(circle!) < this.getStonePlacementScore(worstCircle!)) {
+          worstCircle = circle
+        }
+      }
+
+      return worstCircle
     },
     getStonePlacementScore(circle: Circle) {
       const distanceToFinish = gameStateHashTable.value[circle.id].distanceToFinish!
