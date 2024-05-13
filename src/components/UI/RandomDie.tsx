@@ -6,7 +6,7 @@ import { textOpacity } from '../../signals/signals'
 export function RandomDie() {
   return (
     <Svg width={200} height={200} opacity={textOpacity.value}>
-      <g style={{ transform: 'translate(50px, 50px)' }}>
+      <g style={{ transform: 'translate(45px, 60px)' }}>
         <Square />
         {dotLayouts[Math.floor(Math.random() * 6 + 1)].map(pos => (
           <Dot position={pos} />

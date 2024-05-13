@@ -1,5 +1,5 @@
 import { consts } from '../config/consts'
-import { ItemName } from '../items'
+import { ItemName, itemDefs } from '../items'
 import { gameState } from '../signals/signals'
 import { updateGame } from './updateGame'
 
@@ -24,6 +24,7 @@ export async function takeItem(itemName: ItemName, pieceId: string, circleId: st
       ...gameState.value!.items,
       [itemName]: {
         ...gameState.value!.items[itemName],
+        isActive: true,
         positions: gameState.value!.items[itemName].positions.filter(
           pos => pos.circleId !== circleId
         ),
@@ -31,4 +32,6 @@ export async function takeItem(itemName: ItemName, pieceId: string, circleId: st
     },
     dieRoll: null,
   })
+
+  itemDefs[itemName].onPickup()
 }

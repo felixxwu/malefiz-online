@@ -1,4 +1,5 @@
 import { gameStateHashTable } from '../signals/signals'
+import { GameState } from '../types/gameTypes'
 import { currentPlayer } from '../utils/currentPlayer'
 import { updateGame } from './updateGame'
 
@@ -7,7 +8,7 @@ window.roll = (number: number) => {
   updateGame({ dieRoll: number })
 }
 
-export async function rollDie() {
+export async function rollDie(additionalGameState?: Partial<GameState>) {
   const dieRoll = Math.floor(Math.random() * 6) + 1
   const reRoll = Math.floor(Math.random() * 6) + 1
   const player = currentPlayer()
@@ -16,5 +17,5 @@ export async function rollDie() {
   )
   const closeToFinish = distancesToFinish.filter(d => d <= 3)
   const actualRoll = closeToFinish.length && dieRoll === 1 ? reRoll : dieRoll
-  updateGame({ dieRoll: actualRoll })
+  await updateGame({ ...additionalGameState, dieRoll: actualRoll })
 }

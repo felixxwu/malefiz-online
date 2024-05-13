@@ -75,13 +75,13 @@ const Customise = styled('div')`
 
 const Share = styled('div')`
   background-color: ${colours.background};
-  padding: 30px;
+  padding: 20px;
   border-radius: ${consts.borderRadius};
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 30px;
+  gap: 10px;
   color: black;
 `
 

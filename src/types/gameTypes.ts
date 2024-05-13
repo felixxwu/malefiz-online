@@ -31,11 +31,6 @@ export type User = {
 
 export type UserID = `user${string}`
 
-export type Item = {
-  isEnabled: boolean
-  isActive: boolean
-}
-
 export type GameState = {
   mapNum: number
   created: number

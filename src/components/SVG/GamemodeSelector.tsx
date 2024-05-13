@@ -1,5 +1,5 @@
 import { colours } from '../../config/colours'
-import { items } from '../../items'
+import { itemDefs } from '../../items'
 import { arcadeItemSelection, pickArcadeItems } from '../../signals/signals'
 import { objectToArray } from '../../utils/objectToArray'
 import { PencilIconPath } from '../Icons'
@@ -9,7 +9,7 @@ export function GamemodeSelector() {
 
   function handleClick() {
     if (classicMode) {
-      arcadeItemSelection.value = objectToArray(items).map(({ key }) => key)
+      arcadeItemSelection.value = objectToArray(itemDefs).map(({ key }) => key)
     } else {
       arcadeItemSelection.value = []
     }

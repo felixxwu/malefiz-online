@@ -8,17 +8,20 @@ import { getMyPlayer, getMyPlayerId } from '../../utils/getUsers'
 import { getLegalMoves } from '../../utils/legalMoves'
 import { getCircleFromPiece } from '../../utils/getCircleFromPiece'
 import { RandomDie } from './RandomDie'
+import { getActiveItem } from '../../utils/getActiveItem'
 
 export function Action() {
-  const myTurn = gameState.value?.playerTurn === getMyPlayerId()
-  const stoneInPit = gameState.value?.stones.find(stone => stone.circleId === null)
-  const gameNotStarted = gameState.value?.playerTurn === null
-  const dieNotRolled = gameState.value?.dieRoll === null
-  const playerWhoIsPlaying = gameState.value?.players.find(
+  if (gameOver.value) return null
+  if (!gameState.value) return null
+
+  const myTurn = gameState.value.playerTurn === getMyPlayerId()
+  const stoneInPit = gameState.value.stones.find(stone => stone.circleId === null)
+  const gameNotStarted = gameState.value.playerTurn === null
+  const dieNotRolled = gameState.value.dieRoll === null
+  const playerWhoIsPlaying = gameState.value.players.find(
     player => player.id === gameState.value!.playerTurn
   )
-
-  if (gameOver.value) return null
+  const activeItem = getActiveItem()
 
   // if (waitingForServer.value)
   //   return (
@@ -26,6 +29,20 @@ export function Action() {
   //       <WaitingForServer />
   //     </Div>
   //   )
+
+  if (myTurn && activeItem) {
+    return (
+      <>
+        {activeItem.actionWhenActive.showDie && <RandomDie />}
+        <Div
+          onClick={activeItem.actionWhenActive.onClick}
+          {...(activeItem.actionWhenActive.clickable ? { className: 'clickable' } : {})}
+        >
+          {activeItem.actionWhenActive.text}
+        </Div>
+      </>
+    )
+  }
 
   if (getMyPlayerId() && gameNotStarted) {
     return (

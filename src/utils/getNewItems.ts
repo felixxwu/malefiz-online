@@ -13,10 +13,10 @@ export function getNewItems(excludeCircleIds: string[]) {
 
   const randomItem = itemsArray[Math.floor(Math.random() * itemsArray.length)]
   const circlesArray = objectToArray(gameStateHashTable.value)
-  console.log(`circlesArray`, circlesArray)
   const validCircles = circlesArray.filter(
     circle =>
       circle.value.circle &&
+      !circle.value.item &&
       !circle.value.pieces &&
       !circle.value.stone &&
       !circle.value.circle.finish &&

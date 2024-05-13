@@ -17,7 +17,7 @@ export const screenHeight = signal(window.innerHeight)
 export const menuOpen = signal(false)
 export const pickEmoji = signal(false)
 export const waitingForServer = signal(false)
-export const arcadeItemSelection = signal<ItemName[]>([])
+export const arcadeItemSelection = storedSignal<ItemName[]>('arcadeItemSelection', [])
 export const pickArcadeItems = signal(false)
 
 export const map = signal(homePageMap)

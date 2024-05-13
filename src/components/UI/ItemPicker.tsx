@@ -3,7 +3,7 @@ import { colours } from '../../config/colours'
 import { consts } from '../../config/consts'
 import { arcadeItemSelection, pickArcadeItems } from '../../signals/signals'
 import { objectToArray } from '../../utils/objectToArray'
-import { items } from '../../items'
+import { itemDefs } from '../../items'
 
 export function ItemPicker() {
   return (
@@ -24,7 +24,7 @@ export function ItemPicker() {
       }
     >
       <Content>
-        {objectToArray(items).map(({ key }) => {
+        {objectToArray(itemDefs).map(({ key }) => {
           function handleClick(e: MouseEvent) {
             e.stopPropagation()
 

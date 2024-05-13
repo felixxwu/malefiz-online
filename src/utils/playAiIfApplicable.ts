@@ -7,9 +7,16 @@ import { placeStone } from '../dbactions/placeStone'
 import { playerPiecesWithMoves } from './playerPiecesWithMoves'
 import { rollDie } from '../dbactions/rollDie'
 import { submitMove } from '../dbactions/submitMove'
+import { getActiveItem } from './getActiveItem'
 
 export async function playAiIfApplicable() {
   if (!canAiPlay()) return
+
+  const activeItem = getActiveItem()
+  if (activeItem) {
+    activeItem.aiAction()
+    return
+  }
 
   // place stone if taken
   if (gameState.value!.stones.some(stone => stone.circleId === null)) {
