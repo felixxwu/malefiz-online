@@ -8,7 +8,7 @@ import { polygonToXY } from '../utils/polygonToXY'
 
 export const StoneMove = {
   name: 'Stone Move',
-  colour: '#ddd',
+  colour: 'hsl(0, 0%, 85%)',
   icon: () => (
     <polygon
       style={{

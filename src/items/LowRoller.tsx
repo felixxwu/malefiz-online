@@ -1,4 +1,4 @@
-import { rollDie } from '../dbactions/rollDie'
+import { updateGame } from '../dbactions/updateGame'
 import { getDeactivatedItems } from '../utils/getDeactivatedItems'
 import { Item } from './'
 
@@ -7,16 +7,16 @@ function Dot({ x, y }: { x: number; y: number }) {
     <circle
       r={2}
       style={{
-        fill: DoubleDice.colour,
+        fill: LowRoller.colour,
         transform: `translate(${x}px, ${y}px)`,
       }}
     />
   )
 }
 
-export const DoubleDice = {
-  name: 'Double Dice',
-  colour: 'hsl(60, 70%, 50%)',
+export const LowRoller = {
+  name: 'Low Roller',
+  colour: 'hsl(230, 70%, 75%)',
   icon: () => (
     <g style={{ transform: 'translateY(1px)' }}>
       <rect
@@ -29,25 +29,20 @@ export const DoubleDice = {
           fill: 'black',
         }}
       />
-      <Dot x={-3.5} y={-5} />
-      <Dot x={-3.5} y={0} />
-      <Dot x={-3.5} y={5} />
-      <Dot x={3.5} y={-5} />
-      <Dot x={3.5} y={0} />
-      <Dot x={3.5} y={5} />
+      <Dot x={0} y={0} />
     </g>
   ),
   actionWhenActive: {
     onClick: async () => {
-      await rollDie({ items: getDeactivatedItems() })
+      updateGame({ dieRoll: Math.floor(Math.random() * 3) + 1, items: getDeactivatedItems() })
     },
-    text: 'Double dice, roll again!',
+    text: 'Roll a low number! (1-3)',
     showDie: true,
     clickable: true,
   },
   onPickup: () => {},
   onCircleClickWhenActive: null,
   aiAction: () => {
-    rollDie({ items: getDeactivatedItems() })
+    updateGame({ dieRoll: Math.floor(Math.random() * 3) + 1, items: getDeactivatedItems() })
   },
 } as const satisfies Item

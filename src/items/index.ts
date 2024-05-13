@@ -3,6 +3,7 @@ import { arcadeItemSelection } from '../signals/signals'
 import { objectMap } from '../utils/objectMap'
 import { DoubleDice } from './DoubleDice'
 import { StoneMove } from './StoneMove'
+import { LowRoller } from './LowRoller'
 
 export type Item = {
   name: string
@@ -17,6 +18,7 @@ export type Item = {
 export const itemDefs = {
   [StoneMove.name]: StoneMove,
   [DoubleDice.name]: DoubleDice,
+  [LowRoller.name]: LowRoller,
 } as const
 
 export type ItemName = keyof typeof itemDefs
