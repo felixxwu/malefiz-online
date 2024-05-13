@@ -2,7 +2,7 @@ import { styled } from 'goober'
 import { colours } from '../../config/colours'
 import { consts } from '../../config/consts'
 import { gameState, pickEmoji, userId } from '../../signals/signals'
-import { updateGameNested } from '../../utils/updateGame'
+import { updateGameNested } from '../../dbactions/updateGame'
 import { UserID } from '../../types/gameTypes'
 import { emojis } from './emojis'
 

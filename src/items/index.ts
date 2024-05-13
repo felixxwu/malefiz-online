@@ -12,6 +12,7 @@ export type ItemName = keyof typeof items
 export type GameStateItem = {
   isActive: boolean
   isEnabled: boolean
+  positions: { circleId: string; itemId: string }[]
 }
 export type GameStateItems = { [key in ItemName]: GameStateItem }
 
@@ -24,5 +25,6 @@ export function createGameItems(): GameStateItems {
   return objectMap(items, item => ({
     isActive: false,
     isEnabled: selection.includes(item.name),
+    positions: [],
   }))
 }

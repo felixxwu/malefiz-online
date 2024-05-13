@@ -1,11 +1,11 @@
-import { getNextPlayer } from './playerTurns'
-import { sleep } from '../utils/sleep'
-import { gameState, lastDieRoll } from '../signals/signals'
 import { consts } from '../config/consts'
+import { ItemName } from '../items'
+import { gameState } from '../signals/signals'
 import { updateGame } from './updateGame'
 
-export async function movePiece(pieceId: string, circleId: string) {
+export async function takeItem(itemName: ItemName, pieceId: string, circleId: string) {
   await updateGame({
+    // move piece to item
     players: gameState.value!.players.map(player => {
       if (gameState.value!.playerTurn === player.id) {
         return {
@@ -19,9 +19,16 @@ export async function movePiece(pieceId: string, circleId: string) {
         return player
       }
     }),
-    ...(lastDieRoll.value === 6 ? {} : { playerTurn: getNextPlayer() }),
+    // remove item
+    items: {
+      ...gameState.value!.items,
+      [itemName]: {
+        ...gameState.value!.items[itemName],
+        positions: gameState.value!.items[itemName].positions.filter(
+          pos => pos.circleId !== circleId
+        ),
+      },
+    },
     dieRoll: null,
   })
-
-  await sleep(consts.playerTransition)
 }

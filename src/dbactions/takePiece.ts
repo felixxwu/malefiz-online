@@ -1,6 +1,7 @@
 import { consts } from '../config/consts'
 import { gameState, lastDieRoll, map } from '../signals/signals'
-import { getNextPlayer } from './playerTurns'
+import { getNewItems } from '../utils/getNewItems'
+import { getNextPlayer } from '../utils/playerTurns'
 import { updateGame } from './updateGame'
 
 export async function takePiece(pieceId: string, circleId: string, opponentPieceId: string) {
@@ -13,6 +14,7 @@ export async function takePiece(pieceId: string, circleId: string, opponentPiece
           positions: player.positions
             .filter(pos => pos.pieceId !== pieceId)
             .concat({ pieceId, circleId }),
+          aiTemper: Math.max(0, player.aiTemper - consts.temperDecrease),
         }
       } else if (player.positions.some(pos => pos.pieceId === opponentPieceId)) {
         // move opponent piece to start
@@ -31,6 +33,7 @@ export async function takePiece(pieceId: string, circleId: string, opponentPiece
       }
     }),
     ...(lastDieRoll.value === 6 ? {} : { playerTurn: getNextPlayer() }),
+    items: getNewItems([circleId]),
     dieRoll: null,
   })
 }

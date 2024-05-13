@@ -8,7 +8,7 @@ import { onGameStateChange } from './onGameStateChange'
 import { eyesList } from '../playermodel/eyes'
 import { mouthList } from '../playermodel/mouthes'
 import { headList } from '../playermodel/heads'
-import { updatePlayerModelMidGame } from '../utils/updatePlayerModelMidGame'
+import { updatePlayerModelMidGame } from '../dbactions/updatePlayerModelMidGame'
 import { ItemName } from '../items'
 
 export const screenWidth = signal(window.innerWidth)

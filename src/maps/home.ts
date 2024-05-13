@@ -1,7 +1,6 @@
 import { Map } from '../types/mapTypes'
-import { createGame } from '../utils/createGame'
+import { createGame } from '../dbactions/createGame'
 import { PlayerCustomisation } from '../components/SVG/PlayerCustomisation'
-// import { GamemodeSelector } from '../components/SVG/GamemodeSelector'
 
 export const homePageMap: Map = [
   {

@@ -1,6 +1,8 @@
 import { gameState, gameStateHashTable } from '../signals/signals'
 import { Move } from '../types/gameTypes'
+import { objectToArray } from '../utils/objectToArray'
 import { movePiece } from './movePiece'
+import { takeItem } from './takeItem'
 import { takePiece } from './takePiece'
 import { takeStone } from './takeStone'
 
@@ -18,6 +20,14 @@ export async function submitMove(move: Move) {
     // move and take player piece
     const pieceId = gameStateHashTable.value[destinationCircleId].pieces![0].pieceId
     return await takePiece(pieceToMove, destinationCircleId, pieceId)
+  }
+
+  const itemAtDestination = objectToArray(gameState.value!.items).find(item =>
+    item.value.positions.find(pos => pos.circleId === destinationCircleId)
+  )
+  if (itemAtDestination) {
+    // move and take item
+    return await takeItem(itemAtDestination.key, pieceToMove, destinationCircleId)
   }
 
   // move only

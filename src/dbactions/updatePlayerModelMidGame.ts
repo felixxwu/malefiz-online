@@ -1,6 +1,6 @@
 import { gameState, playerModel, userId } from '../signals/signals'
 import { UserID } from '../types/gameTypes'
-import { gameId } from './gameId'
+import { gameId } from '../utils/gameId'
 import { updateGameNested } from './updateGame'
 
 export function updatePlayerModelMidGame() {

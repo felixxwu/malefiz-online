@@ -8,7 +8,7 @@ import {
 } from '../../../signals/signals'
 import { fitToScreen } from '../../../utils/fitToScreen'
 import { isMyTurn } from '../../../utils/playerTurns'
-import { rollDie } from '../../../utils/rollDie'
+import { rollDie } from '../../../dbactions/rollDie'
 import { zoomIn, zoomOut } from '../../../utils/zoom'
 
 export function handleKeydown(event: KeyboardEvent) {

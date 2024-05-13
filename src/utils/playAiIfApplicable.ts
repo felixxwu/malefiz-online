@@ -3,10 +3,10 @@ import { AI1, selectedBestPieceToMove } from './ai'
 import { getUserControllingPlayer } from './getUserControllingPlayer'
 import { getMyPlayerId, getUsers } from './getUsers'
 import { getLegalStonePlacements } from './legalMoves'
-import { placeStone } from './placeStone'
+import { placeStone } from '../dbactions/placeStone'
 import { playerPiecesWithMoves } from './playerPiecesWithMoves'
-import { rollDie } from './rollDie'
-import { submitMove } from './submitMove'
+import { rollDie } from '../dbactions/rollDie'
+import { submitMove } from '../dbactions/submitMove'
 
 export async function playAiIfApplicable() {
   if (!canAiPlay()) return

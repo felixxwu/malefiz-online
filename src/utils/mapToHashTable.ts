@@ -1,12 +1,15 @@
+import { ItemName } from '../items'
 import { map } from '../signals/signals'
 import { GameState, Stone } from '../types/gameTypes'
 import { Circle } from '../types/mapTypes'
 import { addDistancesToFinish } from './distanceToFinish'
+import { objectToArray } from './objectToArray'
 
 export type HashTable = {
   [circleId: string]: {
     circle?: Circle
     stone?: Stone
+    item?: ItemName
     pieces?: { playerId: string; pieceId: string }[]
     distanceToFinish?: number
   }
@@ -44,6 +47,12 @@ export function mapToHashTable(gameState: GameState) {
           },
         ]
       }
+    }
+  }
+
+  for (const item of objectToArray(gameState.items)) {
+    for (const position of item.value.positions) {
+      hashTable[position.circleId].item = item.key
     }
   }
 

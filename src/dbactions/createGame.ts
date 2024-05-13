@@ -2,10 +2,10 @@ import { addDoc, collection } from 'firebase/firestore'
 import { db } from '../config/firebase'
 import { mapList } from '../maps/mapList'
 import { GameState } from '../types/gameTypes'
-import { zoomIntoCircle } from './zoomIntoCircle'
+import { zoomIntoCircle } from '../utils/zoomIntoCircle'
 import { homePageMap } from '../maps/home'
 import { textOpacity } from '../signals/signals'
-import { sleep } from './sleep'
+import { sleep } from '../utils/sleep'
 import { createGameItems } from '../items'
 
 export async function createGame(mapNum: number) {

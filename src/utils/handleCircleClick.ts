@@ -3,8 +3,8 @@ import { getCircleFromPiece } from './getCircleFromPiece'
 import { getPieceFromCircle } from './getPieceFromCircle'
 import { getLegalMoves, getLegalStonePlacements } from './legalMoves'
 import { pieceBelongsToMe } from './pieceBelongsToMe'
-import { placeStone } from './placeStone'
-import { submitMove } from './submitMove'
+import { placeStone } from '../dbactions/placeStone'
+import { submitMove } from '../dbactions/submitMove'
 
 export async function handleCircleClick(clickedCircleId: string) {
   if (waitingForServer.value) return

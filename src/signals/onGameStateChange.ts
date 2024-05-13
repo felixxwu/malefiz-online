@@ -8,13 +8,16 @@ import {
   gameOver,
   userId,
 } from './signals'
-import { leaveGame } from '../utils/leaveGame'
+import { leaveGame } from '../dbactions/leaveGame'
 
 export function onGameStateChange() {
+  console.info(`gameState.value`, gameState.value)
+
   resolveMultipleUsersPerPlayer()
   if (gameState.value && gameState.value!.dieRoll !== null) {
     lastDieRoll.value = gameState.value!.dieRoll
   }
+
   setTimeout(() => {
     circleHovered.value = null
     for (const key in gameStateHashTable.value) {

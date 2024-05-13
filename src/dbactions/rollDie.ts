@@ -1,5 +1,5 @@
 import { gameStateHashTable } from '../signals/signals'
-import { currentPlayer } from './currentPlayer'
+import { currentPlayer } from '../utils/currentPlayer'
 import { updateGame } from './updateGame'
 
 //@ts-ignore

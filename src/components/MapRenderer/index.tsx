@@ -21,6 +21,7 @@ import { handlePointerUp } from './handlers/handlePointerUp'
 import { handleWheel } from './handlers/handleWheel'
 import { handleKeydown } from './handlers/handleKeyDown'
 import { useEffect } from 'preact/hooks'
+import { ItemGroup } from './ItemGroup'
 
 export function MapRenderer() {
   useEffect(() => {
@@ -54,6 +55,7 @@ export function MapRenderer() {
           <MapGroup />
           <StoneGroup />
           <PlayerGroup />
+          <ItemGroup />
           <HudGroup />
           <HoverGroup />
           {gameState.value?.dieRoll && <DieGroup />}

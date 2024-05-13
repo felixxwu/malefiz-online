@@ -6,7 +6,7 @@ import {
   pieceSelected,
 } from '../../../signals/signals'
 import { getLegalMoves } from '../../../utils/legalMoves'
-import { submitMove } from '../../../utils/submitMove'
+import { submitMove } from '../../../dbactions/submitMove'
 
 export function handlePointerUp(event: PointerEvent) {
   mouseDownData.value = null

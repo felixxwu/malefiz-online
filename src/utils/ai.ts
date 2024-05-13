@@ -5,8 +5,9 @@ import { currentPlayer } from './currentPlayer'
 
 export const AI1 = createAI({
   forwardPriority: 0.08,
-  stonePriority: 1,
+  stonePriority: 2,
   killPriority: 2,
+  itemPriority: 4,
   stoneLookahead: 5,
   stoneForwardPriority: 0.1,
   ditherRange: 0.05,
@@ -23,6 +24,7 @@ export function selectedBestPieceToMove(
 function createAI({
   stonePriority,
   killPriority,
+  itemPriority,
   forwardPriority,
   stoneLookahead,
   stoneForwardPriority,
@@ -30,6 +32,7 @@ function createAI({
 }: {
   stonePriority: number // add to score if stone taken
   killPriority: number // add to score if kill
+  itemPriority: number // add to score if item taken
   forwardPriority: number // add to score for every step forward
   stoneLookahead: number // how many stones in front of a player before it stops counting
   stoneForwardPriority: number // add to score for every step forward a stone is
@@ -65,6 +68,9 @@ function createAI({
       const playerTaken = !!to.pieces
       const temper = currentPlayer().aiTemper
       if (playerTaken) score += killPriority + temper
+
+      const itemTaken = !!to.item
+      if (itemTaken) score += itemPriority
 
       const finishReached = to.circle!.finish
       if (finishReached) score += 1000000000

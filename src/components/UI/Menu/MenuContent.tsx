@@ -1,7 +1,7 @@
 import { styled } from 'goober'
 import { colours } from '../../../config/colours'
 import { consts } from '../../../config/consts'
-import { leaveGame } from '../../../utils/leaveGame'
+import { leaveGame } from '../../../dbactions/leaveGame'
 import qrcode from 'qrcode-generator'
 import { customiseInMenu } from '../../../signals/signals'
 import { PlayerCustomisation } from '../../SVG/PlayerCustomisation'

@@ -1,7 +1,7 @@
 import { styled } from 'goober'
 import { gameState, map, pickEmoji } from '../../../signals/signals'
 import { players } from '../../../utils/players'
-import { joinGame } from '../../../utils/joinGame'
+import { joinGame } from '../../../dbactions/joinGame'
 import { getMyPlayerId } from '../../../utils/getUsers'
 import { polygonToXY } from '../../../utils/polygonToXY'
 import { getUserControllingPlayer } from '../../../utils/getUserControllingPlayer'
