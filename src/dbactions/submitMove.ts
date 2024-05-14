@@ -1,6 +1,8 @@
-import { gameState, gameStateHashTable } from '../signals/signals'
+import { gameState, gameStateHashTable, map } from '../signals/signals'
 import { Move } from '../types/gameTypes'
+import { fitToScreen } from '../utils/fitToScreen'
 import { objectToArray } from '../utils/objectToArray'
+import { isMyTurn } from '../utils/playerTurns'
 import { movePiece } from './movePiece'
 import { takeItem } from './takeItem'
 import { takePiece } from './takePiece'
@@ -10,6 +12,10 @@ export async function submitMove(move: Move) {
   if (!move) return
   const pieceToMove = gameStateHashTable.value[move.from.id].pieces![0].pieceId
   const destinationCircleId = move.to.id
+
+  if (isMyTurn()) {
+    fitToScreen(map.value, {})
+  }
 
   if (gameState.value!.stones.find(stone => stone.circleId === destinationCircleId)) {
     // move and take stone

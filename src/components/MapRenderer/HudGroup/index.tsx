@@ -3,7 +3,6 @@ import {
   customCircleHighlights,
   gameState,
   gameStateHashTable,
-  map,
   pieceSelected,
   waitingForServer,
 } from '../../../signals/signals'
@@ -18,10 +17,7 @@ import { Circle } from '../../../types/mapTypes'
 import { fitToScreen } from '../../../utils/fitToScreen'
 
 export function HudGroup() {
-  if (!isMyTurn() || waitingForServer.value) {
-    fitToScreen(map.value, {})
-    return null
-  }
+  if (!isMyTurn() || waitingForServer.value) return null
 
   if (customCircleHighlights.value.length > 0) {
     return (
@@ -83,6 +79,5 @@ export function HudGroup() {
     )
   }
 
-  fitToScreen(map.value, {})
   return null
 }
