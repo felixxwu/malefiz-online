@@ -8,7 +8,41 @@ import { ItemSvg } from '../../MapRenderer/ItemGroup/ItemSvg'
 export function Help() {
   return (
     <Div>
-      <b>ITEMS</b>
+      <b>RULES</b>
+      <div>
+        <b>Objective</b>
+        <div>The first to land a piece on the finish wins.</div>
+      </div>
+      <div>
+        <b>Stones</b>
+        <div>
+          Stones cannot be passed unless landed on, place a stone in front of your opponents to
+          block them!
+        </div>
+      </div>
+      <div>
+        <b>Picking up stones</b>
+        <div>
+          If your piece lands on a stone, you can move it to any empty space on the board. (Except
+          for safe spaces)
+        </div>
+      </div>
+      <div>
+        <b>Safe spaces</b>
+        <div>
+          The first 1-2 rows are safe spaces, where stones cannot be placed and pieces cannot be
+          taken.
+        </div>
+      </div>
+      <div>
+        <b>Taking opponent pieces</b>
+        <div>
+          Landing on an opponent's piece will send it back to the start. Unlike stones, you may jump
+          over pieces.
+        </div>
+      </div>
+
+      <b>ITEMS (ARCADE MODE)</b>
       <Table>
         {objectToArray(itemDefs).map(({ value }) => (
           <tr>
@@ -25,6 +59,7 @@ export function Help() {
           </tr>
         ))}
       </Table>
+
       <b>KEYBOARD SHORTCUTS</b>
       <Table>
         {keyboardShortcuts.map(([key, description]) => (
@@ -50,6 +85,7 @@ const Div = styled('div')`
   color: black;
   height: 500px;
   overflow-y: auto;
+  overflow-x: hidden;
 `
 
 const Table = styled('table')`
