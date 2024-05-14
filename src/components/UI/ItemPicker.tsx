@@ -42,10 +42,11 @@ export function ItemPicker() {
                 <Svg>
                   <polygon
                     style={{
-                      filter: 'drop-shadow(0 0 12px rgba(0,0,0,0.5))',
                       willChange: 'transform',
                       transition: '300ms',
                       fill: value.colour,
+                      stroke: 'black',
+                      strokeWidth: '2',
                       strokeLinejoin: 'round',
                     }}
                     points={[0, 1, 2, 3, 4]

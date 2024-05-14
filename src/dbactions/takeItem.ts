@@ -33,5 +33,5 @@ export async function takeItem(itemName: ItemName, pieceId: string, circleId: st
     dieRoll: null,
   })
 
-  itemDefs[itemName].onPickup()
+  itemDefs[itemName].onPickup(pieceId, circleId)
 }

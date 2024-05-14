@@ -4,6 +4,7 @@ import { objectMap } from '../utils/objectMap'
 import { DoubleDice } from './DoubleDice'
 import { StoneMove } from './StoneMove'
 import { LowRoller } from './LowRoller'
+import { PositionSwap } from './PositionSwap'
 
 export type Item = {
   name: string
@@ -11,7 +12,7 @@ export type Item = {
   icon: () => JSX.Element
   actionWhenActive: { onClick: () => void; text: string; showDie: boolean; clickable: boolean }
   aiAction: () => void
-  onPickup: () => void
+  onPickup: (pieceId: string, circleId: string) => void
   onCircleClickWhenActive: ((circleId: string) => void) | null
 }
 
@@ -19,6 +20,7 @@ export const itemDefs = {
   [StoneMove.name]: StoneMove,
   [DoubleDice.name]: DoubleDice,
   [LowRoller.name]: LowRoller,
+  [PositionSwap.name]: PositionSwap,
 } as const
 
 export type ItemName = keyof typeof itemDefs

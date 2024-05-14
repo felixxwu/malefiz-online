@@ -15,7 +15,7 @@ function Dot({ x, y }: { x: number; y: number }) {
 }
 
 export const DoubleDice = {
-  name: 'Double Dice',
+  name: 'Extra Roll',
   colour: 'hsl(60, 70%, 50%)',
   icon: () => (
     <g style={{ transform: 'translateY(1px)' }}>
@@ -41,7 +41,7 @@ export const DoubleDice = {
     onClick: async () => {
       await rollDie({ items: getDeactivatedItems() })
     },
-    text: 'Double dice, roll again!',
+    text: 'Extra roll, roll again!',
     showDie: true,
     clickable: true,
   },
