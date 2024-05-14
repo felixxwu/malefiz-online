@@ -1,5 +1,5 @@
 import { styled } from 'goober'
-import { gameState, map, pickEmoji } from '../../../signals/signals'
+import { gameState, gameStateHashTable, map, pickEmoji } from '../../../signals/signals'
 import { players } from '../../../utils/players'
 import { joinGame } from '../../../dbactions/joinGame'
 import { getMyPlayerId } from '../../../utils/getUsers'
@@ -25,6 +25,17 @@ export function StartCircles() {
         })()
 
         const showJoinButton = !gameState.value?.playerTurn || !getMyPlayerId()
+        const neightbourPos = gameStateHashTable.value[circle.neighbours[0]].circle!.position
+        const posDiff = {
+          x: circle.position.x - neightbourPos.x,
+          y: circle.position.y - neightbourPos.y,
+        }
+        console.log(`posDiff`, posDiff)
+        const joinButtonPos = {
+          x: (circle.position.x + posDiff.x) * 100,
+          y: (circle.position.y + posDiff.y) * 100,
+        }
+        console.log(`joinButtonPos`, joinButtonPos)
 
         return (
           <>
@@ -41,8 +52,8 @@ export function StartCircles() {
                   onClick={() => {
                     if (!myPlayerId && !userControllingPlayer) joinGame(player.id)
                   }}
-                  x={circle.position.x * 100 - 100}
-                  y={circle.position.y * 100 + 70}
+                  x={joinButtonPos.x - 100}
+                  y={joinButtonPos.y - 22}
                   rx={20}
                   width='200'
                   height='40'
@@ -55,8 +66,8 @@ export function StartCircles() {
                   }}
                 ></rect>
                 <text
-                  x={circle.position.x * 100}
-                  y={circle.position.y * 100 + 91}
+                  x={joinButtonPos.x}
+                  y={joinButtonPos.y}
                   font-family={'Lexend Deca'}
                   font-size={18}
                   dominant-baseline='middle'
@@ -68,8 +79,8 @@ export function StartCircles() {
             ) : (
               <>
                 <text
-                  x={circle.position.x * 100}
-                  y={circle.position.y * 100 + 100}
+                  x={joinButtonPos.x}
+                  y={joinButtonPos.y}
                   dominant-baseline='middle'
                   text-anchor='middle'
                   font-size={60}
