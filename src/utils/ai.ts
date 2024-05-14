@@ -8,7 +8,7 @@ export const AI1 = createAI({
   stonePriority: 2,
   killPriority: 3,
   itemPriority: 6,
-  stoneLookahead: 5,
+  stoneLookahead: 7,
   stoneForwardPriority: 0.1,
   ditherRange: 0.05,
 })
