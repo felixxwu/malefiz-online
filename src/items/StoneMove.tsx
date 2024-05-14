@@ -5,6 +5,7 @@ import { gameState, gameStateHashTable } from '../signals/signals'
 import { AI1 } from '../utils/ai'
 import { getLegalStonePlacements } from '../utils/legalMoves'
 import { polygonToXY } from '../utils/polygonToXY'
+import { ItemAction } from './ItemAction'
 
 export const StoneMove = {
   name: 'Stone Move',
@@ -51,6 +52,7 @@ export const StoneMove = {
     }
   },
   onPickup: () => {},
+  alert: () => <ItemAction title='Stone Move: Move one stone somewhere else' />,
   aiAction: () => {
     if (gameState.value!.stones.some(stone => stone.circleId === null)) {
       const legalStonePlacements = getLegalStonePlacements()

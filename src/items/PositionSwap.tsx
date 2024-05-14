@@ -5,6 +5,7 @@ import { getNewItems } from '../utils/getNewItems'
 import { getMyPlayerId } from '../utils/getUsers'
 import { getNextPlayer } from '../utils/playerTurns'
 import { sleep } from '../utils/sleep'
+import { ItemAction } from './ItemAction'
 
 export const PositionSwap = {
   name: 'Position Swap',
@@ -25,6 +26,7 @@ export const PositionSwap = {
     clickable: false,
   },
   onCircleClickWhenActive: null,
+  alert: () => <ItemAction title='Position Swap: Swapping places with a random opponent' />,
   onPickup: async (_, circleId) => {
     await sleep(1000)
 

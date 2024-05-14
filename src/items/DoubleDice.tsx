@@ -1,6 +1,7 @@
 import { rollDie } from '../dbactions/rollDie'
 import { getDeactivatedItems } from '../utils/getDeactivatedItems'
 import { Item } from './'
+import { ItemAction } from './ItemAction'
 
 function Dot({ x, y }: { x: number; y: number }) {
   return (
@@ -41,11 +42,12 @@ export const DoubleDice = {
     onClick: async () => {
       await rollDie({ items: getDeactivatedItems() })
     },
-    text: 'Extra roll, roll again!',
+    text: 'Roll again',
     showDie: true,
     clickable: true,
   },
   onPickup: () => {},
+  alert: () => <ItemAction title='Extra roll: roll again!' />,
   onCircleClickWhenActive: null,
   aiAction: () => {
     rollDie({ items: getDeactivatedItems() })

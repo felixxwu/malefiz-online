@@ -41,6 +41,7 @@ export type GameState = {
   stonePit: { x: number; y: number }
   diePit: { x: number; y: number }
   items: GameStateItems
+  alert: string | null
   [user: UserID]: User
 }
 

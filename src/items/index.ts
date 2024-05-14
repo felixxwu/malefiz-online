@@ -11,6 +11,7 @@ export type Item = {
   colour: string
   icon: () => JSX.Element
   actionWhenActive: { onClick: () => void; text: string; showDie: boolean; clickable: boolean }
+  alert: () => JSX.Element
   aiAction: () => void
   onPickup: (pieceId: string, circleId: string) => void
   onCircleClickWhenActive: ((circleId: string) => void) | null

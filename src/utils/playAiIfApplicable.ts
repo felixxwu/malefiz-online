@@ -50,6 +50,8 @@ function canAiPlay() {
 
   if (!isUserHost()) return false
 
+  if (gameState.value.alert) return false
+
   const playerTurn = gameState.value.playerTurn
   const playerPlaying = gameState.value.players.find(player => player.id === playerTurn)
   if (isPlayerAi(playerPlaying?.id)) return true
