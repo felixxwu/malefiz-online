@@ -1,3 +1,4 @@
+import { EventName } from '../events'
 import { GameStateItems } from '../items'
 import { Circle } from './mapTypes'
 
@@ -42,6 +43,8 @@ export type GameState = {
   diePit: { x: number; y: number }
   items: GameStateItems
   alert: Alert
+  turnsUntilEvent: number
+  eventsEnabled: EventName[]
   [user: UserID]: User
 }
 

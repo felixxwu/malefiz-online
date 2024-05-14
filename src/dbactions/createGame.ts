@@ -4,14 +4,18 @@ import { mapList } from '../maps/mapList'
 import { GameState } from '../types/gameTypes'
 import { zoomIntoCircle } from '../utils/zoomIntoCircle'
 import { homePageMap } from '../maps/home'
-import { textOpacity } from '../signals/signals'
+import { arcadeEventSelection, textOpacity } from '../signals/signals'
 import { sleep } from '../utils/sleep'
 import { createGameItems } from '../items'
 
 export async function createGame(mapNum: number) {
   const gameState = mapList[mapNum].gameState
-  // items may have changed since map was parsed
-  const gameStateWithItems: GameState = { ...gameState, items: createGameItems() }
+  // items/events may have changed since map was parsed
+  const gameStateWithItems: GameState = {
+    ...gameState,
+    items: createGameItems(),
+    eventsEnabled: arcadeEventSelection.value,
+  }
   const gameId = await addDoc(collection(db, 'games'), gameStateWithItems)
   textOpacity.value = 0
   await zoomIntoCircle({ circle: homePageMap[mapNum] })

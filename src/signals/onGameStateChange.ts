@@ -9,28 +9,17 @@ import {
   userId,
 } from './signals'
 import { leaveGame } from '../dbactions/leaveGame'
+import { events } from '../events'
+import { sleep } from '../utils/sleep'
+import { updateGame } from '../dbactions/updateGame'
 
 export function onGameStateChange() {
   console.info(`gameState.value`, gameState.value)
 
   resolveMultipleUsersPerPlayer()
-  if (gameState.value && gameState.value!.dieRoll !== null) {
-    lastDieRoll.value = gameState.value!.dieRoll
-  }
-
-  setTimeout(() => {
-    circleHovered.value = null
-    for (const key in gameStateHashTable.value) {
-      const pos = gameStateHashTable.value[key]
-      if (pos.circle?.finish && pos.pieces) {
-        const playerName = gameState.value!.players.find(
-          player => player.id === pos.pieces![0].playerId
-        )!.name
-        gameOver.value = playerName
-        zoomIntoCircle({ circle: pos.circle, zoomDelay: 500 })
-      }
-    }
-  })
+  saveDieRoll()
+  checkForGameOver()
+  activateEvent()
 }
 
 function resolveMultipleUsersPerPlayer() {
@@ -47,5 +36,38 @@ function resolveMultipleUsersPerPlayer() {
         leaveGame()
       }
     }
+  }
+}
+
+function saveDieRoll() {
+  if (gameState.value && gameState.value!.dieRoll !== null) {
+    lastDieRoll.value = gameState.value!.dieRoll
+  }
+}
+
+function checkForGameOver() {
+  setTimeout(() => {
+    circleHovered.value = null
+    for (const key in gameStateHashTable.value) {
+      const pos = gameStateHashTable.value[key]
+      if (pos.circle?.finish && pos.pieces) {
+        const playerName = gameState.value!.players.find(
+          player => player.id === pos.pieces![0].playerId
+        )!.name
+        gameOver.value = playerName
+        zoomIntoCircle({ circle: pos.circle, zoomDelay: 500 })
+      }
+    }
+  })
+}
+
+async function activateEvent() {
+  if (!gameState.value) return
+  const event = events.find(event => event.name === gameState.value!.alert?.id)
+  if (event) {
+    await sleep(3000)
+    await updateGame({ alert: null })
+    await sleep(300)
+    event.onActivate()
   }
 }

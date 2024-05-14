@@ -1,3 +1,4 @@
+import { consts } from '../config/consts'
 import { GameState, Player } from '../types/gameTypes'
 import { Map } from '../types/mapTypes'
 import { players } from './players'
@@ -26,7 +27,7 @@ type Coordinate = {
 export function parseMap(
   mapNum: number,
   template: string
-): { map: Map; gameState: Omit<GameState, 'items'> } {
+): { map: Map; gameState: Omit<GameState, 'items' | 'eventsEnabled'> } {
   let pieceId = 0
   const mapGrid = mapStringTo2dArray(template)
   const stonePit = getCoordinates(mapGrid, ['P'])[0]
@@ -77,6 +78,7 @@ export function parseMap(
       stonePit: { x: stonePit.x / 2, y: stonePit.y / 2 },
       diePit: { x: diePit.x / 2, y: diePit.y / 2 },
       alert: null,
+      turnsUntilEvent: consts.eventInterval,
     },
   }
 }

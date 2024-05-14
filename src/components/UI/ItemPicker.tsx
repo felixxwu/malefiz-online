@@ -1,10 +1,11 @@
 import { styled } from 'goober'
 import { colours } from '../../config/colours'
 import { consts } from '../../config/consts'
-import { arcadeItemSelection, pickArcadeItems } from '../../signals/signals'
+import { arcadeEventSelection, arcadeItemSelection, pickArcadeItems } from '../../signals/signals'
 import { objectToArray } from '../../utils/objectToArray'
 import { itemDefs } from '../../items'
 import { ItemSvg } from '../MapRenderer/ItemGroup/ItemSvg'
+import { events } from '../../events'
 
 export function ItemPicker() {
   return (
@@ -25,6 +26,7 @@ export function ItemPicker() {
       }
     >
       <Content>
+        <Header>ITEMS</Header>
         {objectToArray(itemDefs).map(({ value, key }) => {
           function handleClick(e: MouseEvent) {
             e.stopPropagation()
@@ -53,6 +55,40 @@ export function ItemPicker() {
                   style={{
                     transform: `translate(${
                       arcadeItemSelection.value.includes(key) ? '17' : '2'
+                    }px, 2px)`,
+                  }}
+                />
+              </ToggleContainer>
+            </Row>
+          )
+        })}
+
+        <Header>EVENTS</Header>
+        {events.map(event => {
+          function handleClick(e: MouseEvent) {
+            e.stopPropagation()
+
+            if (arcadeEventSelection.value.includes(event.name)) {
+              arcadeEventSelection.value = arcadeEventSelection.value.filter(
+                item => item !== event.name
+              )
+            } else {
+              arcadeEventSelection.value = [...arcadeEventSelection.value, event.name]
+            }
+          }
+
+          return (
+            <Row onClick={handleClick}>
+              {event.name}
+              <ToggleContainer
+                style={{
+                  opacity: arcadeEventSelection.value.includes(event.name) ? 1 : 0.5,
+                }}
+              >
+                <Toggle
+                  style={{
+                    transform: `translate(${
+                      arcadeEventSelection.value.includes(event.name) ? '17' : '2'
                     }px, 2px)`,
                   }}
                 />
@@ -89,6 +125,11 @@ const Content = styled('div')`
   flex-wrap: wrap;
 `
 
+const Header = styled('div')`
+  padding: 10px 20px;
+  font-weight: bold;
+`
+
 const Row = styled('div')`
   display: flex;
   align-items: center;
@@ -115,9 +156,9 @@ const Name = styled('div')`
 
 const Svg = styled('svg')`
   overflow: visible;
-  width: 30px;
+  width: 35px;
   height: 30px;
-  transform: scale(0.8) translate(10px, 15px);
+  transform: scale(0.8) translate(15px, 15px);
 `
 
 const ToggleContainer = styled('div')`

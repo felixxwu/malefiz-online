@@ -1,5 +1,5 @@
 import { sleep } from '../utils/sleep'
-import { gameState } from '../signals/signals'
+import { gameState, lastDieRoll } from '../signals/signals'
 import { consts } from '../config/consts'
 import { updateGame } from './updateGame'
 import { getNextTurnGameState } from '../utils/getNextTurnGameState'
@@ -19,7 +19,7 @@ export async function movePiece(pieceId: string, circleId: string) {
         return player
       }
     }),
-    ...getNextTurnGameState([circleId]),
+    ...getNextTurnGameState(lastDieRoll.value !== 6, [circleId]),
   })
 
   await sleep(consts.playerTransition)

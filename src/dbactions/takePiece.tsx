@@ -1,7 +1,7 @@
 import { styled } from 'goober'
 import { PlayerModelGroup } from '../components/MapRenderer/PlayerGroup'
 import { consts } from '../config/consts'
-import { gameState, map } from '../signals/signals'
+import { gameState, lastDieRoll, map } from '../signals/signals'
 import { Player } from '../types/gameTypes'
 import { getUserControllingPlayer } from '../utils/getUserControllingPlayer'
 import { players } from '../utils/players'
@@ -44,9 +44,13 @@ export async function takePiece(pieceId: string, circleId: string, opponentPiece
       }
     }),
 
-    ...getNextTurnGameState([circleId]),
+    ...getNextTurnGameState(lastDieRoll.value !== 6, [circleId]),
   })
-  await displayAlert({ id: 'takePieceAlert', meta: lastKill })
+
+  // another alert could be set, in which case ignore this one
+  if (!gameState.value!.alert) {
+    await displayAlert({ id: 'takePieceAlert', meta: lastKill })
+  }
 }
 
 export function takePieceAlert() {

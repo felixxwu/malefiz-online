@@ -10,6 +10,7 @@ import { mouthList } from '../playermodel/mouthes'
 import { headList } from '../playermodel/heads'
 import { updatePlayerModelMidGame } from '../dbactions/updatePlayerModelMidGame'
 import { ItemName } from '../items'
+import { EventName } from '../events'
 
 export const screenWidth = signal(window.innerWidth)
 export const screenHeight = signal(window.innerHeight)
@@ -18,6 +19,7 @@ export const menuOpen = signal(false)
 export const pickEmoji = signal(false)
 export const waitingForServer = signal(false)
 export const arcadeItemSelection = storedSignal<ItemName[]>('arcadeItemSelection', [])
+export const arcadeEventSelection = storedSignal<EventName[]>('arcadeEventSelection', [])
 export const pickArcadeItems = signal(false)
 
 export const map = signal(homePageMap)

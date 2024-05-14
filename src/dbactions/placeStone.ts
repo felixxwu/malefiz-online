@@ -15,6 +15,6 @@ export async function placeStone(clickedCircleId: string) {
       }
     }),
 
-    ...getNextTurnGameState([clickedCircleId]),
+    ...getNextTurnGameState(true, [clickedCircleId]),
   })
 }

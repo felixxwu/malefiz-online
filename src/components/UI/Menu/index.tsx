@@ -18,7 +18,17 @@ export function Menu() {
     e.stopPropagation()
   }
 
-  const showInviteHint = gameState.value?.playerTurn === null
+  const text = (() => {
+    if (gameState.value?.playerTurn === null) return 'Invite players'
+    if (!customisationOpened.value) return 'Customise appearance'
+    if (
+      gameState.value &&
+      gameState.value.turnsUntilEvent < 7 &&
+      gameState.value.eventsEnabled.length > 0
+    )
+      return `Random event in ${gameState.value.turnsUntilEvent} turns`
+    return null
+  })()
 
   return (
     <Div
@@ -38,10 +48,7 @@ export function Menu() {
         <MenuContent />
       ) : (
         <OpenButton onClick={openMenu}>
-          {showInviteHint && <InviteHint>Invite players</InviteHint>}
-          {!showInviteHint && !customisationOpened.value && (
-            <InviteHint>Customise appearance</InviteHint>
-          )}
+          {text && <InviteHint>{text}</InviteHint>}
           <MenuIcon size={12} />
         </OpenButton>
       )}

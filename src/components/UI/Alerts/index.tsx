@@ -4,6 +4,7 @@ import { ItemName, itemDefs } from '../../../items'
 import { takePieceAlert } from '../../../dbactions/takePiece'
 import { useEffect, useState } from 'preact/hooks'
 import { isMyTurn } from '../../../utils/playerTurns'
+import { events } from '../../../events'
 
 const alerts = { takePieceAlert }
 
@@ -24,10 +25,19 @@ export function Alerts() {
   if (gameState.value.alert === null) return null
   if (!showAlert) return null
 
-  const ItemComponent = itemDefs[gameState.value?.alert.id as ItemName]?.alert ?? null
-  const OtherComponent = alerts[gameState.value.alert.id as keyof typeof alerts] ?? null
-  const Component = ItemComponent ?? OtherComponent
+  const alertId = gameState.value.alert.id
 
+  const OtherComponent = alerts[alertId as keyof typeof alerts] ?? null
+  const ItemComponent = itemDefs[alertId as ItemName]?.alert ?? null
+  const EventComponent = events.find(event => event.name === alertId)?.alert ?? null
+  const Component = (() => {
+    if (ItemComponent !== null) return ItemComponent
+    if (OtherComponent !== null) return OtherComponent
+    if (EventComponent !== null) return EventComponent
+    return null
+  })()
+
+  if (Component === null) return null
   if (ItemComponent !== null && OtherComponent === null && !isMyTurn()) return null
 
   return (

@@ -11,4 +11,5 @@ export const consts = {
   placeholderEmoji: `🫥`,
   temperIncrease: 3,
   temperDecrease: 0.5,
+  eventInterval: 15,
 }
