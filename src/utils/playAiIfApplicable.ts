@@ -1,4 +1,4 @@
-import { gameState } from '../signals/signals'
+import { gameOver, gameState } from '../signals/signals'
 import { AI1, selectedBestPieceToMove } from './ai'
 import { getUserControllingPlayer } from './getUserControllingPlayer'
 import { getMyPlayerId, getUsers } from './getUsers'
@@ -47,9 +47,8 @@ export async function playAiIfApplicable() {
 
 function canAiPlay() {
   if (!gameState.value) return false
-
   if (!isUserHost()) return false
-
+  if (gameOver.value) return false
   if (gameState.value.alert) return false
 
   const playerTurn = gameState.value.playerTurn
