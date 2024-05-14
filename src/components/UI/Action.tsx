@@ -44,6 +44,14 @@ export function Action() {
     )
   }
 
+  if (!myTurn && activeItem && playerWhoIsPlaying) {
+    return (
+      <Div>
+        {playerWhoIsPlaying.name} picked up {activeItem.name}
+      </Div>
+    )
+  }
+
   if (getMyPlayerId() && gameNotStarted) {
     return (
       <Div onClick={() => updateGame({ playerTurn: players[0].id })} className='clickable'>
