@@ -1,14 +1,13 @@
 import { styled } from 'goober'
 import { PlayerModelGroup } from '../components/MapRenderer/PlayerGroup'
 import { consts } from '../config/consts'
-import { gameState, lastDieRoll, map } from '../signals/signals'
+import { gameState, map } from '../signals/signals'
 import { Player } from '../types/gameTypes'
-import { getNewItems } from '../utils/getNewItems'
 import { getUserControllingPlayer } from '../utils/getUserControllingPlayer'
-import { getNextPlayer } from '../utils/playerTurns'
 import { players } from '../utils/players'
 import { displayAlert } from './displayAlert'
 import { updateGame } from './updateGame'
+import { getNextTurnGameState } from '../utils/getNextTurnGameState'
 
 let lastKill: { killer: Player | null; victim: Player | null } = { killer: null, victim: null }
 
@@ -44,9 +43,8 @@ export async function takePiece(pieceId: string, circleId: string, opponentPiece
         return player
       }
     }),
-    ...(lastDieRoll.value === 6 ? {} : { playerTurn: getNextPlayer() }),
-    items: getNewItems([circleId]),
-    dieRoll: null,
+
+    ...getNextTurnGameState([circleId]),
   })
   await displayAlert({ id: 'takePieceAlert', meta: lastKill })
 }

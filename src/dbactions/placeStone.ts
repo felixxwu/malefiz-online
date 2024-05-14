@@ -1,6 +1,5 @@
-import { gameState, lastDieRoll } from '../signals/signals'
-import { getNewItems } from '../utils/getNewItems'
-import { getNextPlayer } from '../utils/playerTurns'
+import { gameState } from '../signals/signals'
+import { getNextTurnGameState } from '../utils/getNextTurnGameState'
 import { updateGame } from './updateGame'
 
 export async function placeStone(clickedCircleId: string) {
@@ -16,8 +15,6 @@ export async function placeStone(clickedCircleId: string) {
       }
     }),
 
-    ...(lastDieRoll.value === 6 ? {} : { playerTurn: getNextPlayer() }),
-    items: getNewItems([clickedCircleId]),
-    dieRoll: null,
+    ...getNextTurnGameState([clickedCircleId]),
   })
 }
