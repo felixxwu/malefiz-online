@@ -1,6 +1,14 @@
+import { updateGame } from '../dbactions/updateGame'
 import { gameState, gameStateHashTable } from '../signals/signals'
 import { objectMap } from './objectMap'
 import { objectToArray } from './objectToArray'
+
+//@ts-ignore
+window.addManyItems = async () => {
+  for (let i = 0; i < 50; i++) {
+    await updateGame({ items: getNewItems([]) })
+  }
+}
 
 export function getNewItems(excludeCircleIds: string[]) {
   const gameStateItems = gameState.value!.items
@@ -19,16 +27,18 @@ export function getNewItems(excludeCircleIds: string[]) {
 
   const randomItem = itemsArray[Math.floor(Math.random() * itemsArray.length)]
   const circlesArray = objectToArray(gameStateHashTable.value)
-  const validCircles = circlesArray.filter(
-    circle =>
+  const validCircles = circlesArray.filter(circle => {
+    return (
       circle.value.circle &&
       !circle.value.item &&
       !circle.value.pieces &&
       !circle.value.stone &&
       !circle.value.circle.finish &&
       !circle.value.circle.start &&
-      !excludeCircleIds.includes(circle.value.circle.id)
-  )
+      !excludeCircleIds.includes(circle.value.circle.id) &&
+      gameStateHashTable.value[circle.value.circle.id].distanceToFinish! > 10
+    )
+  })
   const randomValidCircle = validCircles[Math.floor(Math.random() * validCircles.length)]
 
   return objectMap(gameStateItems, (item, key) =>

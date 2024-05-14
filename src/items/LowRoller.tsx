@@ -1,7 +1,7 @@
 import { updateGame } from '../dbactions/updateGame'
 import { getDeactivatedItems } from '../utils/getDeactivatedItems'
 import { Item } from './'
-import { ItemAction } from './ItemAction'
+import { ItemAlert } from './ItemAlert'
 
 function Dot({ x, y }: { x: number; y: number }) {
   return (
@@ -42,7 +42,7 @@ export const LowRoller = {
     clickable: true,
   },
   onPickup: () => {},
-  alert: () => <ItemAction title='Low Roller: Roll a low number! (1-3)' />,
+  alert: () => <ItemAlert item={LowRoller} />,
   onCircleClickWhenActive: null,
   aiAction: () => {
     updateGame({ dieRoll: Math.floor(Math.random() * 3) + 1, items: getDeactivatedItems() })

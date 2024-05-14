@@ -116,13 +116,13 @@ const Group = styled('g')`
 const AnimationGroup = styled('g')`
   @keyframes bob {
     0% {
-      transform: translateY(0);
+      transform: translateY(1px);
     }
     50% {
-      transform: translateY(-3px);
+      transform: translateY(-1px);
     }
     100% {
-      transform: translateY(0);
+      transform: translateY(1px);
     }
   }
 `

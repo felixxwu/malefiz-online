@@ -1,7 +1,7 @@
 import { rollDie } from '../dbactions/rollDie'
 import { getDeactivatedItems } from '../utils/getDeactivatedItems'
 import { Item } from './'
-import { ItemAction } from './ItemAction'
+import { ItemAlert } from './ItemAlert'
 
 function Dot({ x, y }: { x: number; y: number }) {
   return (
@@ -47,7 +47,7 @@ export const DoubleDice = {
     clickable: true,
   },
   onPickup: () => {},
-  alert: () => <ItemAction title='Extra roll: roll again!' />,
+  alert: () => <ItemAlert item={DoubleDice} />,
   onCircleClickWhenActive: null,
   aiAction: () => {
     rollDie({ items: getDeactivatedItems() })

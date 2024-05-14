@@ -1,3 +1,4 @@
+import { styled } from 'goober'
 import { Item } from '.'
 import { placeStone } from '../dbactions/placeStone'
 import { updateGame } from '../dbactions/updateGame'
@@ -5,7 +6,8 @@ import { customCircleHighlights, gameState, gameStateHashTable } from '../signal
 import { AI1 } from '../utils/ai'
 import { getLegalStonePlacements } from '../utils/legalMoves'
 import { polygonToXY } from '../utils/polygonToXY'
-import { ItemAction } from './ItemAction'
+import { ItemAlert } from './ItemAlert'
+import { consts } from '../config/consts'
 
 export const StoneMove = {
   name: 'Stone Move',
@@ -56,7 +58,11 @@ export const StoneMove = {
   onPickup: () => {
     customCircleHighlights.value = gameState.value!.stones.map(stone => stone.circleId!)
   },
-  alert: () => <ItemAction title='Stone Move: Move one stone somewhere else' />,
+  alert: () => (
+    <ItemAlert item={StoneMove}>
+      <StoneMoveGraphic />
+    </ItemAlert>
+  ),
   aiAction: () => {
     if (gameState.value!.stones.some(stone => stone.circleId === null)) {
       const legalStonePlacements = getLegalStonePlacements()
@@ -80,3 +86,60 @@ export const StoneMove = {
     })
   },
 } as const satisfies Item
+
+function StoneMoveGraphic() {
+  return (
+    <Svg>
+      <circle cx='-100' cy='0' r={consts.circleRadius} fill='black' />
+      <circle cx='0' cy='0' r={consts.circleRadius} fill='black' />
+      <circle cx='100' cy='0' r={consts.circleRadius} fill='black' />
+      <line
+        x1='-100'
+        y1='0'
+        x2='100'
+        y2='0'
+        stroke='black'
+        style={{ strokeWidth: consts.pathStrokeWidth }}
+      />
+      <StoneGroup>
+        <polygon
+          style={{
+            stroke: 'black',
+            strokeWidth: '5',
+            filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.3))',
+            fill: 'white',
+            strokeLinejoin: 'round',
+          }}
+          points={[0, 1, 2, 3, 4, 5, 6, 7]
+            .map(i => polygonToXY(i, 8, 25))
+            .map(({ x, y }) => `${x},${y}`)
+            .join(' ')}
+        />
+      </StoneGroup>
+    </Svg>
+  )
+}
+
+const Svg = styled('svg')`
+  overflow: visible;
+  width: 1px;
+  height: 1px;
+  transform: scale(1.5) translateY(50px);
+`
+
+const StoneGroup = styled('g')`
+  animation: stoneAlertMove 1s cubic-bezier(0.8, 0, 0.2, 1);
+  animation-fill-mode: forwards;
+
+  @keyframes stoneAlertMove {
+    0% {
+      transform: translate(-100px, 0px);
+    }
+    30% {
+      transform: translate(-100px, 0px);
+    }
+    100% {
+      transform: translate(100px, 0px);
+    }
+  }
+`

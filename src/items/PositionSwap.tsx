@@ -1,11 +1,15 @@
+import { styled } from 'goober'
 import { Item } from '.'
 import { updateGame } from '../dbactions/updateGame'
-import { gameState, gameStateHashTable, lastDieRoll } from '../signals/signals'
+import { gameState, gameStateHashTable, lastDieRoll, playerModel } from '../signals/signals'
 import { getNewItems } from '../utils/getNewItems'
 import { getMyPlayerId } from '../utils/getUsers'
 import { getNextPlayer } from '../utils/playerTurns'
 import { sleep } from '../utils/sleep'
-import { ItemAction } from './ItemAction'
+import { ItemAlert } from './ItemAlert'
+import { PlayerModelGroup } from '../components/MapRenderer/PlayerGroup'
+import { consts } from '../config/consts'
+import { players } from '../utils/players'
 
 export const PositionSwap = {
   name: 'Position Swap',
@@ -26,7 +30,11 @@ export const PositionSwap = {
     clickable: false,
   },
   onCircleClickWhenActive: null,
-  alert: () => <ItemAction title='Position Swap: Swapping places with a random opponent' />,
+  alert: () => (
+    <ItemAlert item={PositionSwap}>
+      <SwapGraphic />
+    </ItemAlert>
+  ),
   onPickup: async (_, circleId) => {
     await sleep(1000)
 
@@ -39,7 +47,14 @@ export const PositionSwap = {
         }
       }
     }
-    if (validPieces.length === 0) return
+    if (validPieces.length === 0) {
+      updateGame({
+        ...(lastDieRoll.value === 6 ? {} : { playerTurn: getNextPlayer() }),
+        items: getNewItems([circleId]),
+        dieRoll: null,
+      })
+      return
+    }
 
     const randomPiece = validPieces[Math.floor(Math.random() * validPieces.length)]
     updateGame({
@@ -75,3 +90,78 @@ export const PositionSwap = {
   },
   aiAction: () => {},
 } as const satisfies Item
+
+function SwapGraphic() {
+  const playerAColour = players.find(player => player.id === getMyPlayerId())?.colour
+  const myModel = playerModel.value
+  const randomPlayer = players[Math.floor(Math.random() * players.length)]
+
+  return (
+    <Svg>
+      <circle cx='-100' cy='0' r={consts.circleRadius} fill='black' />
+      <circle cx='0' cy='0' r={consts.circleRadius} fill='black' />
+      <circle cx='100' cy='0' r={consts.circleRadius} fill='black' />
+      <line
+        x1='-100'
+        y1='0'
+        x2='100'
+        y2='0'
+        stroke='black'
+        style={{ strokeWidth: consts.pathStrokeWidth }}
+      />
+      <PlayerA>
+        <PlayerModelGroup x={0} y={0} id='1' colour={playerAColour!} model={myModel} />
+      </PlayerA>
+      <PlayerB>
+        <PlayerModelGroup
+          x={0}
+          y={0}
+          id='1'
+          colour={randomPlayer.colour}
+          model={randomPlayer.model}
+        />
+      </PlayerB>
+    </Svg>
+  )
+}
+
+const Svg = styled('svg')`
+  overflow: visible;
+  width: 1px;
+  height: 1px;
+  transform: scale(1.5) translateY(50px);
+`
+
+const PlayerA = styled('g')`
+  animation: positionSwapTo 2s cubic-bezier(0.8, 0, 0.2, 1);
+  animation-fill-mode: forwards;
+
+  @keyframes positionSwapTo {
+    0% {
+      transform: translate(-100px, 0px);
+    }
+    50% {
+      transform: translate(0px, -30px);
+    }
+    100% {
+      transform: translate(100px, 0px);
+    }
+  }
+`
+
+const PlayerB = styled('g')`
+  animation: positionSwapFrom 2s cubic-bezier(0.8, 0, 0.2, 1);
+  animation-fill-mode: forwards;
+
+  @keyframes positionSwapFrom {
+    0% {
+      transform: translate(100px, 0px);
+    }
+    50% {
+      transform: translate(0px, 30px);
+    }
+    100% {
+      transform: translate(-100px, 0px);
+    }
+  }
+`
