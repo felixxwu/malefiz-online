@@ -3,6 +3,7 @@ import {
   customCircleHighlights,
   gameState,
   gameStateHashTable,
+  map,
   pieceSelected,
   waitingForServer,
 } from '../../../signals/signals'
@@ -13,9 +14,14 @@ import { MoveLine } from './MoveLine'
 import { getMyPlayer } from '../../../utils/getUsers'
 import { MoveDestination } from './MoveDestination'
 import { StonePlacement } from './StonePlacement'
+import { Circle } from '../../../types/mapTypes'
+import { fitToScreen } from '../../../utils/fitToScreen'
 
 export function HudGroup() {
-  if (!isMyTurn() || waitingForServer.value) return null
+  if (!isMyTurn() || waitingForServer.value) {
+    fitToScreen(map.value, {})
+    return null
+  }
 
   if (customCircleHighlights.value.length > 0) {
     return (
@@ -33,6 +39,14 @@ export function HudGroup() {
     const myLegalMoves = myPieces.map(position =>
       getLegalMoves(getCircleFromPiece(position.pieceId)!.id)
     )
+    const allCircles: Circle[] = []
+    for (const legalMoves of myLegalMoves) {
+      for (const legalMove of legalMoves) {
+        allCircles.push(legalMove.to)
+        allCircles.push(legalMove.from)
+      }
+    }
+    fitToScreen(allCircles, {})
     return (
       <>
         {myLegalMoves.map(legalMoves => legalMoves.map(legalMove => <MoveLine move={legalMove} />))}
@@ -69,5 +83,6 @@ export function HudGroup() {
     )
   }
 
+  fitToScreen(map.value, {})
   return null
 }
