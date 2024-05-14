@@ -37,7 +37,7 @@ export async function firstRender() {
       }
     })
 
-    setInterval(playAiIfApplicable, 1500)
+    setInterval(playAiIfApplicable, 2000)
   } else {
     introSequence()
   }

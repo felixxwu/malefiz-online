@@ -1,7 +1,7 @@
 import { consts } from '../config/consts'
 import { ItemName, itemDefs } from '../items'
 import { gameState } from '../signals/signals'
-import { sleep } from '../utils/sleep'
+import { displayAlert } from './displayAlert'
 import { updateGame } from './updateGame'
 
 export async function takeItem(itemName: ItemName, pieceId: string, circleId: string) {
@@ -34,10 +34,7 @@ export async function takeItem(itemName: ItemName, pieceId: string, circleId: st
     dieRoll: null,
   })
 
-  await updateGame({ alert: itemDefs[itemName].name })
-  await sleep(2000)
-  await updateGame({ alert: null })
-  await sleep(500)
+  await displayAlert(itemDefs[itemName].name)
 
   itemDefs[itemName].onPickup(pieceId, circleId)
 }
