@@ -11,6 +11,7 @@ import { PlayerModelGroup } from '../components/MapRenderer/PlayerGroup'
 import { consts } from '../config/consts'
 import { players } from '../utils/players'
 import { currentPlayer } from '../utils/currentPlayer'
+import { useEffect, useState } from 'preact/hooks'
 
 export const PositionSwap = {
   name: 'Position Swap',
@@ -48,6 +49,7 @@ export const PositionSwap = {
         }
       }
     }
+
     if (validPieces.length === 0) {
       updateGame({
         ...(lastDieRoll.value === 6 ? {} : { playerTurn: getNextPlayer() }),
@@ -60,7 +62,7 @@ export const PositionSwap = {
     const randomPiece = validPieces[Math.floor(Math.random() * validPieces.length)]
     updateGame({
       players: gameState.value!.players.map(player => {
-        if (player.id === getMyPlayerId()) {
+        if (player.id === currentPlayer().id) {
           return {
             ...player,
             positions: player.positions.map(position =>
@@ -93,9 +95,19 @@ export const PositionSwap = {
 } as const satisfies Item
 
 function SwapGraphic() {
+  const [randomPlayer, setRandomPlayer] = useState(players[0])
+
   const playerAColour = players.find(player => player.id === getMyPlayerId())?.colour
   const myModel = playerModel.value
-  const randomPlayer = players[Math.floor(Math.random() * players.length)]
+
+  useEffect(() => {
+    ;(async () => {
+      for (let i = 1; i < 6; i++) {
+        await sleep(300)
+        setRandomPlayer(players[i])
+      }
+    })()
+  }, [])
 
   return (
     <Svg>
