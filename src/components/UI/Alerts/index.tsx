@@ -11,21 +11,21 @@ export function Alerts() {
   const [showAlert, setShowAlert] = useState(false)
 
   useEffect(() => {
-    if (gameState.value?.alert) {
+    if (gameState.value?.alert?.id) {
       setTimeout(() => {
         setShowAlert(true)
       }, 500)
     } else {
       setShowAlert(false)
     }
-  }, [gameState.value?.alert])
+  }, [gameState.value?.alert, gameState.value?.alert?.id])
 
   if (!gameState.value) return null
   if (gameState.value.alert === null) return null
   if (!showAlert) return null
 
-  const ItemComponent = itemDefs[gameState.value?.alert as ItemName]?.alert ?? null
-  const OtherComponent = alerts[gameState.value.alert as keyof typeof alerts] ?? null
+  const ItemComponent = itemDefs[gameState.value?.alert.id as ItemName]?.alert ?? null
+  const OtherComponent = alerts[gameState.value.alert.id as keyof typeof alerts] ?? null
   const Component = ItemComponent ?? OtherComponent
 
   if (ItemComponent !== null && OtherComponent === null && !isMyTurn()) return null
@@ -33,7 +33,7 @@ export function Alerts() {
   return (
     <Div
       style={
-        gameState.value?.alert
+        gameState.value?.alert?.id
           ? {
               backdropFilter: 'blur(20px)',
               backgroundColor: 'rgba(0,0,0,0.5)',

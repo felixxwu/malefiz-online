@@ -48,18 +48,21 @@ export async function takePiece(pieceId: string, circleId: string, opponentPiece
     items: getNewItems([circleId]),
     dieRoll: null,
   })
-  await displayAlert('takePieceAlert')
+  await displayAlert({ id: 'takePieceAlert', meta: lastKill })
 }
 
 export function takePieceAlert() {
-  if (lastKill.killer === null || lastKill.victim === null) return null
-  const userForKiller = getUserControllingPlayer(lastKill.killer.id)
-  const userForVictim = getUserControllingPlayer(lastKill.victim.id)
+  const gameStateLastKill = gameState.value?.alert?.meta as typeof lastKill
+  if (gameStateLastKill.killer === null || gameStateLastKill.victim === null) return null
+  const userForKiller = getUserControllingPlayer(gameStateLastKill.killer.id)
+  const userForVictim = getUserControllingPlayer(gameStateLastKill.victim.id)
 
   const killerModel =
-    userForKiller?.playerModel ?? players.find(player => player.id === lastKill.killer?.id)?.model
+    userForKiller?.playerModel ??
+    players.find(player => player.id === gameStateLastKill.killer?.id)?.model
   const victimModel =
-    userForVictim?.playerModel ?? players.find(player => player.id === lastKill.victim?.id)?.model
+    userForVictim?.playerModel ??
+    players.find(player => player.id === gameStateLastKill.victim?.id)?.model
 
   if (!killerModel || !victimModel) return null
 
@@ -72,7 +75,7 @@ export function takePieceAlert() {
             x={0}
             y={0}
             id='1'
-            colour={lastKill.victim.colour}
+            colour={gameStateLastKill.victim.colour}
             model={victimModel}
           />
         </VictimGroup>
@@ -80,8 +83,8 @@ export function takePieceAlert() {
           <PlayerModelGroup
             x={0}
             y={0}
-            id='1'
-            colour={lastKill.killer.colour}
+            id='2'
+            colour={gameStateLastKill.killer.colour}
             model={killerModel}
           />
         </KillerGroup>

@@ -6,7 +6,7 @@ import { currentPlayer } from './currentPlayer'
 export const AI1 = createAI({
   forwardPriority: 0.08,
   stonePriority: 2,
-  killPriority: 3,
+  killPriority: 2,
   itemPriority: 6,
   stoneLookahead: 7,
   stoneForwardPriority: 0.1,

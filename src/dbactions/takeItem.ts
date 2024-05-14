@@ -34,7 +34,7 @@ export async function takeItem(itemName: ItemName, pieceId: string, circleId: st
     dieRoll: null,
   })
 
-  await displayAlert(itemDefs[itemName].name)
+  await displayAlert({ id: itemDefs[itemName].name })
 
   itemDefs[itemName].onPickup(pieceId, circleId)
 }

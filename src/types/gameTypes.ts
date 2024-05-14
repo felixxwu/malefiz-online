@@ -41,9 +41,14 @@ export type GameState = {
   stonePit: { x: number; y: number }
   diePit: { x: number; y: number }
   items: GameStateItems
-  alert: string | null
+  alert: Alert
   [user: UserID]: User
 }
+
+export type Alert = {
+  id: string
+  meta?: any
+} | null
 
 export type Move = {
   from: Circle
