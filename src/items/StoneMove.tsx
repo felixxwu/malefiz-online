@@ -8,6 +8,7 @@ import { getLegalStonePlacements } from '../utils/legalMoves'
 import { polygonToXY } from '../utils/polygonToXY'
 import { ItemAlert } from './ItemAlert'
 import { consts } from '../config/consts'
+import { isMyTurn } from '../utils/playerTurns'
 
 export const StoneMove = {
   name: 'Stone Move',
@@ -56,7 +57,9 @@ export const StoneMove = {
     }
   },
   onPickup: () => {
-    customCircleHighlights.value = gameState.value!.stones.map(stone => stone.circleId!)
+    if (isMyTurn()) {
+      customCircleHighlights.value = gameState.value!.stones.map(stone => stone.circleId!)
+    }
   },
   alert: () => (
     <ItemAlert item={StoneMove}>
