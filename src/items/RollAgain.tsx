@@ -17,6 +17,7 @@ function Dot({ x, y }: { x: number; y: number }) {
 
 export const DoubleDice = {
   name: 'Roll Again',
+  description: 'Get another chance at rolling numbers 1 to 6',
   colour: 'hsl(60, 70%, 50%)',
   icon: () => (
     <g style={{ transform: 'translateY(1px)' }}>

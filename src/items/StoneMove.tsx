@@ -12,6 +12,7 @@ import { isMyTurn } from '../utils/playerTurns'
 
 export const StoneMove = {
   name: 'Stone Move',
+  description: 'Move a stone to a place of your choice',
   colour: 'hsl(0, 0%, 85%)',
   icon: () => (
     <polygon
@@ -29,7 +30,7 @@ export const StoneMove = {
   ),
   actionWhenActive: {
     onClick: () => {},
-    text: 'Move one stone somewhere else',
+    text: 'Move a stone',
     showDie: false,
     clickable: false,
   },

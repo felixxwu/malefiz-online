@@ -8,6 +8,7 @@ import { PositionSwap } from './PositionSwap'
 
 export type Item = {
   name: string
+  description: string
   colour: string
   icon: () => JSX.Element
   actionWhenActive: { onClick: () => void; text: string; showDie: boolean; clickable: boolean }

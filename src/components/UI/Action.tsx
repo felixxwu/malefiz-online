@@ -1,115 +1,75 @@
 import { styled } from 'goober'
 import { colours } from '../../config/colours'
-import { gameOver, gameState, lastDieRoll } from '../../signals/signals'
+import { gameOver, gameState } from '../../signals/signals'
 import { updateGame } from '../../dbactions/updateGame'
 import { players } from '../../utils/players'
 import { rollDie } from '../../dbactions/rollDie'
-import { getMyPlayer, getMyPlayerId } from '../../utils/getUsers'
-import { getLegalMoves } from '../../utils/legalMoves'
-import { getCircleFromPiece } from '../../utils/getCircleFromPiece'
 import { RandomDie } from './RandomDie'
 import { getActiveItem } from '../../utils/getActiveItem'
+import { getAction } from '../../utils/getAction'
 
 export function Action() {
   if (gameOver.value) return null
   if (!gameState.value) return null
 
-  const myTurn = gameState.value.playerTurn === getMyPlayerId()
-  const stoneInPit = gameState.value.stones.find(stone => stone.circleId === null)
-  const gameNotStarted = gameState.value.playerTurn === null
-  const dieNotRolled = gameState.value.dieRoll === null
   const playerWhoIsPlaying = gameState.value.players.find(
     player => player.id === gameState.value!.playerTurn
   )
   const activeItem = getActiveItem()
 
-  // if (waitingForServer.value)
-  //   return (
-  //     <Div>
-  //       <WaitingForServer />
-  //     </Div>
-  //   )
+  const action = getAction()
 
-  if (myTurn && activeItem) {
-    return (
+  return {
+    itemaction: () => (
       <>
-        {activeItem.actionWhenActive.showDie && <RandomDie />}
+        {activeItem!.actionWhenActive.showDie && <RandomDie />}
         <Div
-          onClick={activeItem.actionWhenActive.onClick}
-          {...(activeItem.actionWhenActive.clickable ? { className: 'clickable' } : {})}
+          onClick={activeItem!.actionWhenActive.onClick}
+          {...(activeItem!.actionWhenActive.clickable ? { className: 'clickable' } : {})}
         >
-          {activeItem.actionWhenActive.text}
+          {activeItem!.actionWhenActive.text}
         </Div>
       </>
-    )
-  }
-
-  if (!myTurn && activeItem && playerWhoIsPlaying) {
-    return (
+    ),
+    pickedupmessage: () => (
       <Div>
-        {playerWhoIsPlaying.name} picked up {activeItem.name}
+        {playerWhoIsPlaying!.name} picked up {activeItem!.name}
       </Div>
-    )
-  }
-
-  if (getMyPlayerId() && gameNotStarted) {
-    return (
+    ),
+    startgame: () => (
       <Div onClick={() => updateGame({ playerTurn: players[0].id })} className='clickable'>
         Start game
       </Div>
-    )
-  }
-
-  if (stoneInPit && myTurn) {
-    return <Div>Place stone</Div>
-  }
-
-  if (myTurn && dieNotRolled && lastDieRoll.value === 6) {
-    return (
+    ),
+    placestone: () => <Div>Place stone</Div>,
+    rollagain: () => (
       <>
         <RandomDie />
         <Div onClick={rollDie} className='clickable'>
           Roll again
         </Div>
       </>
-    )
-  }
-
-  if (myTurn && dieNotRolled) {
-    return (
+    ),
+    roll: () => (
       <>
         <RandomDie />
         <Div onClick={rollDie} className='clickable'>
           Roll
         </Div>
       </>
-    )
-  }
-
-  if (myTurn && gameState.value && !dieNotRolled) {
-    const myPieces = getMyPlayer()!.positions
-    const myLegalMoves = myPieces
-      .map(position => getLegalMoves(getCircleFromPiece(position.pieceId)!.id))
-      .reduce((acc, val) => acc.concat(val), [])
-    if (myLegalMoves.length > 0) {
-      return <Div>Your turn</Div>
-    } else {
-      return (
-        <>
-          <RandomDie />
-          <Div onClick={rollDie} className='clickable'>
-            Roll again (no legal moves)
-          </Div>
-        </>
-      )
-    }
-  }
-
-  if (!myTurn && gameState.value && playerWhoIsPlaying) {
-    return <Div>{playerWhoIsPlaying.name}'s turn</Div>
-  }
-
-  return null
+    ),
+    yourturn: () => <Div>Your turn</Div>,
+    rollagainnolegal: () => (
+      <>
+        <RandomDie />
+        <Div onClick={rollDie} className='clickable'>
+          Roll again (no legal moves)
+        </Div>
+      </>
+    ),
+    playerturn: () => <Div>{playerWhoIsPlaying!.name}'s turn</Div>,
+    none: () => null,
+  }[action]()
 }
 
 const Div = styled('div')`

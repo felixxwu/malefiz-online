@@ -4,7 +4,7 @@ import { consts } from '../../config/consts'
 import { arcadeItemSelection, pickArcadeItems } from '../../signals/signals'
 import { objectToArray } from '../../utils/objectToArray'
 import { itemDefs } from '../../items'
-import { polygonToXY } from '../../utils/polygonToXY'
+import { ItemSvg } from '../MapRenderer/ItemGroup/ItemSvg'
 
 export function ItemPicker() {
   return (
@@ -40,21 +40,7 @@ export function ItemPicker() {
             <Row onClick={handleClick}>
               <Name>
                 <Svg>
-                  <polygon
-                    style={{
-                      willChange: 'transform',
-                      transition: '300ms',
-                      fill: value.colour,
-                      stroke: 'black',
-                      strokeWidth: '2',
-                      strokeLinejoin: 'round',
-                    }}
-                    points={[0, 1, 2, 3, 4]
-                      .map(i => polygonToXY(i, 5, 20))
-                      .map(({ x, y }) => `${x},${y}`)
-                      .join(' ')}
-                  />
-                  <value.icon />
+                  <ItemSvg colour={value.colour} Icon={value.icon} />
                 </Svg>
                 {key}
               </Name>

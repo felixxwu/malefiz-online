@@ -1,10 +1,10 @@
 import { styled } from 'goober'
 import { ItemName, itemDefs } from '../../../items'
-import { gameState, gameStateHashTable, textOpacity } from '../../../signals/signals'
+import { gameState, gameStateHashTable } from '../../../signals/signals'
 import { objectToArray } from '../../../utils/objectToArray'
-import { polygonToXY } from '../../../utils/polygonToXY'
 import { JSX } from 'preact/jsx-runtime'
 import { seededRandom } from '../../../utils/seededRandom'
+import { ItemSvg } from './ItemSvg'
 
 export function ItemGroup() {
   if (!gameState.value) return null
@@ -47,23 +47,7 @@ export function ItemGroup() {
               animationDelay: `${seededRandom(item.itemId) * -3}s`,
             }}
           >
-            <polygon
-              id={'item' + item.itemId}
-              key={item.itemId}
-              style={{
-                filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.3))',
-                willChange: 'transform',
-                transition: '300ms',
-                fill: item.colour,
-                opacity: textOpacity.value,
-                strokeLinejoin: 'round',
-              }}
-              points={[0, 1, 2, 3, 4]
-                .map(i => polygonToXY(i, 5, 20))
-                .map(({ x, y }) => `${x},${y}`)
-                .join(' ')}
-            />
-            <item.icon />
+            <ItemSvg colour={item.colour} Icon={item.icon} />
           </AnimationGroup>
         </g>
       ))}

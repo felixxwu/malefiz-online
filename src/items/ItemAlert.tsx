@@ -1,27 +1,13 @@
 import { styled } from 'goober'
 import { Item } from '.'
 import { ComponentChildren } from 'preact'
-import { polygonToXY } from '../utils/polygonToXY'
+import { ItemSvg } from '../components/MapRenderer/ItemGroup/ItemSvg'
 
 export function ItemAlert(props: { item: Item; children?: ComponentChildren }) {
   return (
     <Div>
       <Svg>
-        <polygon
-          style={{
-            willChange: 'transform',
-            transition: '300ms',
-            fill: props.item.colour,
-            stroke: 'black',
-            strokeWidth: '2',
-            strokeLinejoin: 'round',
-          }}
-          points={[0, 1, 2, 3, 4]
-            .map(i => polygonToXY(i, 5, 20))
-            .map(({ x, y }) => `${x},${y}`)
-            .join(' ')}
-        />
-        <props.item.icon />
+        <ItemSvg colour={props.item.colour} Icon={props.item.icon} />
       </Svg>
       <H1>{props.item.name}</H1>
       {props.children}

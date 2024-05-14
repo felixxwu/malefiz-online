@@ -15,6 +15,7 @@ import { useEffect, useState } from 'preact/hooks'
 
 export const PositionSwap = {
   name: 'Position Swap',
+  description: 'Swap places with a random opponent',
   colour: 'hsl(100, 70%, 60%)',
   icon: () => (
     <path

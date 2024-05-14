@@ -1,15 +1,8 @@
-import {
-  gameState,
-  map,
-  menuOpen,
-  svgTransition,
-  svgTranslation,
-  svgZoom,
-} from '../../../signals/signals'
+import { map, menuOpen, svgTransition, svgTranslation, svgZoom } from '../../../signals/signals'
 import { fitToScreen } from '../../../utils/fitToScreen'
-import { isMyTurn } from '../../../utils/playerTurns'
 import { rollDie } from '../../../dbactions/rollDie'
 import { zoomIn, zoomOut } from '../../../utils/zoom'
+import { getAction } from '../../../utils/getAction'
 
 export function handleKeydown(event: KeyboardEvent) {
   if (event.key === 'Escape') {
@@ -52,7 +45,11 @@ export function handleKeydown(event: KeyboardEvent) {
   if (event.key === 'f') {
     fitToScreen(map.value, {})
   }
-  if (event.key === 'r' && gameState.value?.dieRoll === null && isMyTurn()) {
+  if (
+    (event.key === 'r' && getAction() === 'roll') ||
+    getAction() === 'rollagain' ||
+    getAction() === 'rollagainnolegal'
+  ) {
     rollDie()
   }
 }
