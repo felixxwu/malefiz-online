@@ -30,12 +30,10 @@ export function StartCircles() {
           x: circle.position.x - neightbourPos.x,
           y: circle.position.y - neightbourPos.y,
         }
-        console.log(`posDiff`, posDiff)
         const joinButtonPos = {
           x: (circle.position.x + posDiff.x) * 100,
           y: (circle.position.y + posDiff.y) * 100,
         }
-        console.log(`joinButtonPos`, joinButtonPos)
 
         return (
           <>
