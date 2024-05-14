@@ -10,6 +10,7 @@ import { ItemAlert } from './ItemAlert'
 import { PlayerModelGroup } from '../components/MapRenderer/PlayerGroup'
 import { consts } from '../config/consts'
 import { players } from '../utils/players'
+import { currentPlayer } from '../utils/currentPlayer'
 
 export const PositionSwap = {
   name: 'Position Swap',
@@ -36,9 +37,9 @@ export const PositionSwap = {
     </ItemAlert>
   ),
   onPickup: async (_, circleId) => {
-    await sleep(1000)
+    await sleep(500)
 
-    const opponents = gameState.value!.players.filter(player => player.id !== getMyPlayerId())
+    const opponents = gameState.value!.players.filter(player => player.id !== currentPlayer().id)
     const validPieces: { circleId: string; playerId: string }[] = []
     for (const opponent of opponents) {
       for (const position of opponent.positions) {
