@@ -2,55 +2,42 @@ import { styled } from 'goober'
 import { colours } from '../../../config/colours'
 import { consts } from '../../../config/consts'
 import { leaveGame } from '../../../dbactions/leaveGame'
-import qrcode from 'qrcode-generator'
-import { customiseInMenu } from '../../../signals/signals'
-import { PlayerCustomisation } from '../../SVG/PlayerCustomisation'
+import { customisationOpened } from '../../../signals/signals'
+import { InvitePlayers } from './InvitePlayers'
+import { CustomiseAppearance } from './CustomiseAppearance'
+import { useState } from 'preact/hooks'
+
+type Page = 'main' | 'customise' | 'invite'
 
 export function MenuContent() {
-  const qr = qrcode(0, 'L')
-  qr.addData(window.location.href)
-  qr.make()
-  const svgString = qr.createSvgTag({ cellSize: 2, margin: 0, scalable: true })
+  const [page, setPage] = useState<Page>('main')
 
   async function handleLeaveGame() {
     await leaveGame()
     window.location.href = '/'
   }
 
-  function handleCustomise(e: MouseEvent) {
-    e.stopPropagation()
-    customiseInMenu.value = true
-  }
+  function createPageHandler(page: Page) {
+    return (e: MouseEvent) => {
+      if (page === 'customise') customisationOpened.value = true
 
-  function handleInvite(e: MouseEvent) {
-    e.stopPropagation()
-    customiseInMenu.value = false
+      e.stopPropagation()
+      setPage(page)
+    }
   }
 
   return (
     <Div>
-      {customiseInMenu.value ? (
+      {page === 'main' && (
         <>
-          <Customise onClick={(e: MouseEvent) => e.stopPropagation()}>
-            <svg style={{ overflow: 'visible', width: '100%' }}>
-              <g style={{ transform: 'scale(1.8) translate(40px, 40px)' }}>
-                <PlayerCustomisation />
-              </g>
-            </svg>
-          </Customise>
-          <Button onClick={handleInvite}>Invite players</Button>
-        </>
-      ) : (
-        <>
-          <Share>
-            Invite players:
-            <QRCode dangerouslySetInnerHTML={{ __html: svgString }}></QRCode>
-            <Link href={window.location.href}>{window.location.href}</Link>
-          </Share>
-          <Button onClick={handleCustomise}>Customise appearance</Button>
+          <Button onClick={createPageHandler('invite')}>Invite players</Button>
+          <Button onClick={createPageHandler('customise')}>Customise appearance</Button>
+          <Button onClick={handleLeaveGame}>Leave game</Button>
         </>
       )}
-      <Button onClick={handleLeaveGame}>Leave game</Button>
+      {page === 'customise' && <CustomiseAppearance />}
+      {page === 'invite' && <InvitePlayers />}
+      {page !== 'main' && <Button onClick={createPageHandler('main')}>Back</Button>}
     </Div>
   )
 }
@@ -61,44 +48,7 @@ const Div = styled('div')`
   gap: 20px;
   flex-direction: column;
   width: 100%;
-  max-width: 300px;
-`
-
-const Customise = styled('div')`
-  background-color: ${colours.background};
-  border-radius: ${consts.borderRadius};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
-`
-
-const Share = styled('div')`
-  background-color: ${colours.background};
-  padding: 20px;
-  border-radius: ${consts.borderRadius};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 10px;
-  color: black;
-`
-
-const QRCode = styled('div')`
-  width: 200px;
-
-  & rect {
-    fill: ${colours.background};
-  }
-`
-
-const Link = styled('a')`
-  color: black;
-  text-decoration: underline;
-  cursor: pointer;
-  text-align: center;
-  word-break: break-all;
+  max-width: 350px;
 `
 
 const Button = styled('div')`

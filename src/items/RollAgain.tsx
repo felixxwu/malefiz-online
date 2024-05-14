@@ -1,6 +1,6 @@
 import { rollDie } from '../dbactions/rollDie'
 import { getDeactivatedItems } from '../utils/getDeactivatedItems'
-import { Item } from './'
+import { Item } from '.'
 import { ItemAlert } from './ItemAlert'
 
 function Dot({ x, y }: { x: number; y: number }) {
@@ -16,7 +16,7 @@ function Dot({ x, y }: { x: number; y: number }) {
 }
 
 export const DoubleDice = {
-  name: 'Extra Roll',
+  name: 'Roll Again',
   colour: 'hsl(60, 70%, 50%)',
   icon: () => (
     <g style={{ transform: 'translateY(1px)' }}>

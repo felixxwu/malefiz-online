@@ -55,4 +55,4 @@ export const playerModel = storedSignal<PlayerModel>('playerModel', {
   head: Math.floor(Math.random() * headList.length),
 })
 playerModel.subscribe(updatePlayerModelMidGame)
-export const customiseInMenu = storedSignal('customiseInMenu', false)
+export const customisationOpened = storedSignal('customisationOpened', false)

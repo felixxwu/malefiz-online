@@ -17,7 +17,7 @@ function Dot({ x, y }: { x: number; y: number }) {
 
 export const LowRoller = {
   name: 'Low Roller',
-  colour: 'hsl(230, 70%, 75%)',
+  colour: 'hsl(190, 70%, 75%)',
   icon: () => (
     <g style={{ transform: 'translateY(1px)' }}>
       <rect

@@ -1,5 +1,5 @@
 import { styled } from 'goober'
-import { gameState, menuOpen } from '../../../signals/signals'
+import { customisationOpened, gameState, menuOpen } from '../../../signals/signals'
 import { MenuIcon } from '../../Icons'
 import { colours } from '../../../config/colours'
 import { gameId } from '../../../utils/gameId'
@@ -38,7 +38,10 @@ export function Menu() {
         <MenuContent />
       ) : (
         <OpenButton onClick={openMenu}>
-          {showInviteHint && <InviteHint>Invite players here</InviteHint>}
+          {showInviteHint && <InviteHint>Invite players</InviteHint>}
+          {!showInviteHint && !customisationOpened.value && (
+            <InviteHint>Customise appearance</InviteHint>
+          )}
           <MenuIcon size={12} />
         </OpenButton>
       )}

@@ -1,7 +1,7 @@
 import { JSX } from 'preact/jsx-runtime'
 import { arcadeItemSelection } from '../signals/signals'
 import { objectMap } from '../utils/objectMap'
-import { DoubleDice } from './DoubleDice'
+import { DoubleDice } from './RollAgain'
 import { StoneMove } from './StoneMove'
 import { LowRoller } from './LowRoller'
 import { PositionSwap } from './PositionSwap'
