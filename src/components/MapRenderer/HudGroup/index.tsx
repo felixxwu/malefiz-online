@@ -47,7 +47,11 @@ export function HudGroup() {
       <>
         {myLegalMoves.map(legalMoves => legalMoves.map(legalMove => <MoveLine move={legalMove} />))}
         {myPieces.map(position => {
-          return <PieceIndicator pieceId={position.pieceId} />
+          if (allCircles.find(circle => circle.id === position.circleId)) {
+            return <PieceIndicator pieceId={position.pieceId} />
+          } else {
+            return null
+          }
         })}
       </>
     )
@@ -62,6 +66,7 @@ export function HudGroup() {
           <>
             <MoveLine move={legalMove} />
             <MoveDestination circle={legalMove.to} />
+            <CircleIndicator x={legalMove.to.position.x} y={legalMove.to.position.y} />
           </>
         ))}
       </>
