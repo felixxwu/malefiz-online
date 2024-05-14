@@ -6,15 +6,20 @@ export function PieceIndicator(props: { pieceId: string }) {
   if (!props.pieceId) return null
 
   const circle = getCircleFromPiece(props.pieceId)
-  const { x, y } = { x: circle!.position.x * 100, y: circle!.position.y * 100 - 50 }
+
+  return <CircleIndicator x={circle!.position.x} y={circle!.position.y} />
+}
+
+export function CircleIndicator(props: { x: number; y: number }) {
+  const { x, y } = { x: props.x * 100, y: props.y * 100 - 50 }
 
   return (
     <Polygon
-      points={`${x - 15},${y} ${x + 15},${y} ${x},${y + 30}`}
+      points={`${x - 10},${y} ${x + 10},${y} ${x},${y + 20}`}
       style={{
         fill: colours.background,
         stroke: 'black',
-        strokeWidth: '5px',
+        strokeWidth: '4px',
         strokeLinejoin: 'round',
       }}
     />

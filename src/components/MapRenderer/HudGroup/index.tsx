@@ -1,8 +1,14 @@
 import { isMyTurn } from '../../../utils/playerTurns'
-import { gameState, pieceSelected, waitingForServer } from '../../../signals/signals'
+import {
+  customCircleHighlights,
+  gameState,
+  gameStateHashTable,
+  pieceSelected,
+  waitingForServer,
+} from '../../../signals/signals'
 import { getCircleFromPiece } from '../../../utils/getCircleFromPiece'
 import { getLegalMoves, getLegalStonePlacements } from '../../../utils/legalMoves'
-import { PieceIndicator } from './PieceIndicator'
+import { CircleIndicator, PieceIndicator } from './PieceIndicator'
 import { MoveLine } from './MoveLine'
 import { getMyPlayer } from '../../../utils/getUsers'
 import { MoveDestination } from './MoveDestination'
@@ -10,6 +16,17 @@ import { StonePlacement } from './StonePlacement'
 
 export function HudGroup() {
   if (!isMyTurn() || waitingForServer.value) return null
+
+  if (customCircleHighlights.value.length > 0) {
+    return (
+      <>
+        {customCircleHighlights.value.map(circleId => {
+          const { x, y } = gameStateHashTable.value[circleId].circle?.position!
+          return <CircleIndicator x={x} y={y} />
+        })}
+      </>
+    )
+  }
 
   if (pieceSelected.value === null && gameState.value!.dieRoll !== null) {
     const myPieces = getMyPlayer()!.positions

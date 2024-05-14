@@ -19,7 +19,7 @@ D       S
     -       -
 S-O-O-O-S-O-O-O-S
 -       -       -
-X       X       X
+O       O       O
 -       -       -
 X-X-X-X-X-X-X-X-X
     -       -

@@ -3,6 +3,7 @@ import { gameState } from '../../../signals/signals'
 import { ItemName, itemDefs } from '../../../items'
 import { takePieceAlert } from '../../../dbactions/takePiece'
 import { useEffect, useState } from 'preact/hooks'
+import { isMyTurn } from '../../../utils/playerTurns'
 
 const alerts = { takePieceAlert }
 
@@ -26,6 +27,8 @@ export function Alerts() {
   const ItemComponent = itemDefs[gameState.value?.alert as ItemName]?.alert ?? null
   const OtherComponent = alerts[gameState.value.alert as keyof typeof alerts] ?? null
   const Component = ItemComponent ?? OtherComponent
+
+  if (ItemComponent !== null && OtherComponent === null && !isMyTurn()) return null
 
   return (
     <Div

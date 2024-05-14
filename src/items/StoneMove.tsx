@@ -1,7 +1,7 @@
 import { Item } from '.'
 import { placeStone } from '../dbactions/placeStone'
 import { updateGame } from '../dbactions/updateGame'
-import { gameState, gameStateHashTable } from '../signals/signals'
+import { customCircleHighlights, gameState, gameStateHashTable } from '../signals/signals'
 import { AI1 } from '../utils/ai'
 import { getLegalStonePlacements } from '../utils/legalMoves'
 import { polygonToXY } from '../utils/polygonToXY'
@@ -30,14 +30,14 @@ export const StoneMove = {
     showDie: false,
     clickable: false,
   },
-  onCircleClickWhenActive: (circleId: string) => {
+  onCircleClickWhenActive: async (circleId: string) => {
     if (gameState.value!.stones.find(stone => stone.circleId === null)) {
       placeStone(circleId)
       return
     }
 
     if (gameStateHashTable.value![circleId].stone) {
-      updateGame({
+      await updateGame({
         stones: gameState.value!.stones.map(stone => {
           if (stone.circleId === circleId) {
             return {
@@ -49,9 +49,13 @@ export const StoneMove = {
           }
         }),
       })
+
+      customCircleHighlights.value = []
     }
   },
-  onPickup: () => {},
+  onPickup: () => {
+    customCircleHighlights.value = gameState.value!.stones.map(stone => stone.circleId!)
+  },
   alert: () => <ItemAction title='Stone Move: Move one stone somewhere else' />,
   aiAction: () => {
     if (gameState.value!.stones.some(stone => stone.circleId === null)) {

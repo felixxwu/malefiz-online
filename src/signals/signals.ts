@@ -25,6 +25,7 @@ export const svgZoom = signal(1)
 export const svgTranslation = signal({ x: -1000, y: 0 })
 export const svgTransition = signal(0)
 export const textOpacity = signal(0)
+export const customCircleHighlights = signal<string[]>([])
 
 export const gameState = signal<GameState | null>(null)
 gameState.subscribe(onGameStateChange)
