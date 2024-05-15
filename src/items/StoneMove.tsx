@@ -9,24 +9,16 @@ import { polygonToXY } from '../utils/polygonToXY'
 import { ItemAlert } from './ItemAlert'
 import { consts } from '../config/consts'
 import { isMyTurn } from '../utils/playerTurns'
+import { Stone } from '../components/MapRenderer/StoneGroup/Stone'
 
 export const StoneMove = {
   name: 'Stone Move',
   description: 'Move a stone anywhere on the board.',
   colour: 'hsl(0, 0%, 85%)',
   icon: () => (
-    <polygon
-      style={{
-        stroke: 'black',
-        strokeWidth: '3',
-        fill: 'white',
-        strokeLinejoin: 'round',
-      }}
-      points={[0, 1, 2, 3, 4, 5, 6, 7]
-        .map(i => polygonToXY(i, 8, 10))
-        .map(({ x, y }) => `${x},${y}`)
-        .join(' ')}
-    />
+    <g style={{ transform: 'scale(0.4)' }}>
+      <Stone />
+    </g>
   ),
   actionWhenActive: {
     onClick: () => {},

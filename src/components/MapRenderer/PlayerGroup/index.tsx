@@ -61,14 +61,7 @@ export function PlayerGroup() {
         const model =
           userForPlayer?.playerModel ?? players.find(p => p.id === piece.playerID)?.model!
         return (
-          <PlayerModelGroup
-            key={piece.pieceID}
-            id={piece.pieceID}
-            colour={piece.colour}
-            x={x}
-            y={y}
-            model={model}
-          />
+          <PlayerModelGroup key={piece.pieceID} colour={piece.colour} x={x} y={y} model={model} />
         )
       })}
     </Group>
@@ -76,10 +69,9 @@ export function PlayerGroup() {
 }
 
 export function PlayerModelGroup(props: {
-  id: string
   colour: string
-  x: number
-  y: number
+  x?: number
+  y?: number
   model: PlayerModel
 }) {
   const Eyes = eyesList[props.model.eyes]
@@ -88,7 +80,7 @@ export function PlayerModelGroup(props: {
   return (
     <g
       style={{
-        transform: `translate(${props.x * 100}px, ${props.y * 100}px)`,
+        transform: `translate(${(props.x ?? 0) * 100}px, ${(props.y ?? 0) * 100}px)`,
         transition: '300ms',
         filter: 'drop-shadow(0 0 3px rgba(0, 0, 0, 0.3))',
         willChange: 'transform',

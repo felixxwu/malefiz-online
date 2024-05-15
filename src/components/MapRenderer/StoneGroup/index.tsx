@@ -1,7 +1,7 @@
 import { styled } from 'goober'
 import { gameState, textOpacity } from '../../../signals/signals'
 import { mapList } from '../../../maps/mapList'
-import { polygonToXY } from '../../../utils/polygonToXY'
+import { Stone } from './Stone'
 
 export function StoneGroup() {
   const stones = gameState.value?.stones
@@ -20,24 +20,16 @@ export function StoneGroup() {
   return (
     <Group>
       {stonesWithPositions.map(stone => (
-        <polygon
+        <g
           id={'stone' + stone.id}
           style={{
             transform: `translate(${stone.x * 100}px, ${stone.y * 100}px)`,
-            stroke: 'black',
-            strokeWidth: '5',
-            filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.3))',
             willChange: 'transform',
-            transition: '300ms',
-            fill: 'white',
             opacity: textOpacity.value,
-            strokeLinejoin: 'round',
           }}
-          points={[0, 1, 2, 3, 4, 5, 6, 7]
-            .map(i => polygonToXY(i, 8, 25))
-            .map(({ x, y }) => `${x},${y}`)
-            .join(' ')}
-        />
+        >
+          <Stone />
+        </g>
       ))}
     </Group>
   )

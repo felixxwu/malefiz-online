@@ -38,7 +38,7 @@ export function PlayerCustomisation() {
 
   return (
     <>
-      <PlayerModelGroup x={0} y={0} id='1' colour={colour} model={playerModel.value} />
+      <PlayerModelGroup colour={colour} model={playerModel.value} />
       <g style={{ transform: `scale(0.4) translate(120px, 0px)` }}>
         <g style={{ transform: `translate(0px, -80px)` }}>
           <IconButton icon={ChevronLeftPath} onClick={() => changeModel(headList, 'head', -1)} />

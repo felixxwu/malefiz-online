@@ -73,22 +73,10 @@ export function takePieceAlert() {
       <Svg>
         <circle cx='0' cy='0' r={consts.circleRadius} fill='black' />
         <VictimGroup>
-          <PlayerModelGroup
-            x={0}
-            y={0}
-            id='1'
-            colour={gameStateLastKill.victim.colour}
-            model={victimModel}
-          />
+          <PlayerModelGroup colour={gameStateLastKill.victim.colour} model={victimModel} />
         </VictimGroup>
         <KillerGroup>
-          <PlayerModelGroup
-            x={0}
-            y={0}
-            id='2'
-            colour={gameStateLastKill.killer.colour}
-            model={killerModel}
-          />
+          <PlayerModelGroup colour={gameStateLastKill.killer.colour} model={killerModel} />
         </KillerGroup>
       </Svg>
     </div>
@@ -102,6 +90,7 @@ const Svg = styled('svg')`
   transform: scale(2);
 `
 
+// TODO: use goober keyframes
 const KillerGroup = styled('g')`
   animation: jumpIn 2s cubic-bezier(1, 0, 0.8, -0.5);
   animation-fill-mode: forwards;

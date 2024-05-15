@@ -124,16 +124,10 @@ function SwapGraphic() {
         style={{ strokeWidth: consts.pathStrokeWidth }}
       />
       <PlayerA>
-        <PlayerModelGroup x={0} y={0} id='1' colour={playerAColour!} model={myModel} />
+        <PlayerModelGroup colour={playerAColour!} model={myModel} />
       </PlayerA>
       <PlayerB>
-        <PlayerModelGroup
-          x={0}
-          y={0}
-          id='1'
-          colour={randomPlayer.colour}
-          model={randomPlayer.model}
-        />
+        <PlayerModelGroup colour={randomPlayer.colour} model={randomPlayer.model} />
       </PlayerB>
     </Svg>
   )
