@@ -1,3 +1,4 @@
+import { consts } from '../config/consts'
 import { updateGame } from '../dbactions/updateGame'
 import { gameState, gameStateHashTable } from '../signals/signals'
 import { objectMap } from './objectMap'
@@ -13,7 +14,7 @@ window.addManyItems = async () => {
 export function getNewItems(excludeCircleIds: string[]) {
   const gameStateItems = gameState.value!.items
 
-  const addNewItem = Math.random() < 1 / 3
+  const addNewItem = Math.random() < 1 / consts.itemInterval
   if (!addNewItem) {
     return objectMap(gameStateItems, item => ({
       ...item,

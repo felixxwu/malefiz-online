@@ -2,11 +2,12 @@ import { Event } from '.'
 import { updateGame } from '../dbactions/updateGame'
 import { gameState } from '../signals/signals'
 import { getLegalStonePlacements } from '../utils/legalMoves'
+import { EventAlert } from './EventAlert'
 
 export const Earthquake = {
   name: 'Earthquake',
   description: 'Causes 3 stones to move randomly on the board.',
-  alert: () => <div>earthquake</div>,
+  alert: () => <EventAlert event={Earthquake} />,
   onActivate: () => {
     if (!gameState.value) return
 
@@ -29,8 +30,3 @@ export const Earthquake = {
     updateGame(gameState.value)
   },
 } as const satisfies Event
-
-//@ts-ignore
-window.test = () => {
-  Earthquake.onActivate()
-}

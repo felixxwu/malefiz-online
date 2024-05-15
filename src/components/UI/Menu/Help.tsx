@@ -9,7 +9,7 @@ import { events } from '../../../events'
 export function Help() {
   return (
     <Div>
-      <b>RULES</b>
+      <h2>RULES</h2>
       <div>
         <b>Objective</b>
         <div>The first to land a piece on the finish wins.</div>
@@ -43,12 +43,10 @@ export function Help() {
         </div>
       </div>
 
+      <h2>ITEMS (ARCADE MODE)</h2>
       <div>
-        <b>Items (Arcade mode)</b>
-        <div>
-          Landing on an item will give you a random power-up which is used immediately. Use them to
-          your advantage!
-        </div>
+        Landing on an item will give you a random power-up which is used immediately. A new item
+        appears randomly on the board once every {consts.itemInterval} turns on average.
       </div>
       <Table>
         {objectToArray(itemDefs).map(({ value }) => (
@@ -67,10 +65,8 @@ export function Help() {
         ))}
       </Table>
 
-      <div>
-        <b>Events (Arcade mode)</b>
-        <div>A random event happens once every {consts.eventInterval} turns.</div>
-      </div>
+      <h2>EVENTS (ARCADE MODE)</h2>
+      <div>A random event happens once every {consts.eventInterval} turns.</div>
       {events.map(event => (
         <div>
           <b>{event.name}</b>
@@ -78,7 +74,7 @@ export function Help() {
         </div>
       ))}
 
-      <b>KEYBOARD SHORTCUTS</b>
+      <h2>KEYBOARD SHORTCUTS</h2>
       <Table>
         {keyboardShortcuts.map(([key, description]) => (
           <tr>

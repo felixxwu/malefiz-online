@@ -1,11 +1,12 @@
 import { Event } from '.'
 import { updateGame } from '../dbactions/updateGame'
 import { gameState, gameStateHashTable, map } from '../signals/signals'
+import { EventAlert } from './EventAlert'
 
 export const AcidRain = {
   name: 'Acid Rain',
   description: 'Send one piece back to the start for each player.',
-  alert: () => <div>acid rain</div>,
+  alert: () => <EventAlert event={AcidRain} />,
   onActivate: async () => {
     const pieces = gameState.value!.players.map(player => {
       const eligiblePieces = player.positions.filter(
