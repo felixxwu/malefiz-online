@@ -58,7 +58,7 @@ function canAiPlay() {
   return false
 }
 
-function isUserHost() {
+export function isUserHost() {
   const users = getUsers()
   users.sort((a, b) => a.playerToControl.localeCompare(b.playerToControl))
   const humanPlayers = users.map(u =>

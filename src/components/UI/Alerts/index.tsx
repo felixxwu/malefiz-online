@@ -16,6 +16,9 @@ export function Alerts() {
       setTimeout(() => {
         setShowAlert(true)
       }, 500)
+      setTimeout(() => {
+        setShowAlert(false)
+      }, 2500)
     } else {
       setShowAlert(false)
     }

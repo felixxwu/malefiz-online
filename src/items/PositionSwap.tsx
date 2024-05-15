@@ -12,6 +12,7 @@ import { consts } from '../config/consts'
 import { players } from '../utils/players'
 import { currentPlayer } from '../utils/currentPlayer'
 import { useEffect, useState } from 'preact/hooks'
+import { isUserHost } from '../utils/playAiIfApplicable'
 
 export const PositionSwap = {
   name: 'Position Swap',
@@ -39,6 +40,7 @@ export const PositionSwap = {
     </ItemAlert>
   ),
   onPickup: async (_, circleId) => {
+    if (!isUserHost()) return
     await sleep(500)
 
     const opponents = gameState.value!.players.filter(player => player.id !== currentPlayer().id)

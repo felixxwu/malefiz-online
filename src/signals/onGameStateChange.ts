@@ -13,6 +13,7 @@ import { events } from '../events'
 import { sleep } from '../utils/sleep'
 import { updateGame } from '../dbactions/updateGame'
 import { ItemName, itemDefs } from '../items'
+import { isUserHost } from '../utils/playAiIfApplicable'
 
 export function onGameStateChange() {
   console.info(`gameState.value`, gameState.value)
@@ -68,9 +69,8 @@ async function activateItem() {
   const item = itemDefs[gameState.value!.alert?.id as ItemName]
   if (item) {
     const meta = gameState.value!.alert!.meta
-    await sleep(2500)
+    await sleep(2800)
     await updateGame({ alert: null })
-    await sleep(300)
     item.onPickup(meta.pieceId, meta.circleId)
   }
 }
@@ -78,10 +78,9 @@ async function activateItem() {
 async function activateEvent() {
   if (!gameState.value) return
   const event = events.find(event => event.name === gameState.value!.alert?.id)
-  if (event) {
+  if (event && isUserHost()) {
     await sleep(3000)
     await updateGame({ alert: null })
-    await sleep(700)
     event.onActivate()
   }
 }
