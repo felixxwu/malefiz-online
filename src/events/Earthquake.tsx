@@ -5,6 +5,7 @@ import { getLegalStonePlacements } from '../utils/legalMoves'
 
 export const Earthquake = {
   name: 'Earthquake',
+  description: 'Causes 3 stones to move randomly on the board.',
   alert: () => <div>earthquake</div>,
   onActivate: () => {
     if (!gameState.value) return

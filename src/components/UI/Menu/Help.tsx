@@ -4,6 +4,7 @@ import { consts } from '../../../config/consts'
 import { itemDefs } from '../../../items'
 import { objectToArray } from '../../../utils/objectToArray'
 import { ItemSvg } from '../../MapRenderer/ItemGroup/ItemSvg'
+import { events } from '../../../events'
 
 export function Help() {
   return (
@@ -60,6 +61,14 @@ export function Help() {
         ))}
       </Table>
 
+      <b>EVENTS (ARCADE MODE)</b>
+      {events.map(event => (
+        <div>
+          <b>{event.name}</b>
+          <div>{event.description}</div>
+        </div>
+      ))}
+
       <b>KEYBOARD SHORTCUTS</b>
       <Table>
         {keyboardShortcuts.map(([key, description]) => (
@@ -99,7 +108,7 @@ const Svg = styled('svg')`
   width: 50px;
   height: 1px;
   overflow: visible;
-  transform: translate(25px, -10px);
+  transform: translate(25px, -8px);
 `
 
 const keyboardShortcuts = [
@@ -110,6 +119,7 @@ const keyboardShortcuts = [
   ['R', 'Roll'],
   ['Q', 'Zoom out'],
   ['E', 'Zoom in'],
+  ['F', 'Fit to screen'],
   ['Scroll', 'Pan up/down'],
   ['Shift + Scroll', 'Pan left/right'],
   ['Ctrl + Scroll', 'Zoom in/out'],

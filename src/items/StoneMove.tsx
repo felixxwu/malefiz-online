@@ -12,7 +12,7 @@ import { isMyTurn } from '../utils/playerTurns'
 
 export const StoneMove = {
   name: 'Stone Move',
-  description: 'Move a stone to a place of your choice',
+  description: 'Move a stone anywhere on the board.',
   colour: 'hsl(0, 0%, 85%)',
   icon: () => (
     <polygon

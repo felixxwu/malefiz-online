@@ -4,6 +4,7 @@ import { gameState, gameStateHashTable, map } from '../signals/signals'
 
 export const AcidRain = {
   name: 'Acid Rain',
+  description: 'Send one piece back to the start for each player.',
   alert: () => <div>acid rain</div>,
   onActivate: async () => {
     const pieces = gameState.value!.players.map(player => {

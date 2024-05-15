@@ -49,8 +49,12 @@ const Div = styled('div')`
   display: flex;
   gap: 20px;
   flex-direction: column;
-  width: 100%;
-  max-width: 350px;
+  width: calc(100vw - 40px);
+  max-width: 450px;
+
+  & * {
+    touch-action: auto;
+  }
 `
 
 const Button = styled('div')`

@@ -17,7 +17,7 @@ function Dot({ x, y }: { x: number; y: number }) {
 
 export const LowRoller = {
   name: 'Low Roller',
-  description: 'Get another chance at rolling numbers 1 to 3',
+  description: 'Get another chance at rolling numbers 1 to 3.',
   colour: 'hsl(190, 70%, 75%)',
   icon: () => (
     <g style={{ transform: 'translateY(1px)' }}>
@@ -38,7 +38,7 @@ export const LowRoller = {
     onClick: async () => {
       updateGame({ dieRoll: Math.floor(Math.random() * 3) + 1, items: getDeactivatedItems() })
     },
-    text: 'Roll a low number! (1-3)',
+    text: 'Roll 1 to 3',
     showDie: true,
     clickable: true,
   },
