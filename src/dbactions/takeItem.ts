@@ -1,7 +1,6 @@
 import { consts } from '../config/consts'
 import { ItemName, itemDefs } from '../items'
 import { gameState } from '../signals/signals'
-import { displayAlert } from './displayAlert'
 import { updateGame } from './updateGame'
 
 export async function takeItem(itemName: ItemName, pieceId: string, circleId: string) {
@@ -31,10 +30,7 @@ export async function takeItem(itemName: ItemName, pieceId: string, circleId: st
         ),
       },
     },
+    alert: { id: itemDefs[itemName].name, meta: { pieceId, circleId } },
     dieRoll: null,
   })
-
-  await displayAlert({ id: itemDefs[itemName].name })
-
-  itemDefs[itemName].onPickup(pieceId, circleId)
 }

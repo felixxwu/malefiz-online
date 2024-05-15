@@ -12,6 +12,7 @@ import { leaveGame } from '../dbactions/leaveGame'
 import { events } from '../events'
 import { sleep } from '../utils/sleep'
 import { updateGame } from '../dbactions/updateGame'
+import { ItemName, itemDefs } from '../items'
 
 export function onGameStateChange() {
   console.info(`gameState.value`, gameState.value)
@@ -19,6 +20,7 @@ export function onGameStateChange() {
   resolveMultipleUsersPerPlayer()
   saveDieRoll()
   checkForGameOver()
+  activateItem()
   activateEvent()
 }
 
@@ -61,13 +63,25 @@ function checkForGameOver() {
   })
 }
 
+async function activateItem() {
+  if (!gameState.value) return
+  const item = itemDefs[gameState.value!.alert?.id as ItemName]
+  if (item) {
+    const meta = gameState.value!.alert!.meta
+    await sleep(2500)
+    await updateGame({ alert: null })
+    await sleep(300)
+    item.onPickup(meta.pieceId, meta.circleId)
+  }
+}
+
 async function activateEvent() {
   if (!gameState.value) return
   const event = events.find(event => event.name === gameState.value!.alert?.id)
   if (event) {
     await sleep(3000)
     await updateGame({ alert: null })
-    await sleep(300)
+    await sleep(700)
     event.onActivate()
   }
 }
