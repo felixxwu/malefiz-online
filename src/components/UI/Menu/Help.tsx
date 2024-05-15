@@ -43,7 +43,13 @@ export function Help() {
         </div>
       </div>
 
-      <b>ITEMS (ARCADE MODE)</b>
+      <div>
+        <b>Items (Arcade mode)</b>
+        <div>
+          Landing on an item will give you a random power-up which is used immediately. Use them to
+          your advantage!
+        </div>
+      </div>
       <Table>
         {objectToArray(itemDefs).map(({ value }) => (
           <tr>
@@ -61,7 +67,10 @@ export function Help() {
         ))}
       </Table>
 
-      <b>EVENTS (ARCADE MODE)</b>
+      <div>
+        <b>Events (Arcade mode)</b>
+        <div>A random event happens once every {consts.eventInterval} turns.</div>
+      </div>
       {events.map(event => (
         <div>
           <b>{event.name}</b>
