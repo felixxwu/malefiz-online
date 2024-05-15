@@ -2,17 +2,13 @@ import { styled } from 'goober'
 import { colours } from '../../../config/colours'
 import { consts } from '../../../config/consts'
 import { leaveGame } from '../../../dbactions/leaveGame'
-import { customisationOpened } from '../../../signals/signals'
+import { Page, customisationOpened, menuOpen, menuPage } from '../../../signals/signals'
 import { InvitePlayers } from './InvitePlayers'
 import { CustomiseAppearance } from './CustomiseAppearance'
-import { useState } from 'preact/hooks'
 import { Help } from './Help'
-
-type Page = 'main' | 'customise' | 'invite' | 'help'
+import { gameId } from '../../../utils/gameId'
 
 export function MenuContent() {
-  const [page, setPage] = useState<Page>('main')
-
   async function handleLeaveGame() {
     await leaveGame()
     window.location.href = '/'
@@ -21,14 +17,15 @@ export function MenuContent() {
   function createPageHandler(page: Page) {
     return () => {
       if (page === 'customise') customisationOpened.value = true
+      if (!gameId) menuOpen.value = false
 
-      setPage(page)
+      menuPage.value = page
     }
   }
 
   return (
     <Div onClick={(e: MouseEvent) => e.stopPropagation()}>
-      {page === 'main' && (
+      {menuPage.value === 'main' && (
         <>
           <Button onClick={createPageHandler('invite')}>Invite players</Button>
           <Button onClick={createPageHandler('customise')}>Customise appearance</Button>
@@ -36,10 +33,10 @@ export function MenuContent() {
           <Button onClick={handleLeaveGame}>Leave game</Button>
         </>
       )}
-      {page === 'customise' && <CustomiseAppearance />}
-      {page === 'invite' && <InvitePlayers />}
-      {page === 'help' && <Help />}
-      {page !== 'main' && <Button onClick={createPageHandler('main')}>Back</Button>}
+      {menuPage.value === 'customise' && <CustomiseAppearance />}
+      {menuPage.value === 'invite' && <InvitePlayers />}
+      {menuPage.value === 'help' && <Help />}
+      {menuPage.value !== 'main' && <Button onClick={createPageHandler('main')}>Back</Button>}
     </Div>
   )
 }

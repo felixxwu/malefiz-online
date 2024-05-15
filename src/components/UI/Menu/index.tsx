@@ -6,8 +6,6 @@ import { gameId } from '../../../utils/gameId'
 import { MenuContent } from './MenuContent'
 
 export function Menu() {
-  if (!gameId) return null
-
   function openMenu(e: MouseEvent) {
     menuOpen.value = true
     e.stopPropagation()
@@ -30,6 +28,17 @@ export function Menu() {
     return null
   })()
 
+  const content = (() => {
+    if (menuOpen.value) return <MenuContent />
+    if (gameId)
+      return (
+        <OpenButton onClick={openMenu}>
+          {text && <InviteHint>{text}</InviteHint>}
+          <MenuIcon size={12} />
+        </OpenButton>
+      )
+  })()
+
   return (
     <Div
       onClick={closeMenu}
@@ -44,14 +53,7 @@ export function Menu() {
             }
       }
     >
-      {menuOpen.value ? (
-        <MenuContent />
-      ) : (
-        <OpenButton onClick={openMenu}>
-          {text && <InviteHint>{text}</InviteHint>}
-          <MenuIcon size={12} />
-        </OpenButton>
-      )}
+      {content}
     </Div>
   )
 }

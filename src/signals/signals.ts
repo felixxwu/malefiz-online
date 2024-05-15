@@ -12,10 +12,13 @@ import { updatePlayerModelMidGame } from '../dbactions/updatePlayerModelMidGame'
 import { ItemName } from '../items'
 import { EventName } from '../events'
 
+export type Page = 'main' | 'customise' | 'invite' | 'help'
+
 export const screenWidth = signal(window.innerWidth)
 export const screenHeight = signal(window.innerHeight)
 
 export const menuOpen = signal(false)
+export const menuPage = signal<Page>('main')
 export const pickEmoji = signal(false)
 export const waitingForServer = signal(false)
 export const arcadeItemSelection = storedSignal<ItemName[]>('arcadeItemSelection', [])

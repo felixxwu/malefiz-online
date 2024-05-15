@@ -1,13 +1,25 @@
 import { styled } from 'goober'
 import { colours } from '../../config/colours'
 import { consts } from '../../config/consts'
-import { arcadeEventSelection, arcadeItemSelection, pickArcadeItems } from '../../signals/signals'
+import {
+  arcadeEventSelection,
+  arcadeItemSelection,
+  menuOpen,
+  menuPage,
+  pickArcadeItems,
+} from '../../signals/signals'
 import { objectToArray } from '../../utils/objectToArray'
 import { itemDefs } from '../../items'
 import { ItemSvg } from '../MapRenderer/ItemGroup/ItemSvg'
 import { events } from '../../events'
 
 export function ItemPicker() {
+  function openHelp() {
+    pickArcadeItems.value = false
+    menuOpen.value = true
+    menuPage.value = 'help'
+  }
+
   return (
     <Div
       onClick={() => (pickArcadeItems.value = false)}
@@ -97,6 +109,7 @@ export function ItemPicker() {
           )
         })}
       </Content>
+      <Button onClick={openHelp}>Help</Button>
     </Div>
   )
 }
@@ -108,9 +121,27 @@ const Div = styled('div')`
   width: 100vw;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 20px;
   transition: 0.2s;
+`
+
+const Button = styled('div')`
+  cursor: pointer;
+  padding: 10px;
+  border-radius: ${consts.borderRadius};
+  background-color: ${colours.background};
+  color: black;
+  text-align: center;
+  width: 300px;
+  height: 40px;
+  transition: 0.2s;
+
+  &:hover {
+    filter: invert();
+  }
 `
 
 const Content = styled('div')`
