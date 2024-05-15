@@ -2,6 +2,7 @@ import { styled } from 'goober'
 import { gameState, textOpacity } from '../../../signals/signals'
 import { mapList } from '../../../maps/mapList'
 import { Stone } from './Stone'
+import { consts } from '../../../config/consts'
 
 export function StoneGroup() {
   const stones = gameState.value?.stones
@@ -25,6 +26,7 @@ export function StoneGroup() {
           style={{
             transform: `translate(${stone.x * 100}px, ${stone.y * 100}px)`,
             willChange: 'transform',
+            transition: `500ms ${consts.customEase}`,
             opacity: textOpacity.value,
           }}
         >

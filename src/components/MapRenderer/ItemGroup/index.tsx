@@ -1,4 +1,4 @@
-import { styled } from 'goober'
+import { keyframes, styled } from 'goober'
 import { ItemName, itemDefs } from '../../../items'
 import { gameState, gameStateHashTable } from '../../../signals/signals'
 import { objectToArray } from '../../../utils/objectToArray'
@@ -55,20 +55,20 @@ export function ItemGroup() {
   )
 }
 
-const AnimationGroup = styled('g')`
-  animation: spin 3s infinite;
-
-  @keyframes spin {
-    0% {
-      transform: rotate(-10deg);
-    }
-    50% {
-      transform: rotate(10deg);
-    }
-    100% {
-      transform: rotate(-10deg);
-    }
+const spin = keyframes`
+  0% {
+    transform: rotate(-10deg);
   }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
+  }
+`
+
+const AnimationGroup = styled('g')`
+  animation: ${spin} 3s infinite;
 `
 
 const Group = styled('g')`

@@ -1,4 +1,4 @@
-import { styled } from 'goober'
+import { keyframes, styled } from 'goober'
 import { getCircleFromPiece } from '../../../utils/getCircleFromPiece'
 import { colours } from '../../../config/colours'
 
@@ -26,18 +26,18 @@ export function CircleIndicator(props: { x: number; y: number }) {
   )
 }
 
-const Polygon = styled('polygon')`
-  animation: upAndDown 1s infinite;
-
-  @keyframes upAndDown {
-    0% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-    100% {
-      transform: translateY(0px);
-    }
+const upAndDown = keyframes`
+  0% {
+    transform: translateY(0px);
   }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+`
+
+const Polygon = styled('polygon')`
+  animation: ${upAndDown} 1s infinite ease-in-out;
 `

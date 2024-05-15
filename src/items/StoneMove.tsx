@@ -1,11 +1,10 @@
-import { styled } from 'goober'
+import { keyframes, styled } from 'goober'
 import { Item } from '.'
 import { placeStone } from '../dbactions/placeStone'
 import { updateGame } from '../dbactions/updateGame'
 import { customCircleHighlights, gameState, gameStateHashTable } from '../signals/signals'
 import { AI1 } from '../utils/ai'
 import { getLegalStonePlacements } from '../utils/legalMoves'
-import { polygonToXY } from '../utils/polygonToXY'
 import { ItemAlert } from './ItemAlert'
 import { consts } from '../config/consts'
 import { isMyTurn } from '../utils/playerTurns'
@@ -98,19 +97,7 @@ function StoneMoveGraphic() {
         style={{ strokeWidth: consts.pathStrokeWidth }}
       />
       <StoneGroup>
-        <polygon
-          style={{
-            stroke: 'black',
-            strokeWidth: '5',
-            filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.3))',
-            fill: 'white',
-            strokeLinejoin: 'round',
-          }}
-          points={[0, 1, 2, 3, 4, 5, 6, 7]
-            .map(i => polygonToXY(i, 8, 25))
-            .map(({ x, y }) => `${x},${y}`)
-            .join(' ')}
-        />
+        <Stone />
       </StoneGroup>
     </Svg>
   )
@@ -123,19 +110,19 @@ const Svg = styled('svg')`
   transform: scale(1.5) translateY(50px);
 `
 
-const StoneGroup = styled('g')`
-  animation: stoneAlertMove 1s cubic-bezier(0.8, 0, 0.2, 1);
-  animation-fill-mode: forwards;
-
-  @keyframes stoneAlertMove {
-    0% {
-      transform: translate(-100px, 0px);
-    }
-    30% {
-      transform: translate(-100px, 0px);
-    }
-    100% {
-      transform: translate(100px, 0px);
-    }
+const stoneAlertMove = keyframes`
+  0% {
+    transform: translate(-100px, 0px);
   }
+  30% {
+    transform: translate(-100px, 0px);
+  }
+  100% {
+    transform: translate(100px, 0px);
+  }
+`
+
+const StoneGroup = styled('g')`
+  animation: ${stoneAlertMove} 1s ${consts.customEase};
+  animation-fill-mode: forwards;
 `

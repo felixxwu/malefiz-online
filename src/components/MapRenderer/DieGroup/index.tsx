@@ -1,7 +1,7 @@
 import { useState } from 'preact/hooks'
 import { gameState } from '../../../signals/signals'
 import { randomOffsetAndRotation } from './randomOffsetAndRotation'
-import { styled } from 'goober'
+import { keyframes, styled } from 'goober'
 import { Square } from './Square'
 import { Dot, dotLayouts } from './Dot'
 
@@ -36,29 +36,29 @@ export function DieGroup() {
   )
 }
 
-const Group = styled('g')`
-  animation: rollDie 1s cubic-bezier(0.22, 0.61, 0.36, 1);
-  will-change: 'translate', 'rotate', 'scale', 'opacity', 'filter', 'transform';
+const rollDie = keyframes`
+0% {
+  opacity: 0;
+  rotate: 360deg;
+  filter: blur(10px);
+  scale: 5;
+  translate: 500px 500px;
+}
+30% {
+  opacity: 1;
+  filter: blur(0px);
+  scale: 1;
+}
+100% {
+  opacity: 1;
+  rotate: 0deg;
+  filter: blur(0px);
+  scale: 1;
+  translate: 0 0;
+}
+  
+`
 
-  @keyframes rollDie {
-    0% {
-      opacity: 0;
-      rotate: 360deg;
-      filter: blur(10px);
-      scale: 5;
-      translate: 500px 500px;
-    }
-    30% {
-      opacity: 1;
-      filter: blur(0px);
-      scale: 1;
-    }
-    100% {
-      opacity: 1;
-      rotate: 0deg;
-      filter: blur(0px);
-      scale: 1;
-      translate: 0 0;
-    }
-  }
+const Group = styled('g')`
+  animation: ${rollDie} 1s cubic-bezier(0.22, 0.61, 0.36, 1);
 `

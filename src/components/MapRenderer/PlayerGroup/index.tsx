@@ -8,6 +8,7 @@ import { headList } from '../../../playermodel/heads'
 import { PlayerModel } from '../../../types/gameTypes'
 import { eyesList } from '../../../playermodel/eyes'
 import { mouthList } from '../../../playermodel/mouthes'
+import { consts } from '../../../config/consts'
 
 const spacing = 0.3
 const spokes = 5
@@ -81,7 +82,7 @@ export function PlayerModelGroup(props: {
     <g
       style={{
         transform: `translate(${(props.x ?? 0) * 100}px, ${(props.y ?? 0) * 100}px)`,
-        transition: '300ms',
+        transition: `700ms ${consts.customEaseOut}`,
         filter: 'drop-shadow(0 0 3px rgba(0, 0, 0, 0.3))',
         willChange: 'transform',
       }}

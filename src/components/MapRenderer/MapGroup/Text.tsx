@@ -17,7 +17,7 @@ export function Text() {
               style={{
                 fill: colours.background,
                 opacity: textOpacity.value,
-                transition: `300ms`,
+                transition: `500ms`,
                 userSelect: 'none',
               }}
             >

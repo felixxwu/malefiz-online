@@ -1,4 +1,4 @@
-import { styled } from 'goober'
+import { keyframes, styled } from 'goober'
 import { Dot, dotLayouts } from '../MapRenderer/DieGroup/Dot'
 import { Square } from '../MapRenderer/DieGroup/Square'
 import { textOpacity } from '../../signals/signals'
@@ -16,22 +16,21 @@ export function RandomDie() {
   )
 }
 
+const slideUp = keyframes`
+  0% {
+    transform: scale(2) translate(-50px, 200px) rotate(-20deg);
+  }
+  100% {
+    transform: scale(2) translate(-50px, 60px) rotate(-20deg);
+  }
+`
+
 const Svg = styled('svg')`
   position: fixed;
   bottom: 20px;
   left: 50%;
   transition: opacity 300ms;
-  animation: slideUp 1.5s;
+  animation: ${slideUp} 1.5s;
+  animation-fill-mode: forwards;
   pointer-events: none;
-
-  @keyframes slideUp {
-    0% {
-      transform: scale(2) translate(-50px, 200px) rotate(-20deg);
-    }
-    100% {
-      transform: scale(2) translate(-50px, 60px) rotate(-20deg);
-    }
-  }
-
-  transform: scale(2) translate(-50px, 60px) rotate(-20deg);
 `

@@ -1,4 +1,4 @@
-import { styled } from 'goober'
+import { keyframes, styled } from 'goober'
 import { colours } from '../../config/colours'
 import { gameOver, gameState } from '../../signals/signals'
 import { updateGame } from '../../dbactions/updateGame'
@@ -72,6 +72,18 @@ export function Action() {
   }[action]()
 }
 
+const flash = keyframes`
+  0% {
+    background-color: black;
+  }
+  50% {
+    background-color: ${colours.highlight};
+  }
+  100% {
+    background-color: black;
+  }
+`
+
 const Div = styled('div')`
   height: 40px;
   border-radius: 100vw;
@@ -87,7 +99,7 @@ const Div = styled('div')`
   white-space: nowrap;
 
   &.clickable {
-    animation: flash 1s infinite ease-in-out;
+    animation: ${flash} 1s infinite ease-in-out;
     cursor: pointer;
     background-color: black;
     color: ${colours.background};
@@ -95,18 +107,6 @@ const Div = styled('div')`
     &:hover {
       background-color: ${colours.highlight};
       animation: none;
-    }
-  }
-
-  @keyframes flash {
-    0% {
-      background-color: black;
-    }
-    50% {
-      background-color: ${colours.highlight};
-    }
-    100% {
-      background-color: black;
     }
   }
 `

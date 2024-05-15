@@ -44,12 +44,14 @@ export function MapRenderer() {
         style={{
           transform: `scale(${svgZoom.value})`,
           transition: `all ${svgTransition.value}ms cubic-bezier(0.65, 0, 0.35, 1)`,
+          willChange: 'transform',
         }}
       >
         <TranslateGroup
           style={{
             transform: `translate(${svgTranslation.value.x}px, ${svgTranslation.value.y}px)`,
             transition: `all ${svgTransition.value}ms cubic-bezier(0.65, 0, 0.35, 1)`,
+            willChange: 'transform',
           }}
         >
           <MapGroup />

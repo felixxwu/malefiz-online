@@ -74,7 +74,7 @@ const Stone1Keyframe = keyframes`
 `
 
 const Stone1 = styled('g')`
-  animation: ${Stone1Keyframe} 2s cubic-bezier(0.8, 0, 0.2, 1);
+  animation: ${Stone1Keyframe} 2s ${consts.customEase};
   animation-fill-mode: forwards;
 `
 
@@ -89,6 +89,6 @@ const Stone2Keyframe = keyframes`
 `
 
 const Stone2 = styled('g')`
-  animation: ${Stone2Keyframe} 2s cubic-bezier(0.8, 0, 0.2, 1);
+  animation: ${Stone2Keyframe} 2s ${consts.customEase};
   animation-fill-mode: forwards;
 `

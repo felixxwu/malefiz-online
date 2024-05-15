@@ -1,4 +1,4 @@
-import { styled } from 'goober'
+import { keyframes, styled } from 'goober'
 import { PlayerModelGroup } from '../components/MapRenderer/PlayerGroup'
 import { consts } from '../config/consts'
 import { gameState, lastDieRoll, map } from '../signals/signals'
@@ -90,35 +90,35 @@ const Svg = styled('svg')`
   transform: scale(2);
 `
 
-// TODO: use goober keyframes
-const KillerGroup = styled('g')`
-  animation: jumpIn 2s cubic-bezier(1, 0, 0.8, -0.5);
-  animation-fill-mode: forwards;
-
-  @keyframes jumpIn {
-    0% {
-      opacity: 1;
-      transform: translate(-100px, -50px);
-    }
-    40% {
-      opacity: 1;
-      transform: translate(0px, 0px);
-    }
+const jumpIn = keyframes`
+  0% {
+    opacity: 1;
+    transform: translate(-100px, -50px);
+  }
+  40% {
+    opacity: 1;
+    transform: translate(0px, 0px);
   }
 `
 
-const VictimGroup = styled('g')`
-  animation: jumpOut 2s cubic-bezier(0, 0.5, 0.25, 0.75);
+const KillerGroup = styled('g')`
+  animation: ${jumpIn} 2s cubic-bezier(1, 0, 0.8, -0.5);
   animation-fill-mode: forwards;
+`
 
-  @keyframes jumpOut {
-    40% {
-      opacity: 1;
-      transform: translate(0px, 0px) rotate(0deg);
-    }
-    100% {
-      opacity: 0;
-      transform: translate(150px, 57px) rotate(700deg);
-    }
+const jumpOut = keyframes`
+  40% {
+    opacity: 1;
+    transform: translate(0px, 0px) rotate(0deg);
   }
+  100% {
+    opacity: 0;
+    transform: translate(150px, 57px) rotate(700deg);
+  }
+
+`
+
+const VictimGroup = styled('g')`
+  animation: ${jumpOut} 2s cubic-bezier(0, 0.5, 0.25, 0.75);
+  animation-fill-mode: forwards;
 `

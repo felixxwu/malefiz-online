@@ -1,4 +1,4 @@
-import { styled } from 'goober'
+import { keyframes, styled } from 'goober'
 import { Item } from '.'
 import { updateGame } from '../dbactions/updateGame'
 import { gameState, gameStateHashTable, lastDieRoll, playerModel } from '../signals/signals'
@@ -140,36 +140,36 @@ const Svg = styled('svg')`
   transform: scale(1.5) translateY(50px);
 `
 
-const PlayerA = styled('g')`
-  animation: positionSwapTo 2s cubic-bezier(0.8, 0, 0.2, 1);
-  animation-fill-mode: forwards;
+const positionSwapTo = keyframes`
+  0% {
+    transform: translate(-100px, 0px);
+  }
+  50% {
+    transform: translate(0px, -30px);
+  }
+  100% {
+    transform: translate(100px, 0px);
+  }
+`
 
-  @keyframes positionSwapTo {
-    0% {
-      transform: translate(-100px, 0px);
-    }
-    50% {
-      transform: translate(0px, -30px);
-    }
-    100% {
-      transform: translate(100px, 0px);
-    }
+const PlayerA = styled('g')`
+  animation: ${positionSwapTo} 2s ${consts.customEase};
+  animation-fill-mode: forwards;
+`
+
+const positionSwapFrom = keyframes`
+  0% {
+    transform: translate(100px, 0px);
+  }
+  50% {
+    transform: translate(0px, 30px);
+  }
+  100% {
+    transform: translate(-100px, 0px);
   }
 `
 
 const PlayerB = styled('g')`
-  animation: positionSwapFrom 2s cubic-bezier(0.8, 0, 0.2, 1);
+  animation: ${positionSwapFrom} 2s ${consts.customEase};
   animation-fill-mode: forwards;
-
-  @keyframes positionSwapFrom {
-    0% {
-      transform: translate(100px, 0px);
-    }
-    50% {
-      transform: translate(0px, 30px);
-    }
-    100% {
-      transform: translate(-100px, 0px);
-    }
-  }
 `

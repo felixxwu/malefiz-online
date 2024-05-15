@@ -13,4 +13,6 @@ export const consts = {
   temperDecrease: 0.5,
   eventInterval: 20,
   itemInterval: 3,
+  customEase: 'cubic-bezier(0.8, 0, 0.2, 1)',
+  customEaseOut: 'cubic-bezier(0.2, 1, 0.2, 1)',
 }

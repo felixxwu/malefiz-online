@@ -9,7 +9,7 @@ export function ItemSvg({ colour, Icon }: { colour: string; Icon: () => JSX.Elem
         style={{
           filter: 'drop-shadow(0 0 3px rgba(0,0,0,0.3))',
           willChange: 'transform',
-          transition: '300ms',
+          transition: '500ms',
           fill: colour,
           opacity: textOpacity.value,
           strokeLinejoin: 'round',
