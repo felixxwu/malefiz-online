@@ -1,6 +1,7 @@
 import { JSX } from 'preact/jsx-runtime'
 import { AcidRain } from './AcidRain'
 import { Earthquake } from './Earthquake'
+import { ItemShower } from './ItemShower'
 
 export type Event = {
   name: string
@@ -9,5 +10,5 @@ export type Event = {
   onActivate: () => void
 }
 
-export const events = [AcidRain, Earthquake] as const satisfies Event[]
+export const events = [AcidRain, Earthquake, ItemShower] as const satisfies Event[]
 export type EventName = (typeof events)[number]['name']

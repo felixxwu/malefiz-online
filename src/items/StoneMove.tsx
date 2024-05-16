@@ -26,8 +26,6 @@ export const StoneMove = {
     clickable: false,
   },
   onCircleClickWhenActive: async (circleId: string) => {
-    if (!isMyTurn()) return
-
     if (gameState.value!.stones.find(stone => stone.circleId === null)) {
       const legalStonePlacements = getLegalStonePlacements()
 

@@ -6,6 +6,7 @@ import { pieceBelongsToMe } from './pieceBelongsToMe'
 import { placeStone } from '../dbactions/placeStone'
 import { submitMove } from '../dbactions/submitMove'
 import { getActiveItem } from './getActiveItem'
+import { isMyTurn } from './playerTurns'
 
 export async function handleCircleClick(clickedCircleId: string) {
   if (waitingForServer.value) return
@@ -14,7 +15,7 @@ export async function handleCircleClick(clickedCircleId: string) {
   if (circle?.custom) return
 
   const activeItem = getActiveItem()
-  if (activeItem && activeItem.onCircleClickWhenActive) {
+  if (activeItem && activeItem.onCircleClickWhenActive && isMyTurn()) {
     activeItem.onCircleClickWhenActive(clickedCircleId)
     return
   }
