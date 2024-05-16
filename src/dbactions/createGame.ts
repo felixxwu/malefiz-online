@@ -18,7 +18,7 @@ export async function createGame(mapNum: number) {
   }
   const gameId = await addDoc(collection(db, 'games'), gameStateWithItems)
   textOpacity.value = 0
-  await zoomIntoCircle({ circle: homePageMap[mapNum] })
+  await zoomIntoCircle({ circle: homePageMap[mapNum], zoomDelay: 300 })
   await sleep(500)
   window.location.search = `?game=${gameId.id}`
 }

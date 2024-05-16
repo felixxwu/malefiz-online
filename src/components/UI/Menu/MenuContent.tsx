@@ -11,7 +11,6 @@ import { gameId } from '../../../utils/gameId'
 export function MenuContent() {
   async function handleLeaveGame() {
     await leaveGame()
-    window.location.href = '/'
   }
 
   function createPageHandler(page: Page) {

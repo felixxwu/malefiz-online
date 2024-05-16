@@ -44,8 +44,7 @@ export async function firstRender() {
 }
 
 async function introSequence() {
-  zoomIntoCircle({ transition: 0 })
-  await sleep(100)
+  await zoomIntoCircle({ transition: 0 })
   fitToScreen(map.value, { transition: 1300, translateDelay: 600 })
   await sleep(700)
   textOpacity.value = 1
