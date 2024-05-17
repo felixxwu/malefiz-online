@@ -5,7 +5,7 @@ import { updateGame } from '../../dbactions/updateGame'
 import { playerDefs } from '../../config/playerDefs'
 import { rollDie } from '../../dbactions/rollDie'
 import { RandomDie } from './RandomDie'
-import { getActiveItem } from '../../signals/getters/getActiveItem'
+import { activeItem } from '../../signals/getters/activeItem'
 import { getAction } from '../../utils/getAction'
 
 export function Action() {
@@ -15,25 +15,24 @@ export function Action() {
   const playerWhoIsPlaying = gameState.value.players.find(
     player => player.id === gameState.value!.playerTurn
   )
-  const activeItem = getActiveItem()
 
   const action = getAction()
 
   return {
     itemaction: () => (
       <>
-        {activeItem!.actionWhenActive.showDie && <RandomDie />}
+        {activeItem.value!.actionWhenActive.showDie && <RandomDie />}
         <Div
-          onClick={activeItem!.actionWhenActive.onClick}
-          {...(activeItem!.actionWhenActive.clickable ? { className: 'clickable' } : {})}
+          onClick={activeItem.value!.actionWhenActive.onClick}
+          {...(activeItem.value!.actionWhenActive.clickable ? { className: 'clickable' } : {})}
         >
-          {activeItem!.actionWhenActive.text}
+          {activeItem.value!.actionWhenActive.text}
         </Div>
       </>
     ),
     pickedupmessage: () => (
       <Div>
-        {playerWhoIsPlaying!.name} picked up {activeItem!.name}
+        {playerWhoIsPlaying!.name} picked up {activeItem.value!.name}
       </Div>
     ),
     startgame: () => (

@@ -5,16 +5,15 @@ import { placeStone } from '../../dbactions/placeStone'
 import { playerPiecesWithMoves } from '../queries/playerPiecesWithMoves'
 import { rollDie } from '../../dbactions/rollDie'
 import { submitMove } from '../../dbactions/submitMove'
-import { getActiveItem } from '../getters/getActiveItem'
+import { activeItem } from '../getters/activeItem'
 import { aiCanPlay } from '../getters/aiCanPlay'
 import { currentPlayer } from '../getters/currentPlayer'
 
 export async function playAiIfApplicable() {
   if (!aiCanPlay.value) return
 
-  const activeItem = getActiveItem()
-  if (activeItem) {
-    activeItem.aiAction()
+  if (activeItem.value) {
+    activeItem.value.aiAction()
     return
   }
 

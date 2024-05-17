@@ -10,7 +10,7 @@ import { getLegalMoves, getLegalStonePlacements } from '../../../signals/queries
 import { pieceBelongsToMe } from '../../../signals/queries/pieceBelongsToMe'
 import { placeStone } from '../../../dbactions/placeStone'
 import { submitMove } from '../../../dbactions/submitMove'
-import { getActiveItem } from '../../../signals/getters/getActiveItem'
+import { activeItem } from '../../../signals/getters/activeItem'
 import { isMyTurn } from '../../../signals/getters/isMyTurn'
 
 export async function handleCircleClick(clickedCircleId: string) {
@@ -19,9 +19,8 @@ export async function handleCircleClick(clickedCircleId: string) {
   if (!circle) return
   if (circle?.custom) return
 
-  const activeItem = getActiveItem()
-  if (activeItem && activeItem.onCircleClickWhenActive && isMyTurn()) {
-    activeItem.onCircleClickWhenActive(clickedCircleId)
+  if (activeItem.value && activeItem.value.onCircleClickWhenActive && isMyTurn()) {
+    activeItem.value.onCircleClickWhenActive(clickedCircleId)
     return
   }
 

@@ -1,5 +1,5 @@
 import { gameOver, gameState, lastDieRoll } from '../signals/signals'
-import { getActiveItem } from '../signals/getters/getActiveItem'
+import { activeItem } from '../signals/getters/activeItem'
 import { getCircleFromPiece } from '../signals/queries/getCircleFromPiece'
 import { getMyPlayer, getMyPlayerId } from '../signals/queries/getUsers'
 import { getLegalMoves } from '../signals/queries/legalMoves'
@@ -15,7 +15,6 @@ export function getAction() {
   const playerWhoIsPlaying = gameState.value.players.find(
     player => player.id === gameState.value!.playerTurn
   )
-  const activeItem = getActiveItem()
 
   // if (waitingForServer.value)
   //   return (
@@ -24,8 +23,8 @@ export function getAction() {
   //     </Div>
   //   )
 
-  if (myTurn && activeItem) return 'itemaction' as const
-  if (!myTurn && activeItem && playerWhoIsPlaying) return 'pickedupmessage' as const
+  if (myTurn && activeItem.value) return 'itemaction' as const
+  if (!myTurn && activeItem.value && playerWhoIsPlaying) return 'pickedupmessage' as const
   if (getMyPlayerId() && gameNotStarted) return 'startgame' as const
   if (stoneInPit && myTurn) return 'placestone' as const
   if (myTurn && dieNotRolled && lastDieRoll.value === 6) return 'rollagain' as const

@@ -12,6 +12,9 @@ export const stonePit = computed(() =>
   gameState.value?.stones.find(stone => stone.circleId === null)
 )
 export const dieNotRolled = computed(() => gameState.value?.dieRoll === null)
+export const playerWhoIsPlaying = computed(() =>
+  gameState.value?.players.find(player => player.id === gameState.value!.playerTurn)
+)
 
 // const stoneInPit = gameState.value.stones.find(stone => stone.circleId === null)
 // const gameNotStarted = gameState.value.playerTurn === null
