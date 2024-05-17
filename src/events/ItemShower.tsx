@@ -39,11 +39,7 @@ function ItemShowerGraphic() {
         style={{ strokeWidth: consts.pathStrokeWidth }}
       />
       <Item1Group>
-        <ItemSvg
-          colour={itemDefs['Position Swap'].colour}
-          Icon={itemDefs['Position Swap'].icon}
-          style={{ animationDelay: 500 + 'ms' }}
-        />
+        <ItemSvg colour={itemDefs['Position Swap'].colour} Icon={itemDefs['Position Swap'].icon} />
       </Item1Group>
       <Player2>
         <PlayerModelGroup model={playerDefs[1].model} colour={playerDefs[1].colour} />
@@ -52,7 +48,7 @@ function ItemShowerGraphic() {
         <ItemSvg
           colour={itemDefs['Roll Again'].colour}
           Icon={itemDefs['Roll Again'].icon}
-          style={{ animationDelay: 1000 + 'ms' }}
+          style={{ animationDelay: 500 + 'ms' }}
         />
       </Item2Group>
     </Svg>

@@ -50,5 +50,6 @@ const popIn = keyframes`
 const ItemGroup = styled('g')`
   transform: scale(0);
   animation: ${popIn} 1s ${consts.customEaseOut};
+  animation-delay: 500ms;
   animation-fill-mode: forwards;
 `
