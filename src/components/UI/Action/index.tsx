@@ -1,12 +1,12 @@
 import { keyframes, styled } from 'goober'
-import { colours } from '../../config/colours'
-import { gameOver, gameState } from '../../signals/signals'
-import { updateGame } from '../../dbactions/updateGame'
-import { playerDefs } from '../../config/playerDefs'
-import { rollDie } from '../../dbactions/rollDie'
-import { RandomDie } from './RandomDie'
-import { activeItem } from '../../signals/getters/activeItem'
-import { getAction } from '../../utils/getAction'
+import { colours } from '../../../config/colours'
+import { gameOver, gameState } from '../../../signals/signals'
+import { updateGame } from '../../../dbactions/updateGame'
+import { playerDefs } from '../../../config/playerDefs'
+import { rollDie } from '../../../dbactions/rollDie'
+import { RandomDie } from '../RandomDie'
+import { activeItem } from '../../../signals/getters/activeItem'
+import { getAction } from './getAction'
 
 export function Action() {
   if (gameOver.value) return null

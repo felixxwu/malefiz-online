@@ -2,7 +2,7 @@ import { map, menuOpen, svgTransition, svgTranslation, svgZoom } from '../../../
 import { fitToScreen } from '../../../signals/actions/fitToScreen'
 import { rollDie } from '../../../dbactions/rollDie'
 import { zoomIn, zoomOut } from '../../../signals/actions/zoom'
-import { getAction } from '../../../utils/getAction'
+import { getAction } from '../../UI/Action/getAction'
 
 export function handleKeydown(event: KeyboardEvent) {
   if (event.key === 'Escape') {
