@@ -11,7 +11,7 @@ window.roll = (number: number) => {
 export async function rollDie(additionalGameState?: Partial<GameState>) {
   const dieRoll = Math.floor(Math.random() * 6) + 1
   const reRoll = Math.floor(Math.random() * 6) + 1
-  const player = currentPlayer()
+  const player = currentPlayer.value
   const distancesToFinish = player.positions.map(
     p => gameStateHashTable.value[p.circleId].distanceToFinish ?? Infinity
   )

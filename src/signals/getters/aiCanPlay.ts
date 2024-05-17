@@ -1,8 +1,9 @@
 import { gameOver, gameState } from '../signals'
 import { getUserControllingPlayer } from '../queries/getUserControllingPlayer'
 import { isUserHost } from './isUserHost'
+import { computed } from '@preact/signals'
 
-export function canAiPlay() {
+export const aiCanPlay = computed(() => {
   if (!gameState.value) return false
   if (!isUserHost()) return false
   if (gameOver.value) return false
@@ -13,4 +14,4 @@ export function canAiPlay() {
   if (playerPlaying && !getUserControllingPlayer(playerPlaying.id)) return true
 
   return false
-}
+})

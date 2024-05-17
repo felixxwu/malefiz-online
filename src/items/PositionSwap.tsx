@@ -43,7 +43,9 @@ export const PositionSwap = {
     if (!isUserHost()) return
     await sleep(500)
 
-    const opponents = gameState.value!.players.filter(player => player.id !== currentPlayer().id)
+    const opponents = gameState.value!.players.filter(
+      player => player.id !== currentPlayer.value.id
+    )
     const validPieces: { circleId: string; playerId: string }[] = []
     for (const opponent of opponents) {
       for (const position of opponent.positions) {
@@ -65,7 +67,7 @@ export const PositionSwap = {
     const randomPiece = validPieces[Math.floor(Math.random() * validPieces.length)]
     updateGame({
       players: gameState.value!.players.map(player => {
-        if (player.id === currentPlayer().id) {
+        if (player.id === currentPlayer.value.id) {
           return {
             ...player,
             positions: player.positions.map(position =>

@@ -6,10 +6,11 @@ import { playerPiecesWithMoves } from '../queries/playerPiecesWithMoves'
 import { rollDie } from '../../dbactions/rollDie'
 import { submitMove } from '../../dbactions/submitMove'
 import { getActiveItem } from '../getters/getActiveItem'
-import { canAiPlay } from '../getters/canAiPlay'
+import { aiCanPlay } from '../getters/aiCanPlay'
+import { currentPlayer } from '../getters/currentPlayer'
 
 export async function playAiIfApplicable() {
-  if (!canAiPlay()) return
+  if (!aiCanPlay.value) return
 
   const activeItem = getActiveItem()
   if (activeItem) {
@@ -30,9 +31,7 @@ export async function playAiIfApplicable() {
     return
   }
 
-  const currentPlayer = gameState.value!.playerTurn
-  const player = gameState.value!.players.find(player => player.id === currentPlayer)!
-  const piecesWithLegalMoves = playerPiecesWithMoves(player)
+  const piecesWithLegalMoves = playerPiecesWithMoves(currentPlayer.value)
 
   // re-roll if no legal moves
   if (piecesWithLegalMoves.length === 0) {

@@ -66,7 +66,7 @@ function createAI({
       if (stoneTaken) score += stonePriority
 
       const playerTaken = !!to.pieces
-      const temper = currentPlayer().aiTemper
+      const temper = currentPlayer.value.aiTemper
       if (playerTaken) score += killPriority + temper
 
       const itemTaken = !!to.item
