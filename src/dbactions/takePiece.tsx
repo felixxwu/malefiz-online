@@ -3,11 +3,11 @@ import { PlayerModelGroup } from '../components/MapRenderer/PlayerGroup'
 import { consts } from '../config/consts'
 import { gameState, lastDieRoll, map } from '../signals/signals'
 import { Player } from '../types/gameTypes'
-import { getUserControllingPlayer } from '../utils/getUserControllingPlayer'
-import { players } from '../utils/players'
+import { getUserControllingPlayer } from '../signals/queries/getUserControllingPlayer'
+import { playerDefs } from '../config/playerDefs'
 import { displayAlert } from './displayAlert'
 import { updateGame } from './updateGame'
-import { getNextTurnGameState } from '../utils/getNextTurnGameState'
+import { getNextTurnGameState } from '../signals/queries/getNextTurnGameState'
 
 let lastKill: { killer: Player | null; victim: Player | null } = { killer: null, victim: null }
 
@@ -61,10 +61,10 @@ export function takePieceAlert() {
 
   const killerModel =
     userForKiller?.playerModel ??
-    players.find(player => player.id === gameStateLastKill.killer?.id)?.model
+    playerDefs.find(player => player.id === gameStateLastKill.killer?.id)?.model
   const victimModel =
     userForVictim?.playerModel ??
-    players.find(player => player.id === gameStateLastKill.victim?.id)?.model
+    playerDefs.find(player => player.id === gameStateLastKill.victim?.id)?.model
 
   if (!killerModel || !victimModel) return null
 

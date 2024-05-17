@@ -1,7 +1,7 @@
-import { consts } from '../config/consts'
-import { getMapPosition } from './getMapPosition'
-import { svgTransition, svgTranslation, svgZoom } from '../signals/signals'
-import { Map } from '../types/mapTypes'
+import { consts } from '../../config/consts'
+import { getMapPosition } from '../../utils/getMapPosition'
+import { svgTransition, svgTranslation, svgZoom } from '../signals'
+import { Map } from '../../types/mapTypes'
 
 export function fitToScreen(
   map: Map,

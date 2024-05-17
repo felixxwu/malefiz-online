@@ -1,7 +1,7 @@
 import { consts } from '../config/consts'
 import { GameState, Player } from '../types/gameTypes'
 import { Map } from '../types/mapTypes'
-import { players } from './players'
+import { playerDefs } from '../config/playerDefs'
 
 /*
 
@@ -34,10 +34,10 @@ export function parseMap(
   const diePit = getCoordinates(mapGrid, ['D'])[0]
   const circleCoordinates = getCoordinates(
     mapGrid,
-    ['O', 'F', 'Z', 'S', 'X'].concat(players.map(p => p.id))
+    ['O', 'F', 'Z', 'S', 'X'].concat(playerDefs.map(p => p.id))
   )
   const stoneCoordinates = getCoordinates(mapGrid, ['S'])
-  const playerCoordinates = players.map(player => ({
+  const playerCoordinates = playerDefs.map(player => ({
     ...player,
     coords: getCoordinates(mapGrid, [player.id]),
   }))
@@ -48,7 +48,7 @@ export function parseMap(
     id: c.circle.id,
     position: { x: c.circle.x / 2, y: c.circle.y / 2 },
     neighbours: c.neighbours,
-    start: players.find(p => p.id === c.circle.matchedSymbol)?.id ?? null,
+    start: playerDefs.find(p => p.id === c.circle.matchedSymbol)?.id ?? null,
     finish: c.circle.matchedSymbol === 'F',
     zoomInPoint: c.circle.matchedSymbol === 'Z',
     safeZone: c.circle.matchedSymbol === 'X',

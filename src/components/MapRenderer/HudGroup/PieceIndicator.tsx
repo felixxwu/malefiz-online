@@ -1,5 +1,5 @@
 import { keyframes, styled } from 'goober'
-import { getCircleFromPiece } from '../../../utils/getCircleFromPiece'
+import { getCircleFromPiece } from '../../../signals/queries/getCircleFromPiece'
 import { colours } from '../../../config/colours'
 
 export function PieceIndicator(props: { pieceId: string }) {

@@ -1,5 +1,5 @@
 import { updateGame } from '../dbactions/updateGame'
-import { getDeactivatedItems } from '../utils/getDeactivatedItems'
+import { getDeactivatedItems } from '../signals/getters/getDeactivatedItems'
 import { Item } from './'
 import { ItemAlert } from './ItemAlert'
 

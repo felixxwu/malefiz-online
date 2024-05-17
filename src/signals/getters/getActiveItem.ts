@@ -1,6 +1,6 @@
-import { itemDefs } from '../items'
-import { gameState } from '../signals/signals'
-import { objectToArray } from './objectToArray'
+import { itemDefs } from '../../items'
+import { gameState } from '../signals'
+import { objectToArray } from '../../utils/objectToArray'
 
 export function getActiveItem() {
   if (!gameState.value) return null

@@ -2,8 +2,8 @@ import { styled } from 'goober'
 import { circleHovered, gameState, pieceDragged, textOpacity } from '../../../signals/signals'
 import { mapList } from '../../../maps/mapList'
 import { polygonToXY } from '../../../utils/polygonToXY'
-import { getUserControllingPlayer } from '../../../utils/getUserControllingPlayer'
-import { players } from '../../../utils/players'
+import { getUserControllingPlayer } from '../../../signals/queries/getUserControllingPlayer'
+import { playerDefs } from '../../../config/playerDefs'
 import { headList } from '../../../playermodel/heads'
 import { PlayerModel } from '../../../types/gameTypes'
 import { eyesList } from '../../../playermodel/eyes'
@@ -60,7 +60,7 @@ export function PlayerGroup() {
         const { x, y } = pieceIsBeingDragged ? circleHoveredValue.position : piece
         const userForPlayer = getUserControllingPlayer(piece.playerID)
         const model =
-          userForPlayer?.playerModel ?? players.find(p => p.id === piece.playerID)?.model!
+          userForPlayer?.playerModel ?? playerDefs.find(p => p.id === piece.playerID)?.model!
         return (
           <PlayerModelGroup key={piece.pieceID} colour={piece.colour} x={x} y={y} model={model} />
         )

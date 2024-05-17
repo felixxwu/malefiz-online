@@ -5,7 +5,7 @@ import {
   pieceDragged,
   pieceSelected,
 } from '../../../signals/signals'
-import { getLegalMoves } from '../../../utils/legalMoves'
+import { getLegalMoves } from '../../../signals/queries/legalMoves'
 import { submitMove } from '../../../dbactions/submitMove'
 
 export function handlePointerUp(event: PointerEvent) {

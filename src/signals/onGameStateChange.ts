@@ -1,5 +1,5 @@
-import { getUsers } from '../utils/getUsers'
-import { zoomIntoCircle } from '../utils/zoomIntoCircle'
+import { getUsers } from './queries/getUsers'
+import { zoomIntoCircle } from './actions/zoomIntoCircle'
 import {
   gameState,
   lastDieRoll,
@@ -13,7 +13,7 @@ import { events } from '../events'
 import { sleep } from '../utils/sleep'
 import { updateGame } from '../dbactions/updateGame'
 import { ItemName, itemDefs } from '../items'
-import { isUserHost } from '../utils/playAiIfApplicable'
+import { isUserHost } from './getters/isUserHost'
 
 export function onGameStateChange() {
   console.info(`gameState.value`, gameState.value)

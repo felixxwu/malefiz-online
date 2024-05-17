@@ -1,7 +1,7 @@
 import { doc, updateDoc } from 'firebase/firestore'
 import { db } from '../config/firebase'
 import { GameState } from '../types/gameTypes'
-import { gameId } from '../utils/gameId'
+import { gameId } from '../signals/getters/gameId'
 import { waitingForServer } from '../signals/signals'
 
 export async function updateGame(update: Partial<GameState>) {

@@ -6,7 +6,7 @@ import { Page, customisationOpened, menuOpen, menuPage } from '../../../signals/
 import { InvitePlayers } from './InvitePlayers'
 import { CustomiseAppearance } from './CustomiseAppearance'
 import { Help } from './Help'
-import { gameId } from '../../../utils/gameId'
+import { gameId } from '../../../signals/getters/gameId'
 
 export function MenuContent() {
   async function handleLeaveGame() {

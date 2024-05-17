@@ -18,7 +18,7 @@ function getModel() {
   }
 }
 
-export const players: PlayerDefs[] = [
+export const playerDefs: PlayerDefs[] = [
   { id: '1', colour: 'hsl(0 55% 65%)', name: 'Red', model: getModel() },
   { id: '2', colour: 'hsl(240 55% 75%)', name: 'Blue', model: getModel() },
   { id: '3', colour: 'hsl(140 55% 60%)', name: 'Green', model: getModel() },

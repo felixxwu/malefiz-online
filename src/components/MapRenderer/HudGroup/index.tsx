@@ -1,4 +1,4 @@
-import { isMyTurn } from '../../../utils/playerTurns'
+import { isMyTurn } from '../../../signals/getters/isMyTurn'
 import {
   customCircleHighlights,
   gameState,
@@ -6,15 +6,15 @@ import {
   pieceSelected,
   waitingForServer,
 } from '../../../signals/signals'
-import { getCircleFromPiece } from '../../../utils/getCircleFromPiece'
-import { getLegalMoves, getLegalStonePlacements } from '../../../utils/legalMoves'
+import { getCircleFromPiece } from '../../../signals/queries/getCircleFromPiece'
+import { getLegalMoves, getLegalStonePlacements } from '../../../signals/queries/legalMoves'
 import { CircleIndicator, PieceIndicator } from './PieceIndicator'
 import { MoveLine } from './MoveLine'
-import { getMyPlayer } from '../../../utils/getUsers'
+import { getMyPlayer } from '../../../signals/queries/getUsers'
 import { MoveDestination } from './MoveDestination'
 import { StonePlacement } from './StonePlacement'
 import { Circle } from '../../../types/mapTypes'
-import { fitToScreen } from '../../../utils/fitToScreen'
+import { fitToScreen } from '../../../signals/actions/fitToScreen'
 
 export function HudGroup() {
   if (!isMyTurn() || waitingForServer.value) return null

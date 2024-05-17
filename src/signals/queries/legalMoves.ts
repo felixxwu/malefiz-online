@@ -1,6 +1,6 @@
-import { gameState, gameStateHashTable } from '../signals/signals'
-import { Move } from '../types/gameTypes'
-import { Circle } from '../types/mapTypes'
+import { gameState, gameStateHashTable } from '../signals'
+import { Move } from '../../types/gameTypes'
+import { Circle } from '../../types/mapTypes'
 
 export function getLegalMoves(targetCircleId: string): Move[] {
   const position = gameStateHashTable.value[targetCircleId]!

@@ -1,12 +1,17 @@
-import { gameState, gameStateHashTable, pieceSelected, waitingForServer } from '../signals/signals'
-import { getCircleFromPiece } from './getCircleFromPiece'
-import { getPieceFromCircle } from './getPieceFromCircle'
-import { getLegalMoves, getLegalStonePlacements } from './legalMoves'
-import { pieceBelongsToMe } from './pieceBelongsToMe'
-import { placeStone } from '../dbactions/placeStone'
-import { submitMove } from '../dbactions/submitMove'
-import { getActiveItem } from './getActiveItem'
-import { isMyTurn } from './playerTurns'
+import {
+  gameState,
+  gameStateHashTable,
+  pieceSelected,
+  waitingForServer,
+} from '../../../signals/signals'
+import { getCircleFromPiece } from '../../../signals/queries/getCircleFromPiece'
+import { getPieceFromCircle } from '../../../signals/queries/getPieceFromCircle'
+import { getLegalMoves, getLegalStonePlacements } from '../../../signals/queries/legalMoves'
+import { pieceBelongsToMe } from '../../../signals/queries/pieceBelongsToMe'
+import { placeStone } from '../../../dbactions/placeStone'
+import { submitMove } from '../../../dbactions/submitMove'
+import { getActiveItem } from '../../../signals/getters/getActiveItem'
+import { isMyTurn } from '../../../signals/getters/isMyTurn'
 
 export async function handleCircleClick(clickedCircleId: string) {
   if (waitingForServer.value) return

@@ -2,10 +2,10 @@ import { keyframes, styled } from 'goober'
 import { colours } from '../../config/colours'
 import { gameOver, gameState } from '../../signals/signals'
 import { updateGame } from '../../dbactions/updateGame'
-import { players } from '../../utils/players'
+import { playerDefs } from '../../config/playerDefs'
 import { rollDie } from '../../dbactions/rollDie'
 import { RandomDie } from './RandomDie'
-import { getActiveItem } from '../../utils/getActiveItem'
+import { getActiveItem } from '../../signals/getters/getActiveItem'
 import { getAction } from '../../utils/getAction'
 
 export function Action() {
@@ -37,7 +37,7 @@ export function Action() {
       </Div>
     ),
     startgame: () => (
-      <Div onClick={() => updateGame({ playerTurn: players[0].id })} className='clickable'>
+      <Div onClick={() => updateGame({ playerTurn: playerDefs[0].id })} className='clickable'>
         Start game
       </Div>
     ),

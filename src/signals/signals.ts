@@ -1,16 +1,20 @@
-import { computed, signal } from '@preact/signals'
+import { signal } from '@preact/signals'
 import { homePageMap } from '../maps/home'
 import { storedSignal } from '../utils/storedSignal'
 import { GameState, PlayerModel } from '../types/gameTypes'
-import { HashTable, mapToHashTable } from '../utils/mapToHashTable'
 import { Circle } from '../types/mapTypes'
-import { onGameStateChange } from './onGameStateChange'
 import { eyesList } from '../playermodel/eyes'
 import { mouthList } from '../playermodel/mouthes'
 import { headList } from '../playermodel/heads'
 import { updatePlayerModelMidGame } from '../dbactions/updatePlayerModelMidGame'
 import { ItemName } from '../items'
 import { EventName } from '../events'
+import { onGameStateChange } from './onGameStateChange'
+
+// TODO: remove export keyword
+export const gameState = signal<GameState | null>(null)
+gameState.subscribe(onGameStateChange)
+export { gameStateHashTable } from './getters'
 
 export type Page = 'main' | 'customise' | 'invite' | 'help'
 
@@ -32,12 +36,6 @@ export const svgTransition = signal(0)
 export const textOpacity = signal(0)
 export const customCircleHighlights = signal<string[]>([])
 
-export const gameState = signal<GameState | null>(null)
-gameState.subscribe(onGameStateChange)
-
-export const gameStateHashTable = computed<HashTable>(() => {
-  return gameState.value ? mapToHashTable(gameState.value) : {}
-})
 export const gameOver = signal<string | null>(null)
 export const lastDieRoll = signal<number | null>(null)
 

@@ -4,8 +4,8 @@ import { updateGame } from '../dbactions/updateGame'
 import { EventAlert } from './EventAlert'
 import { consts } from '../config/consts'
 import { PlayerModelGroup } from '../components/MapRenderer/PlayerGroup'
-import { players } from '../utils/players'
-import { getNewItems } from '../utils/getNewItems'
+import { playerDefs } from '../config/playerDefs'
+import { getNewItems } from '../signals/queries/getNewItems'
 import { ItemSvg } from '../components/MapRenderer/ItemGroup/ItemSvg'
 import { itemDefs } from '../items'
 
@@ -46,7 +46,7 @@ function ItemShowerGraphic() {
         />
       </Item1Group>
       <Player2>
-        <PlayerModelGroup model={players[1].model} colour={players[1].colour} />
+        <PlayerModelGroup model={playerDefs[1].model} colour={playerDefs[1].colour} />
       </Player2>
       <Item2Group>
         <ItemSvg

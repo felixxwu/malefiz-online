@@ -1,11 +1,11 @@
 import { styled } from 'goober'
 import { gameState, gameStateHashTable, map, pickEmoji } from '../../../signals/signals'
-import { players } from '../../../utils/players'
+import { playerDefs } from '../../../config/playerDefs'
 import { joinGame } from '../../../dbactions/joinGame'
-import { getMyPlayerId } from '../../../utils/getUsers'
+import { getMyPlayerId } from '../../../signals/queries/getUsers'
 import { polygonToXY } from '../../../utils/polygonToXY'
-import { getUserControllingPlayer } from '../../../utils/getUserControllingPlayer'
-import { emojiToShow } from '../../../utils/emojiToShow'
+import { getUserControllingPlayer } from '../../../signals/queries/getUserControllingPlayer'
+import { emojiToShow } from '../../../signals/queries/emojiToShow'
 
 export function StartCircles() {
   const startCircles = map.value.filter(circle => circle.start)
@@ -14,7 +14,7 @@ export function StartCircles() {
   return (
     <>
       {startCircles.map(circle => {
-        const player = players.find(p => p.id === circle.start)!
+        const player = playerDefs.find(p => p.id === circle.start)!
         const userControllingPlayer = getUserControllingPlayer(player.id)
 
         const joinText = (() => {

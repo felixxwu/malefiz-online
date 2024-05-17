@@ -1,5 +1,5 @@
 import { consts } from '../../../config/consts'
-import { currentPlayer } from '../../../utils/currentPlayer'
+import { currentPlayer } from '../../../signals/getters/currentPlayer'
 
 export function Square() {
   return (

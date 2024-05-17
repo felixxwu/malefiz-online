@@ -1,8 +1,8 @@
 import { gameOver, gameState, lastDieRoll } from '../signals/signals'
-import { getActiveItem } from './getActiveItem'
-import { getCircleFromPiece } from './getCircleFromPiece'
-import { getMyPlayer, getMyPlayerId } from './getUsers'
-import { getLegalMoves } from './legalMoves'
+import { getActiveItem } from '../signals/getters/getActiveItem'
+import { getCircleFromPiece } from '../signals/queries/getCircleFromPiece'
+import { getMyPlayer, getMyPlayerId } from '../signals/queries/getUsers'
+import { getLegalMoves } from '../signals/queries/legalMoves'
 
 export function getAction() {
   if (gameOver.value) return 'none' as const

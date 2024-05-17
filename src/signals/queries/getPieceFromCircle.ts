@@ -1,4 +1,4 @@
-import { gameState } from '../signals/signals'
+import { gameState } from '../signals'
 
 export function getPieceFromCircle(circleId: string) {
   if (!gameState.value) return null

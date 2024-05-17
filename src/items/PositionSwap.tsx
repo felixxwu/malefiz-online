@@ -2,17 +2,17 @@ import { keyframes, styled } from 'goober'
 import { Item } from '.'
 import { updateGame } from '../dbactions/updateGame'
 import { gameState, gameStateHashTable, lastDieRoll, playerModel } from '../signals/signals'
-import { getNewItems } from '../utils/getNewItems'
-import { getMyPlayerId } from '../utils/getUsers'
-import { getNextPlayer } from '../utils/playerTurns'
+import { getNewItems } from '../signals/queries/getNewItems'
+import { getMyPlayerId } from '../signals/queries/getUsers'
+import { getNextPlayer } from '../signals/getters/getNextPlayer'
 import { sleep } from '../utils/sleep'
 import { ItemAlert } from './ItemAlert'
 import { PlayerModelGroup } from '../components/MapRenderer/PlayerGroup'
 import { consts } from '../config/consts'
-import { players } from '../utils/players'
-import { currentPlayer } from '../utils/currentPlayer'
+import { playerDefs } from '../config/playerDefs'
+import { currentPlayer } from '../signals/getters/currentPlayer'
 import { useEffect, useState } from 'preact/hooks'
-import { isUserHost } from '../utils/playAiIfApplicable'
+import { isUserHost } from '../signals/getters/isUserHost'
 
 export const PositionSwap = {
   name: 'Position Swap',
@@ -98,16 +98,16 @@ export const PositionSwap = {
 } as const satisfies Item
 
 function SwapGraphic() {
-  const [randomPlayer, setRandomPlayer] = useState(players[0])
+  const [randomPlayer, setRandomPlayer] = useState(playerDefs[0])
 
-  const playerAColour = players.find(player => player.id === getMyPlayerId())?.colour
+  const playerAColour = playerDefs.find(player => player.id === getMyPlayerId())?.colour
   const myModel = playerModel.value
 
   useEffect(() => {
     ;(async () => {
       for (let i = 1; i < 6; i++) {
         await sleep(300)
-        setRandomPlayer(players[i])
+        setRandomPlayer(playerDefs[i])
       }
     })()
   }, [])

@@ -9,11 +9,12 @@ import { eyesList } from '../../playermodel/eyes'
 import { mouthList } from '../../playermodel/mouthes'
 import { IconButton } from './IconButton'
 import { useEffect, useState } from 'preact/hooks'
-import { players } from '../../utils/players'
+import { playerDefs } from '../../config/playerDefs'
+import { keyframes, styled } from 'goober'
 
 export function PlayerCustomisation() {
   const [count, setCount] = useState(0)
-  const colour = players[count % players.length].colour
+  const colour = playerDefs[count % playerDefs.length].colour
 
   useEffect(() => {
     setTimeout(() => {
@@ -38,7 +39,9 @@ export function PlayerCustomisation() {
 
   return (
     <>
-      <PlayerModelGroup colour={colour} model={playerModel.value} />
+      <Group>
+        <PlayerModelGroup colour={colour} model={playerModel.value} />
+      </Group>
       <g style={{ transform: `scale(0.4) translate(120px, 0px)` }}>
         <g style={{ transform: `translate(0px, -80px)` }}>
           <IconButton icon={ChevronLeftPath} onClick={() => changeModel(headList, 'head', -1)} />
@@ -76,3 +79,19 @@ export function PlayerCustomisation() {
     </>
   )
 }
+
+const bob = keyframes`
+  0% {
+    transform: translateY(10px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(10px);
+  }
+`
+
+const Group = styled('g')`
+  animation: ${bob} 3s infinite ease-in-out;
+`

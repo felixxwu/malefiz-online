@@ -1,5 +1,5 @@
-import { gameState } from '../signals/signals'
-import { objectMap } from './objectMap'
+import { gameState } from '../signals'
+import { objectMap } from '../../utils/objectMap'
 
 export function getDeactivatedItems() {
   return objectMap(gameState.value!.items, item => ({

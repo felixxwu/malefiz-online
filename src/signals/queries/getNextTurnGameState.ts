@@ -1,8 +1,8 @@
-import { consts } from '../config/consts'
-import { gameState } from '../signals/signals'
-import { GameState } from '../types/gameTypes'
+import { consts } from '../../config/consts'
+import { gameState } from '../signals'
+import { GameState } from '../../types/gameTypes'
 import { getNewItems } from './getNewItems'
-import { getNextPlayer } from './playerTurns'
+import { getNextPlayer } from '../getters/getNextPlayer'
 
 export function getNextTurnGameState(
   nextTurn: boolean,

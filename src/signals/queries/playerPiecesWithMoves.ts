@@ -1,5 +1,5 @@
-import { Player } from '../types/gameTypes'
-import { getCircleFromPiece } from '../utils/getCircleFromPiece'
+import { Player } from '../../types/gameTypes'
+import { getCircleFromPiece } from './getCircleFromPiece'
 import { getLegalMoves } from './legalMoves'
 
 export function playerPiecesWithMoves(player: Player) {

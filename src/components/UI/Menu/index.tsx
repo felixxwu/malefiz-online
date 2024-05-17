@@ -2,7 +2,7 @@ import { styled } from 'goober'
 import { customisationOpened, gameState, menuOpen } from '../../../signals/signals'
 import { MenuIcon } from '../../Icons'
 import { colours } from '../../../config/colours'
-import { gameId } from '../../../utils/gameId'
+import { gameId } from '../../../signals/getters/gameId'
 import { MenuContent } from './MenuContent'
 
 export function Menu() {

@@ -1,7 +1,7 @@
 import { map, menuOpen, svgTransition, svgTranslation, svgZoom } from '../../../signals/signals'
-import { fitToScreen } from '../../../utils/fitToScreen'
+import { fitToScreen } from '../../../signals/actions/fitToScreen'
 import { rollDie } from '../../../dbactions/rollDie'
-import { zoomIn, zoomOut } from '../../../utils/zoom'
+import { zoomIn, zoomOut } from '../../../signals/actions/zoom'
 import { getAction } from '../../../utils/getAction'
 
 export function handleKeydown(event: KeyboardEvent) {

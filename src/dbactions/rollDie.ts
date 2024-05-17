@@ -1,6 +1,6 @@
 import { gameStateHashTable } from '../signals/signals'
 import { GameState } from '../types/gameTypes'
-import { currentPlayer } from '../utils/currentPlayer'
+import { currentPlayer } from '../signals/getters/currentPlayer'
 import { updateGame } from './updateGame'
 
 //@ts-ignore

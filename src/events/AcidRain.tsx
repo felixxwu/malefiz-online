@@ -5,7 +5,7 @@ import { gameState, gameStateHashTable, map } from '../signals/signals'
 import { EventAlert } from './EventAlert'
 import { consts } from '../config/consts'
 import { PlayerModelGroup } from '../components/MapRenderer/PlayerGroup'
-import { players } from '../utils/players'
+import { playerDefs } from '../config/playerDefs'
 
 export const AcidRain = {
   name: 'Acid Rain',
@@ -57,13 +57,13 @@ function AcidRainGraphic() {
         style={{ strokeWidth: consts.pathStrokeWidth }}
       />
       <Player1>
-        <PlayerModelGroup model={players[0].model} colour={players[0].colour} />
+        <PlayerModelGroup model={playerDefs[0].model} colour={playerDefs[0].colour} />
       </Player1>
       <Player2>
-        <PlayerModelGroup model={players[1].model} colour={players[1].colour} />
+        <PlayerModelGroup model={playerDefs[1].model} colour={playerDefs[1].colour} />
       </Player2>
       <Player3>
-        <PlayerModelGroup model={players[2].model} colour={players[2].colour} />
+        <PlayerModelGroup model={playerDefs[2].model} colour={playerDefs[2].colour} />
       </Player3>
     </Svg>
   )

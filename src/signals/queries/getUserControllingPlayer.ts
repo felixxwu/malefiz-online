@@ -1,4 +1,4 @@
-import { PlayerID } from '../types/gameTypes'
+import { PlayerID } from '../../types/gameTypes'
 import { getUsers } from './getUsers'
 
 export function getUserControllingPlayer(playerId: PlayerID) {

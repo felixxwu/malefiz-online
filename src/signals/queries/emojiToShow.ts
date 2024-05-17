@@ -1,5 +1,5 @@
-import { consts } from '../config/consts'
-import { gameState } from '../signals/signals'
+import { consts } from '../../config/consts'
+import { gameState } from '../signals'
 import { getUserControllingPlayer } from './getUserControllingPlayer'
 import { getMyPlayerId } from './getUsers'
 

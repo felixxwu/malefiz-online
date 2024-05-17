@@ -1,8 +1,8 @@
-import { consts } from '../config/consts'
-import { updateGame } from '../dbactions/updateGame'
-import { gameState, gameStateHashTable } from '../signals/signals'
-import { objectMap } from './objectMap'
-import { objectToArray } from './objectToArray'
+import { consts } from '../../config/consts'
+import { updateGame } from '../../dbactions/updateGame'
+import { gameState, gameStateHashTable } from '../signals'
+import { objectMap } from '../../utils/objectMap'
+import { objectToArray } from '../../utils/objectToArray'
 
 //@ts-ignore
 window.addManyItems = async () => {

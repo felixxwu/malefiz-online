@@ -7,8 +7,8 @@ import {
   svgZoom,
 } from '../../../signals/signals'
 import { getDistance } from '../../../utils/getDistance'
-import { getPieceFromCircle } from '../../../utils/getPieceFromCircle'
-import { pieceBelongsToMe } from '../../../utils/pieceBelongsToMe'
+import { getPieceFromCircle } from '../../../signals/queries/getPieceFromCircle'
+import { pieceBelongsToMe } from '../../../signals/queries/pieceBelongsToMe'
 import { getCircleFromMousePos } from './utils/getCircleFromMousePos'
 
 export function handlePointerDown(event: PointerEvent) {

@@ -3,7 +3,7 @@ import { gameState } from '../../../signals/signals'
 import { ItemName, itemDefs } from '../../../items'
 import { takePieceAlert } from '../../../dbactions/takePiece'
 import { useEffect, useState } from 'preact/hooks'
-import { isMyTurn } from '../../../utils/playerTurns'
+import { isMyTurn } from '../../../signals/getters/isMyTurn'
 import { events } from '../../../events'
 
 const alerts = { takePieceAlert }

@@ -1,4 +1,4 @@
-import { svgTransition, svgZoom } from '../signals/signals'
+import { svgTransition, svgZoom } from '../signals'
 
 export function zoomIn() {
   svgTransition.value = 300

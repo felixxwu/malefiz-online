@@ -1,5 +1,5 @@
 import { pieceSelected } from '../../../signals/signals'
-import { handleCircleClick } from '../../../utils/handleCircleClick'
+import { handleCircleClick } from './handleCircleClick'
 import { getCircleFromMousePos } from './utils/getCircleFromMousePos'
 
 export function handleClick(event: MouseEvent) {

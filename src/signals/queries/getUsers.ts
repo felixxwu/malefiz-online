@@ -1,5 +1,5 @@
-import { gameState, userId } from '../signals/signals'
-import { UserID } from '../types/gameTypes'
+import { gameState, userId } from '../signals'
+import { UserID } from '../../types/gameTypes'
 
 export function getUsers() {
   const gameStateValue = gameState.value

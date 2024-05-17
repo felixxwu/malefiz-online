@@ -1,7 +1,7 @@
 import { styled } from 'goober'
 import { FullScreenIcon, MinusIcon, PlusIcon } from '../Icons'
-import { zoomIn, zoomOut } from '../../utils/zoom'
-import { fitToScreen } from '../../utils/fitToScreen'
+import { zoomIn, zoomOut } from '../../signals/actions/zoom'
+import { fitToScreen } from '../../signals/actions/fitToScreen'
 import { map } from '../../signals/signals'
 
 export function Navigation() {
