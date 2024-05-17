@@ -5,7 +5,7 @@ import { MapRenderer } from './components/MapRenderer'
 import { useEffect } from 'preact/hooks'
 import { UI } from './components/UI'
 import { colours } from './config/colours'
-import { gameState, map, screenHeight, screenWidth, textOpacity } from './signals/signals'
+import { gameState, map, screenHeight, screenWidth } from './signals/signals'
 import { fitToScreen } from './signals/actions/fitToScreen'
 import { gameId } from './signals/getters/gameId'
 import { doc, onSnapshot } from 'firebase/firestore'
@@ -13,8 +13,7 @@ import { GameState } from './types/gameTypes'
 import { mapList } from './maps/mapList'
 import { playAiIfApplicable } from './signals/actions/playAiIfApplicable'
 import { db } from './config/firebase'
-import { zoomIntoCircle } from './signals/actions/zoomIntoCircle'
-import { sleep } from './utils/sleep'
+import { introSequence } from './signals/actions/introSequence'
 
 export function App() {
   useEffect(() => {
@@ -62,10 +61,3 @@ const Div = styled('div')`
   height: 100vh;
   overflow: hidden;
 `
-
-export async function introSequence() {
-  await zoomIntoCircle({ transition: 0 })
-  fitToScreen(map.value, { transition: 1300, translateDelay: 600 })
-  await sleep(700)
-  textOpacity.value = 1
-}
