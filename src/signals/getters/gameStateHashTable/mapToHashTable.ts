@@ -1,9 +1,9 @@
-import { ItemName } from '../items'
-import { map } from '../signals/signals'
-import { GameState, Stone } from '../types/gameTypes'
-import { Circle } from '../types/mapTypes'
+import { ItemName } from '../../../items'
+import { map } from '../../signals'
+import { GameState, Stone } from '../../../types/gameTypes'
+import { Circle } from '../../../types/mapTypes'
 import { addDistancesToFinish } from './distanceToFinish'
-import { objectToArray } from './objectToArray'
+import { objectToArray } from '../../../utils/objectToArray'
 
 export type HashTable = {
   [circleId: string]: {

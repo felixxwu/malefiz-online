@@ -14,7 +14,7 @@ import { onGameStateChange } from './onGameStateChange'
 // TODO: remove export keyword
 export const gameState = signal<GameState | null>(null)
 gameState.subscribe(onGameStateChange)
-export { gameStateHashTable } from './getters'
+export { gameStateHashTable } from './getters/gameStateHashTable'
 
 export type Page = 'main' | 'customise' | 'invite' | 'help'
 

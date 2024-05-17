@@ -1,11 +1,6 @@
 import { computed } from '@preact/signals'
-import { HashTable, mapToHashTable } from '../../utils/mapToHashTable'
 import { getMyPlayerId } from '../queries/getUsers'
 import { gameState } from '../signals'
-
-export const gameStateHashTable = computed<HashTable>(() => {
-  return gameState.value ? mapToHashTable(gameState.value) : {}
-})
 
 export const myTurn = computed(() => gameState.value?.playerTurn === getMyPlayerId())
 export const stoneInPit = computed(() =>
