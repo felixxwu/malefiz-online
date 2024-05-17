@@ -14,6 +14,7 @@ import { sleep } from '../utils/sleep'
 import { updateGame } from '../dbactions/updateGame'
 import { ItemName, itemDefs } from '../items'
 import { isUserHost } from './getters/isUserHost'
+import { consts } from '../config/consts'
 
 export function onGameStateChange() {
   console.info(`gameState.value`, gameState.value)
@@ -80,7 +81,10 @@ async function activateEvent() {
   const event = events.find(event => event.name === gameState.value!.alert?.id)
   if (event && isUserHost()) {
     await sleep(3000)
-    await updateGame({ alert: null })
-    event.onActivate()
+    await updateGame({
+      alert: null,
+      turnsUntilEvent: consts.eventInterval,
+    })
+    event?.onActivate()
   }
 }

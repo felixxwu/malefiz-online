@@ -1,4 +1,3 @@
-import { consts } from '../../config/consts'
 import { gameState } from '../signals'
 import { GameState } from '../../types/gameTypes'
 import { getNewItems } from './getNewItems'
@@ -18,15 +17,12 @@ export function getNextTurnGameState(
       ? {
           playerTurn: getNextPlayer(),
           items: getNewItems(dontPutItemsOnCircles),
-          turnsUntilEvent:
-            gameState.value!.turnsUntilEvent === 0
-              ? consts.eventInterval
-              : gameState.value!.turnsUntilEvent - 1,
+          turnsUntilEvent: gameState.value!.turnsUntilEvent - 1,
         }
       : {}),
     dieRoll: null,
     ...(randomEvent
-      ? { alert: gameState.value!.turnsUntilEvent === 0 ? { id: randomEvent } : null }
+      ? { alert: gameState.value!.turnsUntilEvent === 0 && nextTurn ? { id: randomEvent } : null }
       : {}),
   }
 }
