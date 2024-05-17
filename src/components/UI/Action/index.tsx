@@ -1,21 +1,14 @@
 import { keyframes, styled } from 'goober'
 import { colours } from '../../../config/colours'
-import { gameOver, gameState } from '../../../signals/signals'
 import { updateGame } from '../../../dbactions/updateGame'
 import { playerDefs } from '../../../config/playerDefs'
 import { rollDie } from '../../../dbactions/rollDie'
 import { RandomDie } from '../RandomDie'
 import { activeItem } from '../../../signals/getters/activeItem'
 import { getAction } from './getAction'
+import { playerWhoIsPlaying } from '../../../signals/getters'
 
 export function Action() {
-  if (gameOver.value) return null
-  if (!gameState.value) return null
-
-  const playerWhoIsPlaying = gameState.value.players.find(
-    player => player.id === gameState.value!.playerTurn
-  )
-
   const action = getAction()
 
   return {
@@ -32,7 +25,7 @@ export function Action() {
     ),
     pickedupmessage: () => (
       <Div>
-        {playerWhoIsPlaying!.name} picked up {activeItem.value!.name}
+        {playerWhoIsPlaying.value!.name} picked up {activeItem.value!.name}
       </Div>
     ),
     startgame: () => (
@@ -66,7 +59,7 @@ export function Action() {
         </Div>
       </>
     ),
-    playerturn: () => <Div>{playerWhoIsPlaying!.name}'s turn</Div>,
+    playerturn: () => <Div>{playerWhoIsPlaying.value!.name}'s turn</Div>,
     none: () => null,
   }[action]()
 }
