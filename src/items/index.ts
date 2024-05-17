@@ -6,12 +6,19 @@ import { StoneMove } from './StoneMove'
 import { LowRoller } from './LowRoller'
 import { PositionSwap } from './PositionSwap'
 
+export type ActionConfig = {
+  onClick: () => void
+  text: string
+  showDie: boolean
+  clickable: boolean
+}
+
 export type Item = {
   name: string
   description: string
   colour: string
   icon: () => JSX.Element
-  actionWhenActive: { onClick: () => void; text: string; showDie: boolean; clickable: boolean }
+  actionWhenActive: ActionConfig
   alert: () => JSX.Element
   aiAction: () => void
   onPickup: (pieceId: string, circleId: string) => void

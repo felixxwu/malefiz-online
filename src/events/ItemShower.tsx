@@ -48,7 +48,7 @@ function ItemShowerGraphic() {
         <ItemSvg
           colour={itemDefs['Roll Again'].colour}
           Icon={itemDefs['Roll Again'].icon}
-          style={{ animationDelay: 500 + 'ms' }}
+          style={{ animationDelay: 1000 + 'ms' }}
         />
       </Item2Group>
     </Svg>

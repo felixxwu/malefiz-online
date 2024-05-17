@@ -3,7 +3,7 @@ import { Item } from '.'
 import { updateGame } from '../dbactions/updateGame'
 import { gameState, gameStateHashTable, lastDieRoll, playerModel } from '../signals/signals'
 import { getNewItems } from '../signals/queries/getNewItems'
-import { getMyPlayerId } from '../signals/queries/getUsers'
+import { myPlayerId } from '../signals/getters/myPlayerId'
 import { getNextPlayer } from '../signals/getters/getNextPlayer'
 import { sleep } from '../utils/sleep'
 import { ItemAlert } from './ItemAlert'
@@ -102,7 +102,7 @@ export const PositionSwap = {
 function SwapGraphic() {
   const [randomPlayer, setRandomPlayer] = useState(playerDefs[0])
 
-  const playerAColour = playerDefs.find(player => player.id === getMyPlayerId())?.colour
+  const playerAColour = playerDefs.find(player => player.id === myPlayerId.value)?.colour
   const myModel = playerModel.value
 
   useEffect(() => {

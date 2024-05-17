@@ -1,8 +1,8 @@
 import { computed } from '@preact/signals'
-import { getMyPlayerId } from '../queries/getUsers'
+import { myPlayerId } from './myPlayerId'
 import { gameState } from '../signals'
 
-export const myTurn = computed(() => gameState.value?.playerTurn === getMyPlayerId())
+export const myTurn = computed(() => gameState.value?.playerTurn === myPlayerId.value)
 export const stoneInPit = computed(() =>
   gameState.value?.stones.find(stone => stone.circleId === null)
 )

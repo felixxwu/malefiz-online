@@ -1,67 +1,20 @@
 import { keyframes, styled } from 'goober'
 import { colours } from '../../../config/colours'
-import { updateGame } from '../../../dbactions/updateGame'
-import { playerDefs } from '../../../config/playerDefs'
-import { rollDie } from '../../../dbactions/rollDie'
 import { RandomDie } from '../RandomDie'
-import { activeItem } from '../../../signals/getters/activeItem'
-import { getAction } from './getAction'
-import { playerWhoIsPlaying } from '../../../signals/getters'
+import { action } from './action'
 
 export function Action() {
-  const action = getAction()
-
-  return {
-    itemaction: () => (
-      <>
-        {activeItem.value!.actionWhenActive.showDie && <RandomDie />}
-        <Div
-          onClick={activeItem.value!.actionWhenActive.onClick}
-          {...(activeItem.value!.actionWhenActive.clickable ? { className: 'clickable' } : {})}
-        >
-          {activeItem.value!.actionWhenActive.text}
-        </Div>
-      </>
-    ),
-    pickedupmessage: () => (
-      <Div>
-        {playerWhoIsPlaying.value!.name} picked up {activeItem.value!.name}
+  return (
+    <>
+      {action.value?.showDie && <RandomDie />}
+      <Div
+        onClick={action.value?.onClick}
+        {...(action.value?.clickable ? { className: 'clickable' } : {})}
+      >
+        {action.value?.text}
       </Div>
-    ),
-    startgame: () => (
-      <Div onClick={() => updateGame({ playerTurn: playerDefs[0].id })} className='clickable'>
-        Start game
-      </Div>
-    ),
-    placestone: () => <Div>Place stone</Div>,
-    rollagain: () => (
-      <>
-        <RandomDie />
-        <Div onClick={rollDie} className='clickable'>
-          Roll again
-        </Div>
-      </>
-    ),
-    roll: () => (
-      <>
-        <RandomDie />
-        <Div onClick={rollDie} className='clickable'>
-          Roll
-        </Div>
-      </>
-    ),
-    yourturn: () => <Div>Your turn</Div>,
-    rollagainnolegal: () => (
-      <>
-        <RandomDie />
-        <Div onClick={rollDie} className='clickable'>
-          Roll again (no legal moves)
-        </Div>
-      </>
-    ),
-    playerturn: () => <Div>{playerWhoIsPlaying.value!.name}'s turn</Div>,
-    none: () => null,
-  }[action]()
+    </>
+  )
 }
 
 const flash = keyframes`

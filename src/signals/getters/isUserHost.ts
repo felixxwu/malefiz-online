@@ -1,5 +1,6 @@
 import { gameState } from '../signals'
-import { getMyPlayerId, getUsers } from '../queries/getUsers'
+import { getUsers } from '../queries/getUsers'
+import { myPlayerId } from './myPlayerId'
 
 export function isUserHost() {
   const users = getUsers()
@@ -7,6 +8,6 @@ export function isUserHost() {
   const humanPlayers = users.map(u =>
     gameState.value!.players.find(p => p.id === u.playerToControl)
   )
-  const myIndex = humanPlayers.findIndex(p => p?.id === getMyPlayerId())
+  const myIndex = humanPlayers.findIndex(p => p?.id === myPlayerId.value)
   return myIndex === 0
 }

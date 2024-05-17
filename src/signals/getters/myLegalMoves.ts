@@ -1,5 +1,5 @@
 import { computed } from '@preact/signals'
-import { getMyPlayer } from '../queries/getUsers'
+import { getMyPlayer } from '../queries/getMyPlayer'
 import { getLegalMoves } from '../queries/legalMoves'
 import { getCircleFromPiece } from '../queries/getCircleFromPiece'
 

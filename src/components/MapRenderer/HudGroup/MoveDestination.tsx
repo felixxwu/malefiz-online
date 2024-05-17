@@ -1,6 +1,6 @@
 import { keyframes, styled } from 'goober'
 import { Circle } from '../../../types/mapTypes'
-import { getMyPlayer } from '../../../signals/queries/getUsers'
+import { getMyPlayer } from '../../../signals/queries/getMyPlayer'
 
 export function MoveDestination(props: { circle: Circle }) {
   const { x, y } = { x: props.circle.position.x * 100, y: props.circle.position.y * 100 }

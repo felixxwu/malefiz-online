@@ -2,7 +2,7 @@ import { map, menuOpen, svgTransition, svgTranslation, svgZoom } from '../../../
 import { fitToScreen } from '../../../signals/actions/fitToScreen'
 import { rollDie } from '../../../dbactions/rollDie'
 import { zoomIn, zoomOut } from '../../../signals/actions/zoom'
-import { getAction } from '../../UI/Action/getAction'
+import { action } from '../../UI/Action/action'
 
 export function handleKeydown(event: KeyboardEvent) {
   if (event.key === 'Escape') {
@@ -45,11 +45,7 @@ export function handleKeydown(event: KeyboardEvent) {
   if (event.key === 'f') {
     fitToScreen(map.value, {})
   }
-  if (
-    (event.key === 'r' && getAction() === 'roll') ||
-    getAction() === 'rollagain' ||
-    getAction() === 'rollagainnolegal'
-  ) {
+  if (event.key === 'r' && action.value?.text?.toLowerCase()?.includes('roll')) {
     rollDie()
   }
 }

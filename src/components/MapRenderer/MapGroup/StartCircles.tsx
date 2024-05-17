@@ -2,14 +2,13 @@ import { styled } from 'goober'
 import { gameState, gameStateHashTable, map, pickEmoji } from '../../../signals/signals'
 import { playerDefs } from '../../../config/playerDefs'
 import { joinGame } from '../../../dbactions/joinGame'
-import { getMyPlayerId } from '../../../signals/queries/getUsers'
+import { myPlayerId } from '../../../signals/getters/myPlayerId'
 import { polygonToXY } from '../../../utils/polygonToXY'
 import { getUserControllingPlayer } from '../../../signals/queries/getUserControllingPlayer'
 import { emojiToShow } from '../../../signals/queries/emojiToShow'
 
 export function StartCircles() {
   const startCircles = map.value.filter(circle => circle.start)
-  const myPlayerId = getMyPlayerId()
 
   return (
     <>
@@ -18,13 +17,13 @@ export function StartCircles() {
         const userControllingPlayer = getUserControllingPlayer(player.id)
 
         const joinText = (() => {
-          if (player.id === myPlayerId) return `Playing as ${player.name}`
-          if (myPlayerId) return `${player.name} (${userControllingPlayer ? 'Human' : 'AI'})`
+          if (player.id === myPlayerId.value) return `Playing as ${player.name}`
+          if (myPlayerId.value) return `${player.name} (${userControllingPlayer ? 'Human' : 'AI'})`
           if (userControllingPlayer) return `${player.name} (Human)`
           return `Play as ${player.name}`
         })()
 
-        const showJoinButton = !gameState.value?.playerTurn || !getMyPlayerId()
+        const showJoinButton = !gameState.value?.playerTurn || !myPlayerId.value
         const neightbourPos = gameStateHashTable.value[circle.neighbours[0]].circle!.position
         const posDiff = {
           x: circle.position.x - neightbourPos.x,
@@ -48,7 +47,7 @@ export function StartCircles() {
               <>
                 <rect
                   onClick={() => {
-                    if (!myPlayerId && !userControllingPlayer) joinGame(player.id)
+                    if (!myPlayerId.value && !userControllingPlayer) joinGame(player.id)
                   }}
                   x={joinButtonPos.x - 100}
                   y={joinButtonPos.y - 22}
@@ -60,7 +59,7 @@ export function StartCircles() {
                     strokeWidth: 3,
                     fill: player.colour,
                     cursor: 'pointer',
-                    pointerEvents: !myPlayerId && !userControllingPlayer ? 'all' : 'none',
+                    pointerEvents: !myPlayerId.value && !userControllingPlayer ? 'all' : 'none',
                   }}
                 ></rect>
                 <text
@@ -86,7 +85,7 @@ export function StartCircles() {
                     cursor: 'pointer',
                     pointerEvents: 'all',
                   }}
-                  onClick={() => (getMyPlayerId() === player.id ? (pickEmoji.value = true) : {})}
+                  onClick={() => (myPlayerId.value === player.id ? (pickEmoji.value = true) : {})}
                 >
                   {emojiToShow(player.id)}
                 </text>

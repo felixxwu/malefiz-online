@@ -1,5 +1,5 @@
 import { Move } from '../../../types/gameTypes'
-import { getMyPlayer } from '../../../signals/queries/getUsers'
+import { getMyPlayer } from '../../../signals/queries/getMyPlayer'
 
 export function MoveLine(props: { move: Move }) {
   const myColour = getMyPlayer()!.colour

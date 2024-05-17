@@ -1,7 +1,7 @@
 import { styled } from 'goober'
 import { circleHovered, gameState } from '../../../signals/signals'
 import { consts } from '../../../config/consts'
-import { getMyPlayer } from '../../../signals/queries/getUsers'
+import { getMyPlayer } from '../../../signals/queries/getMyPlayer'
 import { colours } from '../../../config/colours'
 
 export function HoverGroup() {

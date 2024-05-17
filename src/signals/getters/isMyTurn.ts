@@ -1,8 +1,8 @@
 import { gameState } from '../signals'
-import { getMyPlayerId } from '../queries/getUsers'
+import { myPlayerId } from './myPlayerId'
 
 export function isMyTurn(): boolean {
   if (!gameState.value) return false
-  if (!getMyPlayerId()) return false
-  return gameState.value.playerTurn === getMyPlayerId()
+  if (!myPlayerId.value) return false
+  return gameState.value.playerTurn === myPlayerId.value
 }
