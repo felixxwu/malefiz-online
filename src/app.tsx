@@ -14,6 +14,9 @@ import { mapList } from './maps/mapList'
 import { playAiIfApplicable } from './signals/actions/playAiIfApplicable'
 import { db } from './config/firebase'
 import { introSequence } from './signals/actions/introSequence'
+import { setupInitAudio } from './audio/initAudio'
+
+setupInitAudio()
 
 export function App() {
   useEffect(() => {

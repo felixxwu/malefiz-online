@@ -3,8 +3,11 @@ import { gameState, lastDieRoll } from '../signals/signals'
 import { consts } from '../config/consts'
 import { updateGame } from './updateGame'
 import { getNextTurnGameState } from '../signals/queries/getNextTurnGameState'
+import { playMovePiece } from '../audio/playMovePiece'
 
 export async function movePiece(pieceId: string, circleId: string) {
+  playMovePiece()
+
   await updateGame({
     players: gameState.value!.players.map(player => {
       if (gameState.value!.playerTurn === player.id) {

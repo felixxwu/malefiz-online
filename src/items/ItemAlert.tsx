@@ -10,12 +10,14 @@ export function ItemAlert(props: { item: Item; children?: ComponentChildren }) {
         <ItemSvg colour={props.item.colour} Icon={props.item.icon} />
       </Svg>
       <H1>{props.item.name}</H1>
+      <div>{props.item.description}</div>
       {props.children}
     </Div>
   )
 }
 
 const Div = styled('div')`
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -11,6 +11,8 @@ import { IconButton } from './IconButton'
 import { useEffect, useState } from 'preact/hooks'
 import { playerDefs } from '../../config/playerDefs'
 import { keyframes, styled } from 'goober'
+import { playChord } from '../../audio/playChord'
+import { consts } from '../../config/consts'
 
 export function PlayerCustomisation() {
   const [count, setCount] = useState(0)
@@ -44,34 +46,67 @@ export function PlayerCustomisation() {
       </Group>
       <g style={{ transform: `scale(0.4) translate(120px, 0px)` }}>
         <g style={{ transform: `translate(0px, -80px)` }}>
-          <IconButton icon={ChevronLeftPath} onClick={() => changeModel(headList, 'head', -1)} />
+          <IconButton
+            icon={ChevronLeftPath}
+            onClick={() => {
+              playChord(consts.chords[1])
+              return changeModel(headList, 'head', -1)
+            }}
+          />
           <g style={{ transform: `translate(80px, 11px)` }}>
             <Head colour={colour} />
           </g>
           <g style={{ transform: `translate(134px, 0px)` }}>
-            <IconButton icon={ChevronRightPath} onClick={() => changeModel(headList, 'head', 1)} />
+            <IconButton
+              icon={ChevronRightPath}
+              onClick={() => {
+                playChord(consts.chords[2])
+                return changeModel(headList, 'head', 1)
+              }}
+            />
           </g>
         </g>
 
         <g style={{ transform: `translate(0px, -10px)` }}>
-          <IconButton icon={ChevronLeftPath} onClick={() => changeModel(eyesList, 'eyes', -1)} />
+          <IconButton
+            icon={ChevronLeftPath}
+            onClick={() => {
+              playChord(consts.chords[3])
+              return changeModel(eyesList, 'eyes', -1)
+            }}
+          />
           <g style={{ transform: `translate(80px, 11px)` }}>
             <Eyes colour={colour} />
           </g>
           <g style={{ transform: `translate(134px, 0px)` }}>
-            <IconButton icon={ChevronRightPath} onClick={() => changeModel(eyesList, 'eyes', 1)} />
+            <IconButton
+              icon={ChevronRightPath}
+              onClick={() => {
+                playChord(consts.chords[4])
+                return changeModel(eyesList, 'eyes', 1)
+              }}
+            />
           </g>
         </g>
 
         <g style={{ transform: `translate(0px, 60px)` }}>
-          <IconButton icon={ChevronLeftPath} onClick={() => changeModel(mouthList, 'mouth', -1)} />
+          <IconButton
+            icon={ChevronLeftPath}
+            onClick={() => {
+              playChord(consts.chords[5])
+              return changeModel(mouthList, 'mouth', -1)
+            }}
+          />
           <g style={{ transform: `translate(80px, 11px)` }}>
             <Mouth colour={colour} />
           </g>
           <g style={{ transform: `translate(134px, 0px)` }}>
             <IconButton
               icon={ChevronRightPath}
-              onClick={() => changeModel(mouthList, 'mouth', 1)}
+              onClick={() => {
+                playChord(consts.chords[6])
+                return changeModel(mouthList, 'mouth', 1)
+              }}
             />
           </g>
         </g>

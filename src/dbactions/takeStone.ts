@@ -1,9 +1,12 @@
+import { playStonePickup } from '../audio/playStonePickup'
 import { consts } from '../config/consts'
 import { gameState } from '../signals/signals'
 import { sleep } from '../utils/sleep'
 import { updateGame } from './updateGame'
 
 export async function takeStone(pieceId: string, circleId: string) {
+  playStonePickup()
+
   await updateGame({
     players: gameState.value!.players.map(player => {
       if (gameState.value!.playerTurn === player.id) {

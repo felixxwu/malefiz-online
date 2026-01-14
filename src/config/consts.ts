@@ -15,4 +15,12 @@ export const consts = {
   itemInterval: 4,
   customEase: 'cubic-bezier(0.8, 0, 0.2, 1)',
   customEaseOut: 'cubic-bezier(0.2, 1, 0.2, 1)',
+  chords: {
+    1: ['A3', 'C3', 'D#3', 'F#3'],
+    2: ['A3', 'C3', 'D3', 'F3'],
+    3: ['A3', 'C3', 'E3', 'G3'],
+    4: ['A3', 'B3', 'D3', 'F#3'],
+    5: ['B3', 'D3', 'E3', 'G3'],
+    6: ['A3', 'A#3', 'D3', 'F3'],
+  },
 }

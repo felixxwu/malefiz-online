@@ -1,9 +1,12 @@
+import { playItemPickup } from '../audio/playItemPickup'
 import { consts } from '../config/consts'
 import { ItemName, itemDefs } from '../items'
 import { gameState } from '../signals/signals'
 import { updateGame } from './updateGame'
 
 export async function takeItem(itemName: ItemName, pieceId: string, circleId: string) {
+  playItemPickup()
+
   await updateGame({
     // move piece to item
     players: gameState.value!.players.map(player => {

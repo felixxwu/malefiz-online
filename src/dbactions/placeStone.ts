@@ -1,8 +1,9 @@
-import { gameState } from '../signals/signals'
+import { gameState, lastDieRoll } from '../signals/signals'
 import { getNextTurnGameState } from '../signals/queries/getNextTurnGameState'
 import { updateGame } from './updateGame'
 import { objectMap } from '../utils/objectMap'
 import { objectToArray } from '../utils/objectToArray'
+import { playStonePlace } from '../audio/playStonePlace'
 
 export async function placeStone(clickedCircleId: string) {
   const itemAtCircle = objectToArray(gameState.value!.items).find(item =>
@@ -21,7 +22,7 @@ export async function placeStone(clickedCircleId: string) {
       }
     }),
 
-    ...getNextTurnGameState(true, [clickedCircleId]),
+    ...getNextTurnGameState(lastDieRoll.value !== 6, [clickedCircleId]),
   }
 
   if (itemAtCircle) {
@@ -34,6 +35,8 @@ export async function placeStone(clickedCircleId: string) {
         : item
     )
   }
+
+  playStonePlace()
 
   await updateGame(newGameState)
 }

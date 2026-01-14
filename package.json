@@ -13,7 +13,8 @@
     "firebase": "^10.11.1",
     "goober": "^2.1.14",
     "preact": "^10.19.6",
-    "qrcode-generator": "^1.4.4"
+    "qrcode-generator": "^1.4.4",
+    "tone": "^15.1.22"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.8.2",

@@ -1,6 +1,8 @@
 import { map, menuOpen, svgTransition, svgTranslation, svgZoom } from '../../../signals/signals'
 import { fitToScreen } from '../../../signals/actions/fitToScreen'
 import { zoomIn, zoomOut } from '../../../signals/actions/zoom'
+import { rollDie } from '../../../dbactions/rollDie'
+import { dieNotRolled, myTurn } from '../../../signals/getters'
 
 export function handleKeydown(event: KeyboardEvent) {
   if (event.key === 'Escape') {
@@ -32,6 +34,11 @@ export function handleKeydown(event: KeyboardEvent) {
     svgTranslation.value = {
       x: svgTranslation.value.x - 100 / svgZoom.value,
       y: svgTranslation.value.y,
+    }
+  }
+  if (event.key === 'r') {
+    if (myTurn.value && dieNotRolled.value) {
+      rollDie()
     }
   }
   if (event.key === 'e') {

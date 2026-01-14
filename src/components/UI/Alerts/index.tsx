@@ -3,7 +3,6 @@ import { gameState } from '../../../signals/signals'
 import { ItemName, itemDefs } from '../../../items'
 import { takePieceAlert } from '../../../dbactions/takePiece'
 import { useEffect, useState } from 'preact/hooks'
-import { isMyTurn } from '../../../signals/getters/isMyTurn'
 import { events } from '../../../events'
 
 const alerts = { takePieceAlert }
@@ -41,7 +40,6 @@ export function Alerts() {
   })()
 
   if (Component === null) return null
-  if (ItemComponent !== null && OtherComponent === null && !isMyTurn()) return null
 
   return (
     <Div

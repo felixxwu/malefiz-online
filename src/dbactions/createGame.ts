@@ -7,8 +7,12 @@ import { homePageMap } from '../maps/home'
 import { arcadeEventSelection, textOpacity } from '../signals/signals'
 import { sleep } from '../utils/sleep'
 import { createGameItems } from '../items'
+import { playChord } from '../audio/playChord'
+import { consts } from '../config/consts'
 
 export async function createGame(mapNum: number) {
+  playChord(consts.chords[3])
+
   const gameState = mapList[mapNum].gameState
   // items/events may have changed since map was parsed
   const gameStateWithItems: GameState = {

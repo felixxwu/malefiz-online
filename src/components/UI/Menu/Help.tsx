@@ -124,6 +124,7 @@ const keyboardShortcuts = [
   ['Q', 'Zoom out'],
   ['E', 'Zoom in'],
   ['F', 'Fit to screen'],
+  ['R', 'Roll die'],
   ['Esc', 'Open/close Menu'],
   ['Scroll', 'Pan up/down'],
   ['Shift + Scroll', 'Pan left/right'],

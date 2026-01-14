@@ -1,4 +1,4 @@
-import { updateGame } from '../dbactions/updateGame'
+import { rollDie } from '../dbactions/rollDie'
 import { getDeactivatedItems } from '../signals/getters/getDeactivatedItems'
 import { Item } from './'
 import { ItemAlert } from './ItemAlert'
@@ -36,7 +36,7 @@ export const LowRoller = {
   ),
   actionWhenActive: {
     onClick: async () => {
-      updateGame({ dieRoll: Math.floor(Math.random() * 3) + 1, items: getDeactivatedItems() })
+      rollDie({ items: getDeactivatedItems() }, 3)
     },
     text: 'Roll 1 to 3',
     showDie: true,
@@ -46,6 +46,6 @@ export const LowRoller = {
   alert: () => <ItemAlert item={LowRoller} />,
   onCircleClickWhenActive: null,
   aiAction: () => {
-    updateGame({ dieRoll: Math.floor(Math.random() * 3) + 1, items: getDeactivatedItems() })
+    rollDie({ items: getDeactivatedItems() }, 3)
   },
 } as const satisfies Item
