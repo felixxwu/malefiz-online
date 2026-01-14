@@ -7,6 +7,7 @@ import { Menu } from './Menu'
 import { Navigation } from './Navigation'
 import { WinScreen } from './WinScreen'
 import { useEffect, useState } from 'preact/hooks'
+import { StartButton } from './StartButton'
 
 export function UI() {
   const [showLCPFix, setShowLCPFix] = useState(true)
@@ -27,6 +28,7 @@ export function UI() {
       <EmojiPicker />
       <ItemPicker />
       {showLCPFix && <LCPFix>Malefiz (Barricade)</LCPFix>}
+      <StartButton />
     </>
   )
 }

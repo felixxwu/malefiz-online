@@ -79,7 +79,6 @@ export const setupInitAudio = () => {
   initializeVolume()
 
   window.addEventListener('click', initAudio, { once: true })
-  window.addEventListener('keydown', initAudio, { once: true })
   window.addEventListener('pointerdown', initAudio, { once: true })
   window.addEventListener('touchstart', initAudio, { once: true })
 }

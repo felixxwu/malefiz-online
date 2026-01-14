@@ -32,7 +32,9 @@ export function MapRenderer() {
     <Svg
       width={screenWidth.value}
       height={screenHeight.value}
-      style={{ cursor: circleHovered.value && isMyTurn() ? 'pointer' : 'default' }}
+      style={{
+        cursor: circleHovered.value && (isMyTurn() || !gameState.value) ? 'pointer' : 'default',
+      }}
       onClick={handleClick}
       onPointerDown={handlePointerDown}
       onPointerMove={HandlePointerMove}

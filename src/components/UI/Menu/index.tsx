@@ -1,11 +1,19 @@
 import { styled } from 'goober'
-import { customisationOpened, gameState, menuOpen, menuPage } from '../../../signals/signals'
+import {
+  customisationOpened,
+  gameState,
+  menuOpen,
+  menuPage,
+  started,
+} from '../../../signals/signals'
 import { MenuIcon } from '../../Icons'
 import { colours } from '../../../config/colours'
 import { gameId } from '../../../signals/getters/gameId'
 import { MenuContent } from './MenuContent'
 
 export function Menu() {
+  if (!started.value) return null
+
   function openMenu(e: MouseEvent) {
     menuOpen.value = true
     e.stopPropagation()
