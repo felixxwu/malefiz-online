@@ -11,7 +11,7 @@ export const consts = {
   placeholderEmoji: `🫥`,
   temperIncrease: 3,
   temperDecrease: 0.5,
-  eventInterval: 20,
+  eventInterval: 5,
   itemInterval: 4,
   customEase: 'cubic-bezier(0.8, 0, 0.2, 1)',
   customEaseOut: 'cubic-bezier(0.2, 1, 0.2, 1)',

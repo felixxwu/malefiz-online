@@ -23,8 +23,13 @@ export function Menu() {
       gameState.value &&
       gameState.value.turnsUntilEvent < 7 &&
       gameState.value.eventsEnabled.length > 0
-    )
+    ) {
+      if (gameState.value.turnsUntilEvent <= 1) {
+        return 'Random event next turn'
+      }
+
       return `Random event in ${gameState.value.turnsUntilEvent} turns`
+    }
     return null
   })()
 

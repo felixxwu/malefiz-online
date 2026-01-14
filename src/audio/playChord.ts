@@ -5,6 +5,10 @@ import { gameStateHashTable } from '../signals/getters/gameStateHashTable'
 
 export function playChord(chord: string[]) {
   for (const note of chord) {
+    if (!note) {
+      console.warn('playChord: Invalid note in chord', chord)
+      continue
+    }
     playPluck({
       note: note,
       type: 'sawtooth',
@@ -33,8 +37,6 @@ export function playChord(chord: string[]) {
     }
 
     if (closestDistance !== null) {
-      console.log('Closest piece distance to finish:', closestDistance)
-      console.log('setting to:', 200 + closestDistance * 3)
       setInterval(150 + closestDistance * 5)
     }
   }

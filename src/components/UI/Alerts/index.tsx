@@ -5,7 +5,17 @@ import { takePieceAlert } from '../../../dbactions/takePiece'
 import { useEffect, useState } from 'preact/hooks'
 import { events } from '../../../events'
 
-const alerts = { takePieceAlert }
+function eventWarningAlert() {
+  return (
+    <EventWarningDiv>
+      <div>⁉️</div>
+      <h1>Event incoming</h1>
+      <div>A random event will occur in the next round</div>
+    </EventWarningDiv>
+  )
+}
+
+const alerts = { takePieceAlert, eventWarningAlert }
 
 export function Alerts() {
   const [showAlert, setShowAlert] = useState(false)
@@ -74,4 +84,23 @@ const Div = styled('div')`
   justify-content: center;
   align-items: center;
   transition: 0.2s;
+`
+
+const EventWarningDiv = styled('div')`
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+
+  h1 {
+    margin: 0;
+    font-size: 48px;
+  }
+
+  div:first-child {
+    font-size: 64px;
+  }
 `

@@ -8,6 +8,6 @@ export async function displayAlert(alert: Alert) {
 
   playAlert()
 
-  await sleep(2500)
+  await sleep(3500)
   await updateGame({ alert: null })
 }

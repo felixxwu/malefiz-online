@@ -15,6 +15,9 @@ import { updateGame } from '../dbactions/updateGame'
 import { ItemName, itemDefs } from '../items'
 import { isUserHost } from './getters/isUserHost'
 import { consts } from '../config/consts'
+import { displayAlert } from '../dbactions/displayAlert'
+
+let eventWarningShown = false
 
 export function onGameStateChange() {
   console.info(`gameState.value`, gameState.value)
@@ -22,6 +25,7 @@ export function onGameStateChange() {
   resolveMultipleUsersPerPlayer()
   saveDieRoll()
   checkForGameOver()
+  checkEventWarning()
   activateItem()
   activateEvent()
 }
@@ -63,6 +67,23 @@ function checkForGameOver() {
       }
     }
   })
+}
+
+async function checkEventWarning() {
+  if (!gameState.value) return
+  // Show warning when there's 1 turn left before an event and no alert is currently showing
+  if (
+    gameState.value.turnsUntilEvent === 1 &&
+    gameState.value.alert === null &&
+    !eventWarningShown
+  ) {
+    eventWarningShown = true
+    await displayAlert({ id: 'eventWarningAlert' })
+  }
+  // Reset flag when turnsUntilEvent changes (event happened or countdown reset)
+  if (gameState.value.turnsUntilEvent !== 1) {
+    eventWarningShown = false
+  }
 }
 
 async function activateItem() {

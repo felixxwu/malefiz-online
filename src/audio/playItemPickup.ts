@@ -7,6 +7,10 @@ export async function playItemPickup() {
   await sleep(1000)
   for (let i = 0; i < 4; i++) {
     for (const note of currentChord) {
+      if (!note) {
+        console.warn('playItemPickup: Invalid note in chord', currentChord)
+        continue
+      }
       playPluck({
         note: Tone.Frequency(note).transpose(12).toNote(),
         type: 'sawtooth',

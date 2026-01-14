@@ -30,6 +30,35 @@ export async function playPluck({
   amp: { attack: number; decay: number; sustain: number; gain: number }
   lowpass: { attack: number; decay: number; sustain: number; gain: number; q: number }
 }) {
+  // Validate inputs to prevent Tone.js errors
+  if (!note || note === undefined || note === null) {
+    console.warn('playPluck: Invalid note parameter', note)
+    return
+  }
+
+  // Validate numeric parameters
+  const validateNumber = (value: number, name: string) => {
+    if (value === undefined || value === null || !isFinite(value) || isNaN(value)) {
+      console.warn(`playPluck: Invalid ${name} parameter`, value)
+      return false
+    }
+    return true
+  }
+
+  if (
+    !validateNumber(amp.attack, 'amp.attack') ||
+    !validateNumber(amp.decay, 'amp.decay') ||
+    !validateNumber(amp.sustain, 'amp.sustain') ||
+    !validateNumber(amp.gain, 'amp.gain') ||
+    !validateNumber(lowpass.attack, 'lowpass.attack') ||
+    !validateNumber(lowpass.decay, 'lowpass.decay') ||
+    !validateNumber(lowpass.sustain, 'lowpass.sustain') ||
+    !validateNumber(lowpass.gain, 'lowpass.gain') ||
+    !validateNumber(lowpass.q, 'lowpass.q')
+  ) {
+    return
+  }
+
   // Initialize reverb if needed
   await initializeReverb()
 

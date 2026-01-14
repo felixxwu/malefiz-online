@@ -5,6 +5,10 @@ import * as Tone from 'tone'
 
 export async function playStonePickup() {
   for (const note of currentChord) {
+    if (!note) {
+      console.warn('playStonePickup: Invalid note in chord', currentChord)
+      continue
+    }
     playPluck({
       note: Tone.Frequency(note).transpose(12).toNote(),
       type: 'sawtooth',
