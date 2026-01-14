@@ -6,7 +6,7 @@ export function WinScreen() {
 
   return (
     <Div>
-      {gameOver.value} wins
+      <b>{gameOver.value} wins</b>
       <Button onClick={() => (window.location.href = '/')}>Leave game</Button>
     </Div>
   )
@@ -24,7 +24,6 @@ const Div = styled('div')`
   justify-content: center;
   align-items: center;
   transition: 0.2s;
-  color: white;
   pointer-events: none;
 `
 
@@ -37,5 +36,6 @@ const Button = styled('div')`
   align-items: center;
   cursor: pointer;
   background-color: black;
+  color: white;
   pointer-events: all;
 `

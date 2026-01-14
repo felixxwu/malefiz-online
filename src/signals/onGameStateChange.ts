@@ -1,13 +1,5 @@
 import { getUsers } from './queries/getUsers'
-import { zoomIntoCircle } from './actions/zoomIntoCircle'
-import {
-  gameState,
-  lastDieRoll,
-  circleHovered,
-  gameStateHashTable,
-  gameOver,
-  userId,
-} from './signals'
+import { gameState, lastDieRoll, userId, debugMode } from './signals'
 import { leaveGame } from '../dbactions/leaveGame'
 import { events } from '../events'
 import { sleep } from '../utils/sleep'
@@ -16,11 +8,14 @@ import { ItemName, itemDefs } from '../items'
 import { isUserHost } from './getters/isUserHost'
 import { consts } from '../config/consts'
 import { displayAlert } from '../dbactions/displayAlert'
+import { checkForGameOver } from './actions/win'
 
 let eventWarningShown = false
 
 export function onGameStateChange() {
-  console.info(`gameState.value`, gameState.value)
+  if (debugMode && debugMode.value) {
+    console.info(`gameState.value`, gameState.value)
+  }
 
   resolveMultipleUsersPerPlayer()
   saveDieRoll()
@@ -51,22 +46,6 @@ function saveDieRoll() {
   if (gameState.value && gameState.value!.dieRoll !== null) {
     lastDieRoll.value = gameState.value!.dieRoll
   }
-}
-
-function checkForGameOver() {
-  setTimeout(() => {
-    circleHovered.value = null
-    for (const key in gameStateHashTable.value) {
-      const pos = gameStateHashTable.value[key]
-      if (pos.circle?.finish && pos.pieces) {
-        const playerName = gameState.value!.players.find(
-          player => player.id === pos.pieces![0].playerId
-        )!.name
-        gameOver.value = playerName
-        zoomIntoCircle({ circle: pos.circle, zoomDelay: 500 })
-      }
-    }
-  })
 }
 
 async function checkEventWarning() {

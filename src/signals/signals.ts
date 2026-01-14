@@ -9,6 +9,8 @@ import { headList } from '../playermodel/heads'
 import { updatePlayerModelMidGame } from '../dbactions/updatePlayerModelMidGame'
 import { ItemName } from '../items'
 import { EventName } from '../events'
+
+export const debugMode = signal(false)
 import { onGameStateChange } from './onGameStateChange'
 
 // TODO: remove export keyword
@@ -59,5 +61,5 @@ export const playerModel = storedSignal<PlayerModel>('playerModel', {
 })
 playerModel.subscribe(updatePlayerModelMidGame)
 export const customisationOpened = storedSignal('customisationOpened', false)
-export const audioVolume = storedSignal('audioVolume', 80)
+export const audioVolume = storedSignal('audioVolume', 75)
 export const started = signal(false)

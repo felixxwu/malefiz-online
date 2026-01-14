@@ -2,8 +2,9 @@ import { setCurrentChord, setInterval } from './initAudio'
 import { playPluck } from './playPluck'
 import { gameState } from '../signals/signals'
 import { gameStateHashTable } from '../signals/getters/gameStateHashTable'
+import * as Tone from 'tone'
 
-export function playChord(chord: string[]) {
+export function playChord(chord: string[], type: Tone.ToneOscillatorType = 'sawtooth') {
   for (const note of chord) {
     if (!note) {
       console.warn('playChord: Invalid note in chord', chord)
@@ -11,8 +12,8 @@ export function playChord(chord: string[]) {
     }
     playPluck({
       note: note,
-      type: 'sawtooth',
-      amp: { attack: 0.001, decay: 2, sustain: 0, gain: 0.3 },
+      type: type,
+      amp: { attack: 0.03, decay: 2, sustain: 0, gain: 0.3 },
       lowpass: { attack: 0.03, decay: 2, sustain: 0, gain: 1500, q: 3 },
     })
   }

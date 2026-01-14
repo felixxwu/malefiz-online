@@ -9,6 +9,7 @@ import { map } from '../../../signals/signals'
 import { Text } from './Text'
 import { consts } from '../../../config/consts'
 import { CustomElements } from './CustomElements'
+import { DebugCircleIds } from './DebugCircleIds'
 
 export function MapGroup() {
   const mapPosition = getMapPosition(map.value)
@@ -22,6 +23,7 @@ export function MapGroup() {
       <FinishCircles />
       <Text />
       <CustomElements />
+      <DebugCircleIds />
       <MapPositionRef
         id={consts.mapPositionRef}
         x={mapPosition.mapLeft * 100}
