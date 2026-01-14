@@ -18,26 +18,22 @@ export function playChord(chord: string[]) {
   }
   setCurrentChord(chord)
 
-  // Check game state and find closest piece to finish
   if (gameState.value && gameStateHashTable.value) {
     const hashTable = gameStateHashTable.value
-    let closestDistance: number | null = null
+    const distances: number[] = []
 
-    // Iterate through all players and their pieces
     for (const player of gameState.value.players) {
       for (const position of player.positions) {
         const circleData = hashTable[position.circleId]
         if (circleData && circleData.distanceToFinish !== undefined) {
-          const distance = circleData.distanceToFinish
-          if (closestDistance === null || distance < closestDistance) {
-            closestDistance = distance
-          }
+          distances.push(circleData.distanceToFinish)
         }
       }
     }
 
-    if (closestDistance !== null) {
-      setInterval(150 + closestDistance * 5)
+    if (distances.length > 0) {
+      const averageDistance = distances.reduce((sum, dist) => sum + dist, 0) / distances.length
+      setInterval(50 + averageDistance * 6)
     }
   }
 }

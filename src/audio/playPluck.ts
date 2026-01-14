@@ -5,7 +5,16 @@ export const delay = new Tone.PingPongDelay({
   delayTime: 0.4,
   feedback: 0.5,
   wet: 0.2,
+})
+
+// Create shared highpass filter with fixed 100Hz cutoff
+export const highpass = new Tone.Filter({
+  type: 'highpass',
+  frequency: 250,
 }).toDestination()
+
+// Connect delay to highpass (which connects to destination)
+delay.connect(highpass)
 
 export const reverb = new Tone.Reverb(30)
 reverb.wet.value = 0.3
@@ -22,11 +31,13 @@ export async function initializeReverb() {
 export async function playPluck({
   note,
   type,
+  voices = 2,
   amp,
   lowpass,
 }: {
   note: Tone.Unit.Frequency
   type: Tone.ToneOscillatorType
+  voices?: number
   amp: { attack: number; decay: number; sustain: number; gain: number }
   lowpass: { attack: number; decay: number; sustain: number; gain: number; q: number }
 }) {
@@ -108,15 +119,15 @@ export async function playPluck({
 
   // Create a new oscillator for each note
   const oscillator = new Tone.FatOscillator(note, type, 30)
-  oscillator.count = 2
+  oscillator.count = voices
 
   // Connect: Oscillator → Filter → AmplitudeGain → OutputEnvelope → (split to multiple paths)
-  // Path 1: Direct to Destination (original signal with both filter and amplitude envelope)
-  // Path 2: Reverb → Delay → Destination (reverbed and delayed signal, with both envelopes already applied, can ring out)
+  // Path 1: Direct to Highpass → Destination (original signal with both filter and amplitude envelope)
+  // Path 2: Reverb → Delay → Highpass → Destination (reverbed and delayed signal, with both envelopes already applied, can ring out)
   oscillator.connect(filter)
   filter.connect(amplitudeGain)
   amplitudeGain.connect(outputEnvelope)
-  outputEnvelope.toDestination()
+  outputEnvelope.connect(highpass)
   outputEnvelope.connect(reverb)
   reverb.connect(delay)
 

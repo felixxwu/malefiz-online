@@ -65,6 +65,7 @@ const scheduleNextNote = () => {
     playPluck({
       note: Tone.Frequency(noteValue).transpose(12).toNote(),
       type: 'sine',
+      voices: 1,
       amp: { attack: 0.001, decay: 2, sustain: 0, gain: 0.15 },
       lowpass: { attack: 0.03, decay: 1, sustain: 1, gain: 20000, q: 1 },
     })
