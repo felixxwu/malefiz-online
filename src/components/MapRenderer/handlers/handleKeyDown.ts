@@ -1,4 +1,11 @@
-import { map, menuOpen, svgTransition, svgTranslation, svgZoom } from '../../../signals/signals'
+import {
+  map,
+  menuOpen,
+  menuPage,
+  svgTransition,
+  svgTranslation,
+  svgZoom,
+} from '../../../signals/signals'
 import { fitToScreen } from '../../../signals/actions/fitToScreen'
 import { zoomIn, zoomOut } from '../../../signals/actions/zoom'
 import { rollDie } from '../../../dbactions/rollDie'
@@ -6,7 +13,12 @@ import { dieNotRolled, myTurn } from '../../../signals/getters'
 
 export function handleKeydown(event: KeyboardEvent) {
   if (event.key === 'Escape') {
+    const wasOpen = menuOpen.value
     menuOpen.value = !menuOpen.value
+    // Reset menu page to main when closing the menu
+    if (wasOpen && !menuOpen.value) {
+      menuPage.value = 'main'
+    }
   }
   if (event.key === 'w') {
     svgTransition.value = 200

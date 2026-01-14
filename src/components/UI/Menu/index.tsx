@@ -1,5 +1,5 @@
 import { styled } from 'goober'
-import { customisationOpened, gameState, menuOpen } from '../../../signals/signals'
+import { customisationOpened, gameState, menuOpen, menuPage } from '../../../signals/signals'
 import { MenuIcon } from '../../Icons'
 import { colours } from '../../../config/colours'
 import { gameId } from '../../../signals/getters/gameId'
@@ -13,6 +13,7 @@ export function Menu() {
 
   function closeMenu(e: MouseEvent) {
     menuOpen.value = false
+    menuPage.value = 'main'
     e.stopPropagation()
   }
 

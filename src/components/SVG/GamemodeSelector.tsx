@@ -1,7 +1,12 @@
 import { colours } from '../../config/colours'
 import { events } from '../../events'
 import { itemDefs } from '../../items'
-import { arcadeEventSelection, arcadeItemSelection, pickArcadeItems } from '../../signals/signals'
+import {
+  arcadeEventSelection,
+  arcadeItemSelection,
+  menuOpen,
+  pickArcadeItems,
+} from '../../signals/signals'
 import { objectToArray } from '../../utils/objectToArray'
 import { PencilIconPath } from '../Icons'
 
@@ -18,8 +23,35 @@ export function GamemodeSelector() {
     }
   }
 
+  function handleMenuClick() {
+    menuOpen.value = true
+  }
+
   return (
     <>
+      <g
+        style={{
+          transform: 'translate(-20px, 10px)',
+        }}
+      >
+        <circle
+          r={10}
+          onClick={handleMenuClick}
+          fill='black'
+          style={{
+            cursor: 'pointer',
+          }}
+        />
+        <path
+          d='M24 6h-24v-4h24v4zm0 4h-24v4h24v-4zm0 8h-24v4h24v-4z'
+          fill={colours.background}
+          style={{
+            transform: 'scale(0.3) translate(-12px, -12px)',
+            pointerEvents: 'none',
+          }}
+        />
+      </g>
+
       <rect
         onClick={handleClick}
         x={0}

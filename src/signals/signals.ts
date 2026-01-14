@@ -59,3 +59,4 @@ export const playerModel = storedSignal<PlayerModel>('playerModel', {
 })
 playerModel.subscribe(updatePlayerModelMidGame)
 export const customisationOpened = storedSignal('customisationOpened', false)
+export const audioVolume = storedSignal('audioVolume', 80)
