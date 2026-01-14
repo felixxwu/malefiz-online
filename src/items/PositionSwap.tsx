@@ -13,6 +13,7 @@ import { playerDefs } from '../config/playerDefs'
 import { currentPlayer } from '../signals/getters/currentPlayer'
 import { useEffect, useState } from 'preact/hooks'
 import { isUserHost } from '../signals/getters/isUserHost'
+import { getPathDistance } from '../utils/getPathDistance'
 
 export const PositionSwap = {
   name: 'Position Swap',
@@ -65,6 +66,12 @@ export const PositionSwap = {
     }
 
     const randomPiece = validPieces[Math.floor(Math.random() * validPieces.length)]
+
+    // Calculate distances for both players
+
+    const currentPlayerDistance = getPathDistance(circleId, randomPiece.circleId)
+    const opponentDistance = getPathDistance(randomPiece.circleId, circleId)
+
     updateGame({
       players: gameState.value!.players.map(player => {
         if (player.id === currentPlayer.value.id) {
@@ -78,6 +85,10 @@ export const PositionSwap = {
                   }
                 : position
             ),
+            stats: {
+              ...player.stats,
+              distanceMoved: player.stats.distanceMoved + currentPlayerDistance,
+            },
           }
         } else if (player.id === randomPiece.playerId) {
           return {
@@ -85,6 +96,10 @@ export const PositionSwap = {
             positions: player.positions.map(position =>
               position.circleId === randomPiece.circleId ? { ...position, circleId } : position
             ),
+            stats: {
+              ...player.stats,
+              distanceMoved: player.stats.distanceMoved + opponentDistance,
+            },
           }
         } else {
           return player

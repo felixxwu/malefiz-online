@@ -23,6 +23,7 @@ import { handleKeydown } from './handlers/handleKeyDown'
 import { useEffect } from 'preact/hooks'
 import { ItemGroup } from './ItemGroup'
 import { isMyTurn } from '../../signals/getters/isMyTurn'
+import { EmojiOverlayGroup } from './EmojiOverlayGroup'
 
 export function MapRenderer() {
   useEffect(() => {
@@ -64,6 +65,7 @@ export function MapRenderer() {
           <HudGroup />
           <HoverGroup />
           {gameState.value?.dieRoll && <DieGroup />}
+          <EmojiOverlayGroup />
         </TranslateGroup>
       </ZoomGroup>
     </Svg>

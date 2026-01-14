@@ -1,12 +1,18 @@
 import { styled } from 'goober'
-import { gameOver } from '../../signals/signals'
+import { gameOver, menuOpen, menuPage } from '../../signals/signals'
 
 export function WinScreen() {
   if (!gameOver.value) return null
 
+  function handleViewStats() {
+    menuOpen.value = true
+    menuPage.value = 'stats'
+  }
+
   return (
     <Div>
       <b>{gameOver.value} wins</b>
+      <Button onClick={handleViewStats}>View stats</Button>
       <Button onClick={() => (window.location.href = '/')}>Leave game</Button>
     </Div>
   )

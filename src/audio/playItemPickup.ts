@@ -1,9 +1,12 @@
 import { sleep } from '../utils/sleep'
 import { currentChord } from './initAudio'
+import { playMovePiece } from './playMovePiece'
 import { playPluck } from './playPluck'
 import * as Tone from 'tone'
 
 export async function playItemPickup() {
+  playMovePiece()
+
   await sleep(1000)
   for (let i = 0; i < 4; i++) {
     for (const note of currentChord) {

@@ -6,12 +6,14 @@ import {
   Page,
   audioVolume,
   customisationOpened,
+  gameOver,
   menuOpen,
   menuPage,
 } from '../../../signals/signals'
 import { InvitePlayers } from './InvitePlayers'
 import { CustomiseAppearance } from './CustomiseAppearance'
 import { Help } from './Help'
+import { Stats } from './Stats'
 import { gameId } from '../../../signals/getters/gameId'
 
 export function MenuContent() {
@@ -42,6 +44,14 @@ export function MenuContent() {
 
   function handleIncreaseVolume() {
     audioVolume.value = Math.min(100, audioVolume.value + 5)
+  }
+
+  if (gameOver.value) {
+    return (
+      <Div onClick={(e: MouseEvent) => e.stopPropagation()}>
+        <Stats />
+      </Div>
+    )
   }
 
   return (

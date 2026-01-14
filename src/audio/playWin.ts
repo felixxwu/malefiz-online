@@ -21,23 +21,22 @@ async function getApplausePlayer(): Promise<Tone.Player> {
 export async function playWin() {
   await sleep(1000)
 
-  // Play applause sound
   const player = await getApplausePlayer()
   player.start()
 
-  playChord(consts.winChords[0])
+  playChord(consts.winChords[0], 10, 1)
   setInterval(80)
   await sleep(1000)
 
-  playChord(consts.winChords[1])
+  playChord(consts.winChords[1], 10, 1)
   setInterval(80)
   await sleep(1000)
 
-  playChord(consts.winChords[2])
+  playChord(consts.winChords[2], 10, 1)
   setInterval(80)
   await sleep(500)
 
-  playChord(consts.winChords[3])
+  playChord(consts.winChords[3], 10, 1)
   setInterval(80)
   await sleep(1500)
 

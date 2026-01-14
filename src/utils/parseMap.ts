@@ -70,6 +70,13 @@ export function parseMap(
             circleId: findCircle(c.x, c.y, circleCoordinates)!.id,
           })),
           aiTemper: 0,
+          stats: {
+            distanceMoved: 0,
+            sixesRolled: 0,
+            piecesTaken: 0,
+            stonesTaken: 0,
+            itemsTaken: 0,
+          },
         }))
         .filter(p => p.positions.length > 0) as Player[],
       created: Date.now(),

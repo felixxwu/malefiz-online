@@ -1,7 +1,7 @@
 import { signal } from '@preact/signals'
 import { homePageMap } from '../maps/home'
 import { storedSignal } from '../utils/storedSignal'
-import { GameState, PlayerModel } from '../types/gameTypes'
+import { GameState, PlayerID, PlayerModel } from '../types/gameTypes'
 import { Circle } from '../types/mapTypes'
 import { eyesList } from '../playermodel/eyes'
 import { mouthList } from '../playermodel/mouthes'
@@ -18,7 +18,7 @@ export const gameState = signal<GameState | null>(null)
 gameState.subscribe(onGameStateChange)
 export { gameStateHashTable } from './getters/gameStateHashTable'
 
-export type Page = 'main' | 'customise' | 'invite' | 'help'
+export type Page = 'main' | 'customise' | 'invite' | 'help' | 'stats'
 
 export const screenWidth = signal(window.innerWidth)
 export const screenHeight = signal(window.innerHeight)
@@ -63,3 +63,6 @@ playerModel.subscribe(updatePlayerModelMidGame)
 export const customisationOpened = storedSignal('customisationOpened', false)
 export const audioVolume = storedSignal('audioVolume', 75)
 export const started = signal(false)
+export const emojiOverlay = signal<{ emoji: string; playerId: PlayerID; timestamp: number } | null>(
+  null
+)

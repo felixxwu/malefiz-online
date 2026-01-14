@@ -8,10 +8,16 @@ import { playerDefs } from '../config/playerDefs'
 import { displayAlert } from './displayAlert'
 import { updateGame } from './updateGame'
 import { getNextTurnGameState } from '../signals/queries/getNextTurnGameState'
+import { getPathDistance } from '../utils/getPathDistance'
 
 let lastKill: { killer: Player | null; victim: Player | null } = { killer: null, victim: null }
 
 export async function takePiece(pieceId: string, circleId: string, opponentPieceId: string) {
+  // Get current position of the piece
+  const currentPlayer = gameState.value!.players.find(p => p.id === gameState.value!.playerTurn)!
+  const currentPosition = currentPlayer.positions.find(pos => pos.pieceId === pieceId)!
+  const distance = getPathDistance(currentPosition.circleId, circleId)
+
   await updateGame({
     players: gameState.value!.players.map(player => {
       if (gameState.value!.playerTurn === player.id) {
@@ -24,6 +30,11 @@ export async function takePiece(pieceId: string, circleId: string, opponentPiece
             .filter(pos => pos.pieceId !== pieceId)
             .concat({ pieceId, circleId }),
           aiTemper: Math.max(0, player.aiTemper - consts.temperDecrease),
+          stats: {
+            ...player.stats,
+            distanceMoved: player.stats.distanceMoved + distance,
+            piecesTaken: player.stats.piecesTaken + 1,
+          },
         }
       } else if (player.positions.some(pos => pos.pieceId === opponentPieceId)) {
         lastKill.victim = player

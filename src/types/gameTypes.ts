@@ -10,6 +10,7 @@ export type Player = {
   positions: { pieceId: string; circleId: string }[]
   name: string
   aiTemper: number
+  stats: Stats
 }
 
 export type Stone = {
@@ -46,6 +47,14 @@ export type GameState = {
   turnsUntilEvent: number
   eventsEnabled: EventName[]
   [user: UserID]: User
+}
+
+export type Stats = {
+  distanceMoved: number
+  sixesRolled: number
+  piecesTaken: number
+  stonesTaken: number
+  itemsTaken: number
 }
 
 export type Alert = {
