@@ -2,6 +2,7 @@ import { consts } from '../../config/consts'
 import { getMapPosition } from '../../utils/getMapPosition'
 import { svgTransition, svgTranslation, svgZoom } from '../signals'
 import { Map } from '../../types/mapTypes'
+import { setDiePosition } from '../../components/MapRenderer/DieGroup'
 
 export function fitToScreen(
   map: Map,
@@ -9,7 +10,13 @@ export function fitToScreen(
     transition,
     zoomDelay,
     translateDelay,
-  }: { transition?: number; zoomDelay?: number; translateDelay?: number }
+    resetDieTransform = false,
+  }: {
+    transition?: number
+    zoomDelay?: number
+    translateDelay?: number
+    resetDieTransform?: boolean
+  }
 ) {
   const { mapWidth, mapHeight, mapCenterX, mapCenterY } = getMapPosition(map)
 
@@ -20,6 +27,12 @@ export function fitToScreen(
   const heightZoom = (window.innerHeight - 250) / (mapHeight * 100 + consts.circleRadius * 2)
   const smallestZoom = Math.min(widthZoom, heightZoom)
   const smallestScreenLength = Math.min(window.innerWidth, window.innerHeight)
+
+  if (resetDieTransform) {
+    const x = (mapCenterX + 0.5) * 100
+    const y = (mapCenterY + 0.5) * 100
+    setDiePosition(x, y)
+  }
 
   setTimeout(() => {
     svgTransition.value = transition ?? 500

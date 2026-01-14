@@ -80,7 +80,7 @@ async function activateEvent() {
   if (!gameState.value) return
   const event = events.find(event => event.name === gameState.value!.alert?.id)
   if (event && isUserHost()) {
-    await sleep(3000)
+    await sleep(4000)
     await updateGame({
       alert: null,
       turnsUntilEvent: consts.eventInterval,

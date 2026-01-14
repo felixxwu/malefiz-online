@@ -25,7 +25,7 @@ export async function handleCircleClick(clickedCircleId: string) {
   }
 
   // place stone
-  if (gameState.value!.stones.find(stone => stone.circleId === null)) {
+  if (gameState.value!.stones.find(stone => stone.circleId === null) && isMyTurn()) {
     const legalStonePlacements = getLegalStonePlacements()
     if (legalStonePlacements.map(circle => circle.id).includes(clickedCircleId)) {
       placeStone(clickedCircleId)

@@ -42,7 +42,9 @@ export function HudGroup() {
         allCircles.push(legalMove.from)
       }
     }
-    fitToScreen(allCircles, {})
+
+    if (window.innerWidth < 1000) fitToScreen(allCircles, { resetDieTransform: true })
+
     return (
       <>
         {myLegalMoves.map(legalMoves => legalMoves.map(legalMove => <MoveLine move={legalMove} />))}

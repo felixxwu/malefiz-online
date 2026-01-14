@@ -121,7 +121,6 @@ const keyboardShortcuts = [
   ['A', 'Pan left'],
   ['S', 'Pan down'],
   ['D', 'Pan right'],
-  ['R', 'Roll'],
   ['Q', 'Zoom out'],
   ['E', 'Zoom in'],
   ['F', 'Fit to screen'],

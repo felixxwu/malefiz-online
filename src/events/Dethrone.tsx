@@ -7,42 +7,71 @@ import { consts } from '../config/consts'
 import { PlayerModelGroup } from '../components/MapRenderer/PlayerGroup'
 import { playerDefs } from '../config/playerDefs'
 
-export const AcidRain = {
-  name: 'Acid Rain',
-  description: 'Send one piece back to the start for each player.',
+export const Dethrone = {
+  name: 'Dethrone',
+  description: 'Remove the piece furthest ahead.',
   alert: () => (
-    <EventAlert event={AcidRain}>
-      <AcidRainGraphic />
+    <EventAlert event={Dethrone}>
+      <DethroneGraphic />
     </EventAlert>
   ),
   onActivate: async () => {
-    const pieces = gameState.value!.players.map(player => {
-      const eligiblePieces = player.positions.filter(
-        pos => !gameStateHashTable.value[pos.circleId].circle?.start
-      )
-      return eligiblePieces[Math.floor(Math.random() * eligiblePieces.length)]
-    })
+    // Find all pieces with their distances to finish
+    const allPieces: Array<{
+      playerId: string
+      pieceId: string
+      circleId: string
+      distanceToFinish: number
+    }> = []
+
+    for (const player of gameState.value!.players) {
+      for (const position of player.positions) {
+        const distance = gameStateHashTable.value[position.circleId].distanceToFinish ?? Infinity
+        // Only consider pieces not already at start
+        if (!gameStateHashTable.value[position.circleId].circle?.start) {
+          allPieces.push({
+            playerId: player.id,
+            pieceId: position.pieceId,
+            circleId: position.circleId,
+            distanceToFinish: distance,
+          })
+        }
+      }
+    }
+
+    // Find the piece closest to finish (smallest distance)
+    if (allPieces.length === 0) return
+
+    const closestPiece = allPieces.reduce((closest, current) =>
+      current.distanceToFinish < closest.distanceToFinish ? current : closest
+    )
+
+    // Send that piece back to its start
     await updateGame({
       players: gameState.value!.players.map(player => {
-        return {
-          ...player,
-          positions: player.positions.map(pos => {
-            if (pieces.find(piece => piece.pieceId === pos.pieceId)) {
-              return {
-                ...pos,
-                circleId: map.value.find(circle => circle.start === player.id)!.id,
+        if (player.id === closestPiece.playerId) {
+          return {
+            ...player,
+            positions: player.positions.map(pos => {
+              if (pos.pieceId === closestPiece.pieceId) {
+                return {
+                  ...pos,
+                  circleId: map.value.find(circle => circle.start === player.id)!.id,
+                }
+              } else {
+                return pos
               }
-            } else {
-              return pos
-            }
-          }),
+            }),
+          }
+        } else {
+          return player
         }
       }),
     })
   },
 } as const satisfies Event
 
-function AcidRainGraphic() {
+function DethroneGraphic() {
   return (
     <Svg>
       <circle cx='-100' cy='0' r={consts.circleRadius} fill='black' />
@@ -76,18 +105,7 @@ const Svg = styled('svg')`
   transform: scale(1.5) translateY(50px);
 `
 
-const fall1 = keyframes`
-  0%, 50% {
-    opacity: 1;
-    transform: translate(-100px, 0px) rotate(0deg);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-100px, 200px) rotate(-45deg);
-  }
-`
-
-const fall3 = keyframes`
+const fall = keyframes`
   0%, 50% {
     opacity: 1;
     transform: translate(100px, 0px) rotate(0deg);
@@ -99,8 +117,7 @@ const fall3 = keyframes`
 `
 
 const Player1 = styled('g')`
-  animation: ${fall1} 2s ease-in;
-  animation-fill-mode: forwards;
+  transform: translate(-100px, 0px);
 `
 
 const Player2 = styled('g')`
@@ -108,6 +125,7 @@ const Player2 = styled('g')`
 `
 
 const Player3 = styled('g')`
-  animation: ${fall3} 2s ease-in;
+  transform: translate(0px, 0px);
+  animation: ${fall} 2s ease-in;
   animation-fill-mode: forwards;
 `

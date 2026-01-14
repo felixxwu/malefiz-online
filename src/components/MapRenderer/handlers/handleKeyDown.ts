@@ -1,8 +1,6 @@
 import { map, menuOpen, svgTransition, svgTranslation, svgZoom } from '../../../signals/signals'
 import { fitToScreen } from '../../../signals/actions/fitToScreen'
-import { rollDie } from '../../../dbactions/rollDie'
 import { zoomIn, zoomOut } from '../../../signals/actions/zoom'
-import { action } from '../../UI/Action/action'
 
 export function handleKeydown(event: KeyboardEvent) {
   if (event.key === 'Escape') {
@@ -44,8 +42,5 @@ export function handleKeydown(event: KeyboardEvent) {
   }
   if (event.key === 'f') {
     fitToScreen(map.value, {})
-  }
-  if (event.key === 'r' && action.value?.text?.toLowerCase()?.includes('roll')) {
-    rollDie()
   }
 }

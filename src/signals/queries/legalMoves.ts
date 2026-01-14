@@ -23,7 +23,6 @@ export function getLegalStonePlacements() {
     if (circleId === 'null') continue
     if (position.pieces) continue
     if (position.stone) continue
-    if (position.item) continue
     if (position.circle!.finish) continue
     if (position.circle!.start) continue
     if (position.circle!.safeZone) continue

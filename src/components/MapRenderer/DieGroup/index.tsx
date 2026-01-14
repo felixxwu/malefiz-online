@@ -1,27 +1,43 @@
-import { useState } from 'preact/hooks'
+import { useRef, useState, type Dispatch } from 'preact/hooks'
 import { gameState } from '../../../signals/signals'
 import { randomOffsetAndRotation } from './randomOffsetAndRotation'
 import { keyframes, styled } from 'goober'
 import { Square } from './Square'
 import { Dot, dotLayouts } from './Dot'
+import type { SetStateAction } from 'preact/compat'
+
+let setDieTransform: Dispatch<SetStateAction<{ x: number; y: number; rotation: number }>> | null =
+  null
+let setDieTransformOrigin: Dispatch<SetStateAction<string>> | null = null
+
+export function setDiePosition(x: number, y: number) {
+  setDieTransform?.(({ rotation }) => ({ x, y, rotation }))
+  setDieTransformOrigin?.(`${x + 50}px ${y + 50}px`)
+}
 
 export function DieGroup() {
+  const dieElement = useRef<SVGGElement>(null)
+
   if (!gameState.value?.dieRoll) return null
 
   const { x, y, rotation } = randomOffsetAndRotation()
-  const [transform, setTransform] = useState(`rotate(${rotation}deg) translate(${x}px, ${y}px)`)
+  const [transform, setTransform] = useState({ x, y, rotation })
   const [transformOrigin, setTransformOrigin] = useState(`${x + 50}px ${y + 50}px`)
+
+  setDieTransform = setTransform
+  setDieTransformOrigin = setTransformOrigin
 
   return (
     <Group
+      ref={dieElement}
       onClick={(e: PointerEvent) => {
         e.stopPropagation()
         const diePit = gameState.value!.diePit
-        setTransform(`rotate(0deg) translate(${diePit.x * 100}px, ${diePit.y * 100}px)`)
+        setTransform({ x: diePit.x * 100, y: diePit.y * 100, rotation: 0 })
         setTransformOrigin(`0 0`)
       }}
       style={{
-        transform,
+        transform: `rotate(${transform.rotation}deg) translate(${transform.x}px, ${transform.y}px)`,
         transformOrigin,
         cursor: 'pointer',
         transition: '500ms',

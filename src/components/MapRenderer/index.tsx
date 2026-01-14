@@ -22,6 +22,7 @@ import { handleWheel } from './handlers/handleWheel'
 import { handleKeydown } from './handlers/handleKeyDown'
 import { useEffect } from 'preact/hooks'
 import { ItemGroup } from './ItemGroup'
+import { isMyTurn } from '../../signals/getters/isMyTurn'
 
 export function MapRenderer() {
   useEffect(() => {
@@ -31,7 +32,7 @@ export function MapRenderer() {
     <Svg
       width={screenWidth.value}
       height={screenHeight.value}
-      style={{ cursor: circleHovered.value ? 'pointer' : 'default' }}
+      style={{ cursor: circleHovered.value && isMyTurn() ? 'pointer' : 'default' }}
       onClick={handleClick}
       onPointerDown={handlePointerDown}
       onPointerMove={HandlePointerMove}

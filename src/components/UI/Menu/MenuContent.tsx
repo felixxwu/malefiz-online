@@ -22,6 +22,10 @@ export function MenuContent() {
     }
   }
 
+  function handleCloseMenu() {
+    menuOpen.value = false
+  }
+
   return (
     <Div onClick={(e: MouseEvent) => e.stopPropagation()}>
       {menuPage.value === 'main' && (
@@ -30,6 +34,7 @@ export function MenuContent() {
           <Button onClick={createPageHandler('customise')}>Customise appearance</Button>
           <Button onClick={createPageHandler('help')}>Help</Button>
           <Button onClick={handleLeaveGame}>Leave game</Button>
+          <Button onClick={handleCloseMenu}>Close</Button>
         </>
       )}
       {menuPage.value === 'customise' && <CustomiseAppearance />}
