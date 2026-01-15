@@ -50,10 +50,10 @@ function saveDieRoll() {
 
 async function checkEventWarning() {
   if (!gameState.value) return
-  // Show warning when there's 1 turn left before an event and no alert is currently showing
+  // Show warning when there's 1 turn left before an event and no alerts are currently showing
   if (
     gameState.value.turnsUntilEvent === 1 &&
-    gameState.value.alert === null &&
+    gameState.value.alerts.length === 0 &&
     !eventWarningShown
   ) {
     eventWarningShown = true
@@ -67,22 +67,24 @@ async function checkEventWarning() {
 
 async function activateItem() {
   if (!gameState.value) return
-  const item = itemDefs[gameState.value!.alert?.id as ItemName]
-  if (item) {
-    const meta = gameState.value!.alert!.meta
+  const currentAlert = gameState.value!.alerts?.[0]
+  const item = itemDefs[currentAlert?.id as ItemName]
+  if (item && currentAlert?.meta) {
+    const meta = currentAlert.meta
     await sleep(2800)
-    await updateGame({ alert: null })
+    // Alert will be removed by frontend after display
     item.onPickup(meta.pieceId, meta.circleId)
   }
 }
 
 async function activateEvent() {
   if (!gameState.value) return
-  const event = events.find(event => event.name === gameState.value!.alert?.id)
+  const currentAlert = gameState.value!.alerts?.[0]
+  const event = events.find(event => event.name === currentAlert?.id)
   if (event && isUserHost()) {
     await sleep(4000)
+    // Alert will be removed by frontend after display
     await updateGame({
-      alert: null,
       turnsUntilEvent: consts.eventInterval,
     })
     event?.onActivate()

@@ -5,10 +5,10 @@ import { gameState, lastDieRoll, map } from '../signals/signals'
 import { Player } from '../types/gameTypes'
 import { getUserControllingPlayer } from '../signals/queries/getUserControllingPlayer'
 import { playerDefs } from '../config/playerDefs'
-import { displayAlert } from './displayAlert'
 import { updateGame } from './updateGame'
 import { getNextTurnGameState } from '../signals/queries/getNextTurnGameState'
 import { getPathDistance } from '../utils/getPathDistance'
+import { playTakePiece } from '../audio/playTakePiece'
 
 let lastKill: { killer: Player | null; victim: Player | null } = { killer: null, victim: null }
 
@@ -18,11 +18,29 @@ export async function takePiece(pieceId: string, circleId: string, opponentPiece
   const currentPosition = currentPlayer.positions.find(pos => pos.pieceId === pieceId)!
   const distance = getPathDistance(currentPosition.circleId, circleId)
 
+  // Set lastKill
+  const killer = gameState.value!.players.find(p => p.id === gameState.value!.playerTurn)!
+  const victim = gameState.value!.players.find(p =>
+    p.positions.some(pos => pos.pieceId === opponentPieceId)
+  )!
+  lastKill.killer = killer
+  lastKill.victim = victim
+
+  // Play audio for piece-taking
+  playTakePiece()
+
+  const nextTurn = lastDieRoll.value !== 6
+  const nextTurnState = getNextTurnGameState(nextTurn, [circleId])
+
+  // Add piece-taking alert to the beginning of the queue (before any event alert)
+  const alertsWithPieceAlert = [
+    { id: 'takePieceAlert', meta: lastKill },
+    ...(nextTurnState.alerts || []),
+  ]
+
   await updateGame({
     players: gameState.value!.players.map(player => {
       if (gameState.value!.playerTurn === player.id) {
-        lastKill.killer = player
-
         // move current player piece
         return {
           ...player,
@@ -37,8 +55,6 @@ export async function takePiece(pieceId: string, circleId: string, opponentPiece
           },
         }
       } else if (player.positions.some(pos => pos.pieceId === opponentPieceId)) {
-        lastKill.victim = player
-
         // move opponent piece to start
         return {
           ...player,
@@ -55,17 +71,14 @@ export async function takePiece(pieceId: string, circleId: string, opponentPiece
       }
     }),
 
-    ...getNextTurnGameState(lastDieRoll.value !== 6, [circleId]),
+    ...nextTurnState,
+    alerts: alertsWithPieceAlert,
   })
-
-  // another alert could be set, in which case ignore this one
-  if (!gameState.value!.alert) {
-    await displayAlert({ id: 'takePieceAlert', meta: lastKill })
-  }
 }
 
 export function takePieceAlert() {
-  const gameStateLastKill = gameState.value?.alert?.meta as typeof lastKill
+  const currentAlert = gameState.value?.alerts?.[0]
+  const gameStateLastKill = currentAlert?.meta as typeof lastKill
   if (gameStateLastKill.killer === null || gameStateLastKill.victim === null) return null
   const userForKiller = getUserControllingPlayer(gameStateLastKill.killer.id)
   const userForVictim = getUserControllingPlayer(gameStateLastKill.victim.id)

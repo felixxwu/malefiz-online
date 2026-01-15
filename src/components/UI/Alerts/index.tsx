@@ -4,6 +4,8 @@ import { ItemName, itemDefs } from '../../../items'
 import { takePieceAlert } from '../../../dbactions/takePiece'
 import { useEffect, useState } from 'preact/hooks'
 import { events } from '../../../events'
+import { updateGame } from '../../../dbactions/updateGame'
+import { playEvent } from '../../../audio/playEvent'
 
 function eventWarningAlert() {
   return (
@@ -21,23 +23,48 @@ export function Alerts() {
   const [showAlert, setShowAlert] = useState(false)
 
   useEffect(() => {
-    if (gameState.value?.alert?.id) {
+    if (!gameState.value || gameState.value.alerts.length === 0) {
+      setShowAlert(false)
+      return
+    }
+
+    // Show the first alert in the queue
+    const showCurrentAlert = async () => {
+      if (!gameState.value) return
+
+      const currentAlert = gameState.value.alerts[0]
+      const alertId = currentAlert.id
+
+      // Check if this is an event alert
+      const EventComponent = events.find(event => event.name === alertId)
+      if (EventComponent) {
+        playEvent()
+      }
+
       setTimeout(() => {
         setShowAlert(true)
       }, 500)
-      setTimeout(() => {
+
+      setTimeout(async () => {
         setShowAlert(false)
+        // Remove the first alert from the queue after it's shown
+        if (gameState.value && gameState.value.alerts.length > 0) {
+          await updateGame({
+            alerts: gameState.value.alerts.slice(1),
+          })
+        }
       }, 3000)
-    } else {
-      setShowAlert(false)
     }
-  }, [gameState.value?.alert, gameState.value?.alert?.id])
+
+    showCurrentAlert()
+  }, [gameState.value?.alerts])
 
   if (!gameState.value) return null
-  if (gameState.value.alert === null) return null
+  if (gameState.value.alerts.length === 0) return null
   if (!showAlert) return null
 
-  const alertId = gameState.value.alert.id
+  const currentAlert = gameState.value.alerts[0]
+  const alertId = currentAlert.id
 
   const OtherComponent = alerts[alertId as keyof typeof alerts] ?? null
   const ItemComponent = itemDefs[alertId as ItemName]?.alert ?? null
@@ -54,7 +81,7 @@ export function Alerts() {
   return (
     <Div
       style={
-        gameState.value?.alert?.id
+        currentAlert
           ? {
               backdropFilter: 'blur(20px)',
               backgroundColor: 'rgba(0,0,0,0.5)',

@@ -44,7 +44,7 @@ export async function takeItem(itemName: ItemName, pieceId: string, circleId: st
         ),
       },
     },
-    alert: { id: itemDefs[itemName].name, meta: { pieceId, circleId } },
+    alerts: [...(gameState.value!.alerts || []), { id: itemDefs[itemName].name, meta: { pieceId, circleId } }],
     dieRoll: null,
   })
 }

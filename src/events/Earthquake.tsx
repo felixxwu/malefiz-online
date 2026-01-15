@@ -6,6 +6,8 @@ import { getLegalStonePlacements } from '../signals/queries/legalMoves'
 import { EventAlert } from './EventAlert'
 import { consts } from '../config/consts'
 import { Stone } from '../components/MapRenderer/StoneGroup/Stone'
+import { objectMap } from '../utils/objectMap'
+import { objectToArray } from '../utils/objectToArray'
 
 export const Earthquake = {
   name: 'Earthquake',
@@ -33,26 +35,55 @@ export const Earthquake = {
       </Svg>
     </EventAlert>
   ),
-  onActivate: () => {
+  onActivate: async () => {
     if (!gameState.value) return
 
+    let updatedStones = [...gameState.value.stones]
+    let updatedItems = { ...gameState.value.items }
+    const circlesWithItems = new Set<string>()
+
+    // Move 3 stones randomly
     for (let i = 0; i < 3; i++) {
-      // move one stone randomly
       const legalIds = getLegalStonePlacements()
-      const randomStoneNum = Math.floor(Math.random() * gameState.value.stones.length)
+      if (legalIds.length === 0) break
+
+      const randomStoneNum = Math.floor(Math.random() * updatedStones.length)
       const randomNewCircleId = legalIds[Math.floor(Math.random() * legalIds.length)]!.id
-      gameState.value = {
-        ...gameState.value,
-        stones: gameState.value.stones.map((stone, i) => {
-          if (i === randomStoneNum) {
-            return { ...stone, circleId: randomNewCircleId }
-          }
-          return stone
-        }),
+
+      // Update stone position
+      updatedStones = updatedStones.map((stone, idx) => {
+        if (idx === randomStoneNum) {
+          return { ...stone, circleId: randomNewCircleId }
+        }
+        return stone
+      })
+
+      // Track circles that will have stones (to remove items)
+      circlesWithItems.add(randomNewCircleId)
+    }
+
+    // Remove items from circles where stones were placed
+    for (const circleId of circlesWithItems) {
+      const itemAtCircle = objectToArray(updatedItems).find(item =>
+        item.value.positions.find(pos => pos.circleId === circleId)
+      )
+
+      if (itemAtCircle) {
+        updatedItems = objectMap(updatedItems, (item, key) =>
+          key === itemAtCircle.key
+            ? {
+                ...item,
+                positions: item.positions.filter(pos => pos.circleId !== circleId),
+              }
+            : item
+        )
       }
     }
 
-    updateGame(gameState.value)
+    await updateGame({
+      stones: updatedStones,
+      items: updatedItems,
+    })
   },
 } as const satisfies Event
 

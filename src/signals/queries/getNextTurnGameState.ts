@@ -12,6 +12,12 @@ export function getNextTurnGameState(
       Math.floor(Math.random() * gameState.value!.eventsEnabled.length)
     ]
 
+  const currentAlerts = gameState.value!.alerts || []
+  const newAlerts =
+    randomEvent && gameState.value!.turnsUntilEvent === 0 && nextTurn
+      ? [...currentAlerts, { id: randomEvent }]
+      : currentAlerts
+
   return {
     ...(nextTurn
       ? {
@@ -21,8 +27,6 @@ export function getNextTurnGameState(
         }
       : {}),
     dieRoll: null,
-    ...(randomEvent
-      ? { alert: gameState.value!.turnsUntilEvent === 0 && nextTurn ? { id: randomEvent } : null }
-      : {}),
+    alerts: newAlerts,
   }
 }

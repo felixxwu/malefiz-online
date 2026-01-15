@@ -4,8 +4,12 @@ import { updateGame } from './updateGame'
 import { objectMap } from '../utils/objectMap'
 import { objectToArray } from '../utils/objectToArray'
 import { playStonePlace } from '../audio/playStonePlace'
+import { GameState } from '../types/gameTypes'
 
-export async function placeStone(clickedCircleId: string) {
+export async function placeStone(
+  clickedCircleId: string,
+  additionalGameState?: Partial<GameState>
+) {
   const itemAtCircle = objectToArray(gameState.value!.items).find(item =>
     item.value.positions.find(pos => pos.circleId === clickedCircleId)
   )
@@ -23,10 +27,13 @@ export async function placeStone(clickedCircleId: string) {
     }),
 
     ...getNextTurnGameState(lastDieRoll.value !== 6, [clickedCircleId]),
+    ...additionalGameState,
   }
 
   if (itemAtCircle) {
-    newGameState.items = objectMap(gameState.value!.items, (item, key) =>
+    // Merge item position updates with any items updates from additionalGameState
+    const baseItems = additionalGameState?.items || gameState.value!.items
+    newGameState.items = objectMap(baseItems, (item, key) =>
       key === itemAtCircle.key
         ? {
             ...item,

@@ -43,7 +43,7 @@ export type GameState = {
   stonePit: { x: number; y: number }
   diePit: { x: number; y: number }
   items: GameStateItems
-  alert: Alert
+  alerts: Alert[]
   turnsUntilEvent: number
   eventsEnabled: EventName[]
   [user: UserID]: User
@@ -60,7 +60,7 @@ export type Stats = {
 export type Alert = {
   id: string
   meta?: any
-} | null
+}
 
 export type Move = {
   from: Circle

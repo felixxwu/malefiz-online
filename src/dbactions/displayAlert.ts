@@ -1,13 +1,9 @@
-import { playAlert } from '../audio/playAlert'
 import { Alert } from '../types/gameTypes'
-import { sleep } from '../utils/sleep'
 import { updateGame } from './updateGame'
+import { gameState } from '../signals/signals'
 
 export async function displayAlert(alert: Alert) {
-  await updateGame({ alert })
-
-  playAlert()
-
-  await sleep(3500)
-  await updateGame({ alert: null })
+  // Add alert to the queue
+  const currentAlerts = gameState.value?.alerts || []
+  await updateGame({ alerts: [...currentAlerts, alert] })
 }

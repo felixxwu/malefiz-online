@@ -9,6 +9,7 @@ import { ItemAlert } from './ItemAlert'
 import { consts } from '../config/consts'
 import { isMyTurn } from '../signals/getters/isMyTurn'
 import { Stone } from '../components/MapRenderer/StoneGroup/Stone'
+import { getDeactivatedItems } from '../signals/getters/getDeactivatedItems'
 
 export const StoneMove = {
   name: 'Stone Move',
@@ -30,7 +31,7 @@ export const StoneMove = {
       const legalStonePlacements = getLegalStonePlacements()
 
       if (legalStonePlacements.find(circle => circle.id === circleId)) {
-        placeStone(circleId)
+        await placeStone(circleId, { items: getDeactivatedItems() })
       }
 
       return
@@ -63,16 +64,16 @@ export const StoneMove = {
       <StoneMoveGraphic />
     </ItemAlert>
   ),
-  aiAction: () => {
+  aiAction: async () => {
     if (gameState.value!.stones.some(stone => stone.circleId === null)) {
       const legalStonePlacements = getLegalStonePlacements()
       const placement = AI1.getBestStonePlacement(legalStonePlacements)
-      placeStone(placement.id)
+      await placeStone(placement.id, { items: getDeactivatedItems() })
       return
     }
 
     const stoneToPickup = AI1.getBestStoneToPickUp()
-    updateGame({
+    await updateGame({
       stones: gameState.value!.stones.map(stone => {
         if (stone.circleId === stoneToPickup?.id) {
           return {

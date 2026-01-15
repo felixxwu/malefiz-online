@@ -84,7 +84,7 @@ export function parseMap(
       dieRoll: null,
       stonePit: { x: stonePit.x / 2, y: stonePit.y / 2 },
       diePit: { x: diePit.x / 2, y: diePit.y / 2 },
-      alert: null,
+      alerts: [],
       turnsUntilEvent: consts.eventInterval,
     },
   }

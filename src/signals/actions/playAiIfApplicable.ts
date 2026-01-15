@@ -13,7 +13,7 @@ export async function playAiIfApplicable() {
   if (!aiCanPlay.value) return
 
   if (activeItem.value) {
-    activeItem.value.aiAction()
+    await activeItem.value.aiAction()
     return
   }
 

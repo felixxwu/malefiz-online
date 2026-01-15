@@ -7,7 +7,7 @@ export const aiCanPlay = computed(() => {
   if (!gameState.value) return false
   if (!isUserHost()) return false
   if (gameOver.value) return false
-  if (gameState.value.alert) return false
+  if (gameState.value.alerts.length > 0) return false
 
   const playerTurn = gameState.value.playerTurn
   const playerPlaying = gameState.value.players.find(player => player.id === playerTurn)
